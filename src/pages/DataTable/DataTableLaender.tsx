@@ -38,9 +38,11 @@ function DataTableLaender() {
         <TableBody>
           {data.map((row) => (
             <TableRow key={row.id_country}>
-              <a href={`/${TABLE_NAME}/${row.id_country}`}>
-                <td>{row.id_country}</td>
-              </a>
+              <td>
+                <a href={`/${TABLE_NAME}/${row.id_country}`}>
+                  {row.id_country}
+                </a>
+              </td>
               <td>{row.country}</td>
             </TableRow>
           ))}

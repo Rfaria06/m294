@@ -42,9 +42,11 @@ function DataTableLehrbetriebeLernende() {
         <TableBody>
           {data.map((row) => (
             <TableRow key={row.id_lehrbetrieb_lernende}>
-              <a href={`/${TABLE_NAME}/${row.id_lehrbetrieb_lernende}`}>
-                <td>{row.id_lehrbetrieb_lernende}</td>
-              </a>
+              <td>
+                <a href={`/${TABLE_NAME}/${row.id_lehrbetrieb_lernende}`}>
+                  {row.id_lehrbetrieb_lernende}
+                </a>
+              </td>
               <td>{row.nr_lehrbetrieb}</td>
               <td>{row.nr_lernende}</td>
               <td>{row.start}</td>

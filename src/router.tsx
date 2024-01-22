@@ -1,12 +1,14 @@
 import { createBrowserRouter } from "react-router-dom";
 import Startpage from "./pages/Startpage/Startpage";
-import DataTableLernende from "./pages/DataTable/DataTableLernende";
-import DataTableLehrbetriebe from "./pages/DataTable/DataTableLehrbetriebe";
-import DataTableLehrbetriebeLernende from "./pages/DataTable/DataTableLehrbetriebeLernende";
-import DataTableLaender from "./pages/DataTable/DataTableLaender";
-import DataTableDozenten from "./pages/DataTable/DataTableDozenten";
-import DataTableKurse from "./pages/DataTable/DataTableKurse";
-import DataTableKurseLernende from "./pages/DataTable/DataTableKurseLernende";
+import {
+  DataTableDozenten,
+  DataTableKurse,
+  DataTableKurseLernende,
+  DataTableLaender,
+  DataTableLehrbetriebe,
+  DataTableLehrbetriebeLernende,
+  DataTableLernende,
+} from "./pages/DataTable";
 
 export const router = createBrowserRouter([
   {
