@@ -47,7 +47,7 @@ const components: { title: string; href: string; description: string }[] = [
   },
   {
     title: "Kurse-lernende",
-    href: "/kurse-lernende",
+    href: "/kurse_lernende",
     description:
       "Diese Tabelle zeigt die Zuordnung von Kursen zu Lernenden an.",
   },
@@ -87,7 +87,7 @@ export function Header() {
               className={navigationMenuTriggerStyle()}
               href="https://github.com/Rfaria06/m294"
             >
-              Documentation
+              Dokumentation
             </NavigationMenuLink>
           </NavigationMenuItem>
         </NavigationMenuList>

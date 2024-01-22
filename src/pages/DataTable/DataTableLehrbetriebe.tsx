@@ -4,7 +4,6 @@ import { Row_lehrbetriebe } from "@/lib/types";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableHead,
   TableHeader,
   TableRow,
@@ -32,7 +31,6 @@ function DataTableLehrbetriebe() {
     <div className="table">
       <h1>Lehrbetriebe</h1>
       <Table>
-        <TableCaption className="text-white">Lernende</TableCaption>
         <TableHeader>
           <TableHead className="text-white">ID</TableHead>
           <TableHead className="text-white">Firma</TableHead>

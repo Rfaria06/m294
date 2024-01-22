@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { getLernende } from "@/lib/querys";
-import { Row_lernende } from "@/lib/types";
+import { Row_dozenten } from "@/lib/types";
 import {
   Table,
   TableBody,
@@ -9,16 +8,17 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import "./DataTable.css";
+import { getDozenten } from "@/lib/querys";
 
-function DataTableLernende() {
-  const TABLE_NAME = "lernende";
+function DataTableDozenten() {
+  const TABLE_NAME = "dozenten";
 
-  const [data, setData] = useState<Row_lernende[]>([]);
+  const [data, setData] = useState<Row_dozenten[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await getLernende();
+        const result = await getDozenten();
         setData(result);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -29,25 +29,23 @@ function DataTableLernende() {
 
   return (
     <div className="table">
-      <h1>Lernende</h1>
+      <h1>Dozenten</h1>
       <Table>
         <TableHeader>
           <TableHead className="text-white">ID</TableHead>
           <TableHead className="text-white">Vorname</TableHead>
           <TableHead className="text-white">Nachname</TableHead>
           <TableHead className="text-white">Email</TableHead>
-          <TableHead className="text-white">Lehrbetrieb</TableHead>
         </TableHeader>
         <TableBody>
           {data.map((row) => (
-            <TableRow key={row.id_lernende}>
-              <a href={`/${TABLE_NAME}/${row.id_lernende}`}>
-                <td>{row.id_lernende}</td>
-              </a>
+            <TableRow key={row.id_dozent}>
+              <td>
+                <a href={`/${TABLE_NAME}/${row.id_dozent}`}>{row.id_dozent}</a>
+              </td>
               <td>{row.vorname}</td>
               <td>{row.nachname}</td>
               <td>{row.email}</td>
-              <td>{row.nr_land}</td>
             </TableRow>
           ))}
         </TableBody>
@@ -56,4 +54,4 @@ function DataTableLernende() {
   );
 }
 
-export default DataTableLernende;
+export default DataTableDozenten;

@@ -3,7 +3,6 @@ import { Row_lehrbetrieb_lernende } from "@/lib/types";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableHead,
   TableHeader,
   TableRow,
@@ -30,9 +29,8 @@ function DataTableLehrbetriebeLernende() {
 
   return (
     <div className="table">
-      <h1>Lehrbetriebe Lernende</h1>
+      <h1>Lehrbetriebe -{`>`} Lernende</h1>
       <Table>
-        <TableCaption className="text-white">Lernende</TableCaption>
         <TableHeader>
           <TableHead className="text-white">ID</TableHead>
           <TableHead className="text-white">Nr. Lehrbetrieb</TableHead>
