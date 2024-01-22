@@ -1,6 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import Startpage from "./pages/Startpage/Startpage";
-import DataTable from "./pages/DataTable/DataTable";
+import DataTableLernende from "./pages/DataTable/DataTableLernende";
+import DataTableLehrbetriebe from "./pages/DataTable/DataTableLehrbetriebe";
+import DataTableLehrbetriebeLernende from "./pages/DataTable/DataTableLehrbetriebeLernende";
 
 export const router = createBrowserRouter([
   {
@@ -8,7 +10,15 @@ export const router = createBrowserRouter([
     element: <Startpage />,
   },
   {
-    path: "/:table",
-    element: <DataTable />,
+    path: "/lernende",
+    element: <DataTableLernende />,
+  },
+  {
+    path: "/lehrbetriebe",
+    element: <DataTableLehrbetriebe />,
+  },
+  {
+    path: "/lehrbetriebe_lernende",
+    element: <DataTableLehrbetriebeLernende />,
   },
 ]);

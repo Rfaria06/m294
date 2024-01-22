@@ -25,8 +25,8 @@ const components: { title: string; href: string; description: string }[] = [
     description: "Zeige die Tabelle 'Lernende' an.",
   },
   {
-    title: "Lehrbetrieb-lernende",
-    href: "/lehrbetrieb-lernende",
+    title: "Lehrbetriebe-lernende",
+    href: "/lehrbetriebe_lernende",
     description:
       "Diese Tabelle zeigt die Zuordnung von Lehrbetrieben zu Lernenden an.",
   },
@@ -55,33 +55,44 @@ const components: { title: string; href: string; description: string }[] = [
 
 export function Header() {
   return (
-    <NavigationMenu>
-      <NavigationMenuList>
-        <NavigationMenuItem>
-          <NavigationMenuTrigger>Tabellen</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-              {components.map((component) => (
-                <ListItem
-                  key={component.title}
-                  title={component.title}
-                  href={component.href}
-                >
-                  {component.description}
-                </ListItem>
-              ))}
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <a href="https://github.com/Rfaria06/m294">
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+    <div className="grid place-content-center">
+      <NavigationMenu>
+        <NavigationMenuList>
+          <NavigationMenuItem>
+            <NavigationMenuLink
+              className={navigationMenuTriggerStyle()}
+              href="/"
+            >
+              Home
+            </NavigationMenuLink>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <NavigationMenuTrigger>Tabellen</NavigationMenuTrigger>
+            <NavigationMenuContent>
+              <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                {components.map((component) => (
+                  <ListItem
+                    key={component.title}
+                    title={component.title}
+                    href={component.href}
+                  >
+                    {component.description}
+                  </ListItem>
+                ))}
+              </ul>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <NavigationMenuLink
+              className={navigationMenuTriggerStyle()}
+              href="https://github.com/Rfaria06/m294"
+            >
               Documentation
             </NavigationMenuLink>
-          </a>
-        </NavigationMenuItem>
-      </NavigationMenuList>
-    </NavigationMenu>
+          </NavigationMenuItem>
+        </NavigationMenuList>
+      </NavigationMenu>
+    </div>
   );
 }
 
