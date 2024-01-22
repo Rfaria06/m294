@@ -9,6 +9,12 @@ import {
 } from "@/components/ui/table";
 import "./DataTable.css";
 import { getDozenten } from "@/lib/querys";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 function DataTableDozenten() {
   const TABLE_NAME = "dozenten";
@@ -28,28 +34,44 @@ function DataTableDozenten() {
   }, []);
 
   return (
-    <div className="table">
-      <h1>Dozenten</h1>
-      <Table>
-        <TableHeader>
-          <TableHead className="text-white">ID</TableHead>
-          <TableHead className="text-white">Vorname</TableHead>
-          <TableHead className="text-white">Nachname</TableHead>
-          <TableHead className="text-white">Email</TableHead>
-        </TableHeader>
-        <TableBody>
-          {data.map((row) => (
-            <TableRow key={row.id_dozent}>
-              <td>
-                <a href={`/${TABLE_NAME}/${row.id_dozent}`}>{row.id_dozent}</a>
-              </td>
-              <td>{row.vorname}</td>
-              <td>{row.nachname}</td>
-              <td>{row.email}</td>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+    <div>
+      <div className="mb-3">
+        <a href={`/${TABLE_NAME}/create`}>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>Neu</TooltipTrigger>
+              <TooltipContent>
+                <p>Einen neuen Dozent erstellen</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </a>
+      </div>
+      <div className="table bg-white">
+        <h1>Dozenten</h1>
+        <Table>
+          <TableHeader>
+            <TableHead className="text-black">ID</TableHead>
+            <TableHead className="text-black">Vorname</TableHead>
+            <TableHead className="text-black">Nachname</TableHead>
+            <TableHead className="text-black">Email</TableHead>
+          </TableHeader>
+          <TableBody>
+            {data.map((row) => (
+              <TableRow key={row.id_dozent}>
+                <td>
+                  <a href={`/${TABLE_NAME}/${row.id_dozent}`}>
+                    {row.id_dozent}
+                  </a>
+                </td>
+                <td>{row.vorname}</td>
+                <td>{row.nachname}</td>
+                <td>{row.email}</td>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
 }
