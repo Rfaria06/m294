@@ -9,7 +9,7 @@ lerna-debug.log*
 
 node_modules
 # dist commented out to ensure preview works even if node modules are broken
-#dist
+dist
 dist-ssr
 *.local
 
