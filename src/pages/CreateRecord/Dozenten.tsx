@@ -14,19 +14,7 @@ import {
 import { Input } from "@/components/ui/input";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-
-const formSchema = z.object({
-  username: z.string().min(3, {
-    // EXAMPLE
-    message: "Username must be at least 3 characters long.",
-  }),
-  vorname: z.string().min(1, {
-    message: "Vorname muss mindestens 1 Zeichen lang sein.",
-  }),
-  nachname: z.string().min(1, {
-    message: "Nachname muss mindestens 1 Zeichen lang sein.",
-  }),
-});
+import { dozentFormSchema as formSchema } from "@/lib/schemas/";
 
 function onSubmit(values: z.infer<typeof formSchema>) {
   console.log(values);
@@ -36,7 +24,8 @@ function CreateDozent() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "",
+      vorname: "",
+      nachname: "",
     },
   });
   return (
@@ -45,16 +34,14 @@ function CreateDozent() {
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <FormField
             control={form.control}
-            name="username"
+            name="vorname"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Username</FormLabel>
+                <FormLabel>Vorname</FormLabel>
                 <FormControl>
-                  <Input placeholder="shadcn" {...field} />
+                  <Input placeholder="Vorname" {...field} />
                 </FormControl>
-                <FormDescription>
-                  This is your public display name.
-                </FormDescription>
+                <FormDescription>Der Vorname des Dozenten.</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
