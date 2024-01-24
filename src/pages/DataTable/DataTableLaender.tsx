@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Row_laender } from "@/lib/types";
 import {
   Table,
@@ -11,17 +11,24 @@ import {
 import "./DataTable.css";
 import { getLaender } from "@/lib/querys";
 import { NavLink } from "react-router-dom";
+import { toast } from "sonner";
 
 function DataTableLaender() {
   const TABLE_NAME = "countries";
 
   const [data, setData] = useState<Row_laender[]>([]);
+  const hasFetchedData = useRef(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const result = await getLaender();
         setData(result);
+
+        if (!hasFetchedData.current) {
+          toast("Länder erfolgreich geladen.");
+          hasFetchedData.current = true;
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
       }

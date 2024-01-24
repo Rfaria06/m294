@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Table,
   TableBody,
@@ -11,17 +11,24 @@ import "./DataTable.css";
 import { Row_kurse } from "@/lib/types";
 import { getKurse } from "@/lib/querys";
 import { NavLink } from "react-router-dom";
+import { toast } from "sonner";
 
 function DataTableKurse() {
   const TABLE_NAME = "kurse";
 
   const [data, setData] = useState<Row_kurse[]>([]);
+  const hasFetchedData = useRef(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const result = await getKurse();
         setData(result);
+
+        if (!hasFetchedData.current) {
+          toast("Kurse erfolgreich geladen.");
+          hasFetchedData.current = true;
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
       }

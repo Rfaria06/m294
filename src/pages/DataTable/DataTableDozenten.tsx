@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Row_dozenten } from "@/lib/types";
 import {
   Table,
@@ -17,17 +17,24 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { NavLink } from "react-router-dom";
+import { toast } from "sonner";
 
 function DataTableDozenten() {
   const TABLE_NAME = "dozenten";
 
   const [data, setData] = useState<Row_dozenten[]>([]);
+  const hasFetchedData = useRef(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const result = await getDozenten();
         setData(result);
+
+        if (!hasFetchedData.current) {
+          toast("Dozenten erfolgreich geladen");
+          hasFetchedData.current = true;
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
       }

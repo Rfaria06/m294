@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getLehrbetriebe } from "@/lib/querys";
 import { Row_lehrbetriebe } from "@/lib/types";
 import {
@@ -11,17 +11,24 @@ import {
 } from "@/components/ui/table";
 import "./DataTable.css";
 import { NavLink } from "react-router-dom";
+import { toast } from "sonner";
 
 function DataTableLehrbetriebe() {
   const TABLE_NAME = "lehrbetriebe";
 
   const [data, setData] = useState<Row_lehrbetriebe[]>([]);
+  const hasFetchedData = useRef(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const result = await getLehrbetriebe();
         setData(result);
+
+        if (!hasFetchedData.current) {
+          toast("Lehrbetriebe erfolgreich geladen.");
+          hasFetchedData.current = true;
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
