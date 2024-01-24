@@ -1,5 +1,9 @@
+import "./DataTable.css";
 import { useEffect, useRef, useState } from "react";
 import { Row_dozenten } from "@/lib/types";
+import { getDozenten } from "@/lib/querys";
+import { NavLink } from "react-router-dom";
+import { toast } from "sonner";
 import {
   Table,
   TableBody,
@@ -8,16 +12,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import "./DataTable.css";
-import { getDozenten } from "@/lib/querys";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { NavLink } from "react-router-dom";
-import { toast } from "sonner";
 
 function DataTableDozenten() {
   const TABLE_NAME = "dozenten";

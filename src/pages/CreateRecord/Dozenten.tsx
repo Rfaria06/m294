@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { dozentFormSchema as formSchema } from "@/lib/schemas/";
+import { Button } from "@/components/ui/button";
 
 function onSubmit(values: z.infer<typeof formSchema>) {
   console.log(values);
@@ -23,29 +24,51 @@ function onSubmit(values: z.infer<typeof formSchema>) {
 function CreateDozent() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      vorname: "",
-      nachname: "",
-    },
   });
   return (
     <div>
       <Form {...form}>
+        <FormLabel className="mb-5">Neuer Dozent</FormLabel>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <FormField
             control={form.control}
             name="vorname"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel>Vorname</FormLabel>
+              <FormItem className="mb-4">
                 <FormControl>
-                  <Input placeholder="Vorname" {...field} />
+                  <Input placeholder="Vorname" {...field} required />
                 </FormControl>
-                <FormDescription>Der Vorname des Dozenten.</FormDescription>
+                <FormDescription>Muss ausgefüllt werden</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
+          <FormField
+            control={form.control}
+            name="nachname"
+            render={({ field }) => (
+              <FormItem className="mb-4">
+                <FormControl>
+                  <Input placeholder="Nachname" {...field} required />
+                </FormControl>
+                <FormDescription>Muss ausgefüllt werden</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="strasse"
+            render={({ field }) => (
+              <FormItem className="mb-4">
+                <FormControl>
+                  <Input placeholder="Strasse" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button type="submit">Erstellen</Button>
         </form>
       </Form>
     </div>
