@@ -45,7 +45,7 @@ function DataTableDozenten() {
   return (
     <div>
       <div className="mb-3">
-        <a href={`/${TABLE_NAME}/create`}>
+        <NavLink to={`/${TABLE_NAME}/create`}>
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>Neu</TooltipTrigger>
@@ -54,7 +54,7 @@ function DataTableDozenten() {
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
-        </a>
+        </NavLink>
       </div>
       <div className="table bg-white">
         <h1>Dozenten</h1>
