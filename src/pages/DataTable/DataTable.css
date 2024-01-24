@@ -11,3 +11,8 @@
   -webkit-box-shadow: 5px 5px 5px -2px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 5px 5px 5px -2px rgba(0, 0, 0, 0.75);
 }
+
+h1,
+td {
+  color: black;
+}

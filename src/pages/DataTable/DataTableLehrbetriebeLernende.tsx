@@ -3,12 +3,14 @@ import { Row_lehrbetrieb_lernende } from "@/lib/types";
 import {
   Table,
   TableBody,
+  TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
 import "./DataTable.css";
 import { getLehrbetriebLernende } from "@/lib/querys";
+import { NavLink } from "react-router-dom";
 
 function DataTableLehrbetriebeLernende() {
   const TABLE_NAME = "lehrbetriebe_lernende";
@@ -32,26 +34,26 @@ function DataTableLehrbetriebeLernende() {
       <h1>Lehrbetriebe -{`>`} Lernende</h1>
       <Table>
         <TableHeader>
-          <TableHead className="text-white">ID</TableHead>
-          <TableHead className="text-white">Nr. Lehrbetrieb</TableHead>
-          <TableHead className="text-white">Nr. Lernende</TableHead>
-          <TableHead className="text-white">Start</TableHead>
-          <TableHead className="text-white">Ende</TableHead>
-          <TableHead className="text-white">Beruf</TableHead>
+          <TableHead className="text-black">ID</TableHead>
+          <TableHead className="text-black">Nr. Lehrbetrieb</TableHead>
+          <TableHead className="text-black">Nr. Lernende</TableHead>
+          <TableHead className="text-black">Start</TableHead>
+          <TableHead className="text-black">Ende</TableHead>
+          <TableHead className="text-black">Beruf</TableHead>
         </TableHeader>
         <TableBody>
           {data.map((row) => (
             <TableRow key={row.id_lehrbetrieb_lernende}>
-              <td>
-                <a href={`/${TABLE_NAME}/${row.id_lehrbetrieb_lernende}`}>
+              <TableCell className="text-left">
+                <NavLink to={`/${TABLE_NAME}/${row.id_lehrbetrieb_lernende}`}>
                   {row.id_lehrbetrieb_lernende}
-                </a>
-              </td>
-              <td>{row.nr_lehrbetrieb}</td>
-              <td>{row.nr_lernende}</td>
-              <td>{row.start}</td>
-              <td>{row.ende}</td>
-              <td>{row.beruf}</td>
+                </NavLink>
+              </TableCell>
+              <TableCell className="text-left">{row.nr_lehrbetrieb}</TableCell>
+              <TableCell className="text-left">{row.nr_lernende}</TableCell>
+              <TableCell className="text-left">{row.start}</TableCell>
+              <TableCell className="text-left">{row.ende}</TableCell>
+              <TableCell className="text-left">{row.beruf}</TableCell>
             </TableRow>
           ))}
         </TableBody>

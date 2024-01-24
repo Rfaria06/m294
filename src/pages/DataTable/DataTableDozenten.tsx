@@ -3,6 +3,7 @@ import { Row_dozenten } from "@/lib/types";
 import {
   Table,
   TableBody,
+  TableCell,
   TableHead,
   TableHeader,
   TableRow,
@@ -15,6 +16,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { NavLink } from "react-router-dom";
 
 function DataTableDozenten() {
   const TABLE_NAME = "dozenten";
@@ -59,14 +61,14 @@ function DataTableDozenten() {
           <TableBody>
             {data.map((row) => (
               <TableRow key={row.id_dozent}>
-                <td>
-                  <a href={`/${TABLE_NAME}/${row.id_dozent}`}>
+                <TableCell className="text-left">
+                  <NavLink to={`/${TABLE_NAME}/${row.id_dozent}`}>
                     {row.id_dozent}
-                  </a>
-                </td>
-                <td>{row.vorname}</td>
-                <td>{row.nachname}</td>
-                <td>{row.email}</td>
+                  </NavLink>
+                </TableCell>
+                <TableCell className="text-left">{row.vorname}</TableCell>
+                <TableCell className="text-left">{row.nachname}</TableCell>
+                <TableCell className="text-left">{row.email}</TableCell>
               </TableRow>
             ))}
           </TableBody>

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
+  TableCell,
   TableHead,
   TableHeader,
   TableRow,
@@ -9,6 +10,7 @@ import {
 import "./DataTable.css";
 import { Row_kurse } from "@/lib/types";
 import { getKurse } from "@/lib/querys";
+import { NavLink } from "react-router-dom";
 
 function DataTableKurse() {
   const TABLE_NAME = "kurse";
@@ -32,28 +34,30 @@ function DataTableKurse() {
       <h1>Kurse</h1>
       <Table>
         <TableHeader>
-          <TableHead className="text-white">ID</TableHead>
-          <TableHead className="text-white">Kursnummer</TableHead>
-          <TableHead className="text-white">Kursthema</TableHead>
-          <TableHead className="text-white">Inhalt</TableHead>
-          <TableHead className="text-white">Nr. Dozent</TableHead>
-          <TableHead className="text-white">Startdatum</TableHead>
-          <TableHead className="text-white">Enddatum</TableHead>
-          <TableHead className="text-white">Dauer</TableHead>
+          <TableHead className="text-black">ID</TableHead>
+          <TableHead className="text-black">Kursnummer</TableHead>
+          <TableHead className="text-black">Kursthema</TableHead>
+          <TableHead className="text-black">Inhalt</TableHead>
+          <TableHead className="text-black">Nr. Dozent</TableHead>
+          <TableHead className="text-black">Startdatum</TableHead>
+          <TableHead className="text-black">Enddatum</TableHead>
+          <TableHead className="text-black">Dauer</TableHead>
         </TableHeader>
         <TableBody>
           {data.map((row) => (
             <TableRow key={row.id_kurs}>
-              <td>
-                <a href={`/${TABLE_NAME}/${row.id_kurs}`}>{row.id_kurs}</a>
-              </td>
-              <td>{row.kursnummer}</td>
-              <td>{row.kursthema}</td>
-              <td>{row.inhalt}</td>
-              <td>{row.nr_dozent}</td>
-              <td>{row.startdatum}</td>
-              <td>{row.enddatum}</td>
-              <td>{row.dauer}</td>
+              <TableCell className="text-left">
+                <NavLink to={`/${TABLE_NAME}/${row.id_kurs}`}>
+                  {row.id_kurs}
+                </NavLink>
+              </TableCell>
+              <TableCell className="text-left">{row.kursnummer}</TableCell>
+              <TableCell className="text-left">{row.kursthema}</TableCell>
+              <TableCell className="text-left">{row.inhalt}</TableCell>
+              <TableCell className="text-left">{row.nr_dozent}</TableCell>
+              <TableCell className="text-left">{row.startdatum}</TableCell>
+              <TableCell className="text-left">{row.enddatum}</TableCell>
+              <TableCell className="text-left">{row.dauer}</TableCell>
             </TableRow>
           ))}
         </TableBody>

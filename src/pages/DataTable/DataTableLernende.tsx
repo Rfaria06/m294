@@ -4,11 +4,13 @@ import { Row_lernende } from "@/lib/types";
 import {
   Table,
   TableBody,
+  TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
 import "./DataTable.css";
+import { NavLink } from "react-router-dom";
 
 function DataTableLernende() {
   const TABLE_NAME = "lernende";
@@ -32,24 +34,24 @@ function DataTableLernende() {
       <h1>Lernende</h1>
       <Table>
         <TableHeader>
-          <TableHead className="text-white">ID</TableHead>
-          <TableHead className="text-white">Vorname</TableHead>
-          <TableHead className="text-white">Nachname</TableHead>
-          <TableHead className="text-white">Email</TableHead>
-          <TableHead className="text-white">Lehrbetrieb</TableHead>
+          <TableHead className="text-black">ID</TableHead>
+          <TableHead className="text-black">Vorname</TableHead>
+          <TableHead className="text-black">Nachname</TableHead>
+          <TableHead className="text-black">Email</TableHead>
+          <TableHead className="text-black">Lehrbetrieb</TableHead>
         </TableHeader>
         <TableBody>
           {data.map((row) => (
             <TableRow key={row.id_lernende}>
-              <td>
-                <a href={`/${TABLE_NAME}/${row.id_lernende}`}>
+              <TableCell className="text-left">
+                <NavLink to={`/${TABLE_NAME}/${row.id_lernende}`}>
                   {row.id_lernende}
-                </a>
-              </td>
-              <td>{row.vorname}</td>
-              <td>{row.nachname}</td>
-              <td>{row.email}</td>
-              <td>{row.nr_land}</td>
+                </NavLink>
+              </TableCell>
+              <TableCell className="text-left">{row.vorname} </TableCell>
+              <TableCell className="text-left">{row.nachname} </TableCell>
+              <TableCell className="text-left">{row.email} </TableCell>
+              <TableCell className="text-left">{row.nr_land} </TableCell>
             </TableRow>
           ))}
         </TableBody>

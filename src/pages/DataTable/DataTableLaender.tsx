@@ -3,12 +3,14 @@ import { Row_laender } from "@/lib/types";
 import {
   Table,
   TableBody,
+  TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
 import "./DataTable.css";
 import { getLaender } from "@/lib/querys";
+import { NavLink } from "react-router-dom";
 
 function DataTableLaender() {
   const TABLE_NAME = "countries";
@@ -32,18 +34,18 @@ function DataTableLaender() {
       <h1>Länder</h1>
       <Table>
         <TableHeader>
-          <TableHead className="text-white">ID</TableHead>
-          <TableHead className="text-white">Land</TableHead>
+          <TableHead className="text-black">ID</TableHead>
+          <TableHead className="text-black">Land</TableHead>
         </TableHeader>
         <TableBody>
           {data.map((row) => (
             <TableRow key={row.id_country}>
-              <td>
-                <a href={`/${TABLE_NAME}/${row.id_country}`}>
+              <TableCell className="text-left">
+                <NavLink to={`/${TABLE_NAME}/${row.id_country}`}>
                   {row.id_country}
-                </a>
-              </td>
-              <td>{row.country}</td>
+                </NavLink>
+              </TableCell>
+              <TableCell className="text-left">{row.country}</TableCell>
             </TableRow>
           ))}
         </TableBody>
