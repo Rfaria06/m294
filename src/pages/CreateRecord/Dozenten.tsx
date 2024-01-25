@@ -5,7 +5,6 @@ import "./CreateRecord.css";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -36,9 +35,8 @@ function CreateDozent() {
             render={({ field }) => (
               <FormItem className="mb-4">
                 <FormControl>
-                  <Input placeholder="Vorname" {...field} required />
+                  <Input placeholder="Vorname" {...field} />
                 </FormControl>
-                <FormDescription>Muss ausgefüllt werden</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -49,9 +47,8 @@ function CreateDozent() {
             render={({ field }) => (
               <FormItem className="mb-4">
                 <FormControl>
-                  <Input placeholder="Nachname" {...field} required />
+                  <Input placeholder="Nachname" {...field} />
                 </FormControl>
-                <FormDescription>Muss ausgefüllt werden</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -63,6 +60,18 @@ function CreateDozent() {
               <FormItem className="mb-4">
                 <FormControl>
                   <Input placeholder="Strasse" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="plz"
+            render={({ field }) => (
+              <FormItem className="mb-4">
+                <FormControl>
+                  <Input placeholder="PLZ" {...field} max={4} min={4} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

@@ -2,12 +2,20 @@ import * as z from "zod";
 import { phoneRegex } from "./regex";
 
 export const dozentFormSchema = z.object({
-  vorname: z.string().min(1, {
-    message: "Vorname muss mindestens 1 Zeichen lang sein.",
-  }),
-  nachname: z.string().min(1, {
-    message: "Nachname muss mindestens 1 Zeichen lang sein.",
-  }),
+  vorname: z
+    .string({
+      required_error: "Vorname ist ein Pflichtfeld.",
+    })
+    .min(1, {
+      message: "Vorname muss mindestens 1 Zeichen lang sein.",
+    }),
+  nachname: z
+    .string({
+      required_error: "Nachname ist ein Pflichtfeld.",
+    })
+    .min(1, {
+      message: "Nachname muss mindestens 1 Zeichen lang sein.",
+    }),
   strasse: z
     .string()
     .min(1, {
