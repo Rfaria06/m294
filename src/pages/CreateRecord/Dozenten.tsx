@@ -26,11 +26,10 @@ function CreateDozent() {
   });
   return (
     <div>
-      <Form {...form}>
+      <Form {...form} control={form.control}>
         <FormLabel className="mb-5">Neuer Dozent</FormLabel>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <FormField
-            control={form.control}
             name="vorname"
             render={({ field }) => (
               <FormItem className="mb-4">
@@ -42,7 +41,6 @@ function CreateDozent() {
             )}
           />
           <FormField
-            control={form.control}
             name="nachname"
             render={({ field }) => (
               <FormItem className="mb-4">
@@ -54,7 +52,6 @@ function CreateDozent() {
             )}
           />
           <FormField
-            control={form.control}
             name="strasse"
             render={({ field }) => (
               <FormItem className="mb-4">
@@ -66,7 +63,6 @@ function CreateDozent() {
             )}
           />
           <FormField
-            control={form.control}
             name="plz"
             render={({ field }) => (
               <FormItem className="mb-4">
@@ -74,6 +70,25 @@ function CreateDozent() {
                   <Input placeholder="PLZ" {...field} max={4} min={4} />
                 </FormControl>
                 <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            name="ort"
+            render={({ field }) => (
+              <FormItem className="mb-4">
+                <FormControl>
+                  <Input placeholder="Ort" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            name="nr_land"
+            render={({ field }) => (
+              <FormItem className="mb-4">
+                <FormControl></FormControl>
               </FormItem>
             )}
           />

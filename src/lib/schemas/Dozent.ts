@@ -1,5 +1,5 @@
 import * as z from "zod";
-import { phoneRegex } from "./regex";
+import { numberRegex, phoneRegex, plzRegex } from "./regex";
 
 export const dozentFormSchema = z.object({
   vorname: z
@@ -23,7 +23,10 @@ export const dozentFormSchema = z.object({
     })
     .optional(),
   plz: z
-    .number()
+    .string({
+      invalid_type_error: "PLZ muss genau 4 Zeichen lang sein.",
+    })
+    .regex(plzRegex)
     .min(4, {
       message: "PLZ muss genau 4 Zeichen lang sein.",
     })
@@ -38,7 +41,7 @@ export const dozentFormSchema = z.object({
     })
     .optional(),
   // nr_land is a picker (constraint),
-  nr_land: z.number().optional(),
+  nr_land: z.string().regex(numberRegex).optional(),
   // geschlecht is a picker [m, w, d],
   geschlecht: z.enum(["m", "w", "d"]).optional(),
   telefon: z.string().regex(phoneRegex, "Ungültige Telefonnummer.").optional(),
