@@ -5,7 +5,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import CountryPickerData from "./DozentenPopoverData";
+import CountryPickerData from "./CountryPopoverData";
 import { Check, ChevronsUpDown } from "lucide-react";
 import {
   Command,
@@ -24,7 +24,7 @@ interface DozentenPopoverProps {
   };
 }
 
-export default function DozentenPopover({ field }: DozentenPopoverProps) {
+export default function CountryPopover({ field }: DozentenPopoverProps) {
   const countries = CountryPickerData();
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
@@ -36,15 +36,15 @@ export default function DozentenPopover({ field }: DozentenPopoverProps) {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[200px] justify-between"
+          className="w-[250px] justify-between"
         >
           {value
             ? countries.find((country) => country.value === value)?.label
-            : "Land auswählen..."}
+            : "Land..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
+      <PopoverContent className="w-[250px] p-0">
         <Command>
           <CommandInput placeholder="Land suchen..." />
           <CommandEmpty>Kein Land gefunden.</CommandEmpty>

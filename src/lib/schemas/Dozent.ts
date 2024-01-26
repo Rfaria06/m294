@@ -24,14 +24,14 @@ export const dozentFormSchema = z.object({
     .optional(),
   plz: z
     .string({
-      invalid_type_error: "PLZ muss genau 4 Zeichen lang sein.",
+      invalid_type_error: "Muss 4 Zeichen lang sein.",
     })
-    .regex(plzRegex)
+    .regex(plzRegex, "Muss 4 zeichen lang sein.")
     .min(4, {
-      message: "PLZ muss genau 4 Zeichen lang sein.",
+      message: "Muss 4 Zeichen lang sein.",
     })
     .max(4, {
-      message: "PLZ muss genau 4 Zeichen lang sein.",
+      message: "Muss 4 Zeichen lang sein.",
     })
     .optional(),
   ort: z
@@ -48,7 +48,7 @@ export const dozentFormSchema = z.object({
   handy: z.string().regex(phoneRegex, "Ungültige Handynummer").optional(),
   email: z.string().min(1).email("Muss eine gültige E-Mail sein.").optional(),
   // birthate is a date picker,
-  birthdate: z.date().optional(),
+  birthdate: z.date({ invalid_type_error: "Ungültiges Datum" }).optional(),
 });
 
 export default dozentFormSchema;

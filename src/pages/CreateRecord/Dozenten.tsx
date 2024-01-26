@@ -15,7 +15,9 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { dozentFormSchema as formSchema } from "@/lib/schemas/";
 import { Button } from "@/components/ui/button";
-import DozentenPopover from "./popovers/DozentenPopover";
+import CountryPopover from "../../lib/popovers/CountryPopover";
+import GenderPopover from "@/lib/popovers/GenderPopover";
+import DatePicker from "@/lib/CustomComponents/DatePicker.tsx";
 
 function onSubmit(values: z.infer<typeof formSchema>) {
   console.log(values);
@@ -90,7 +92,62 @@ function CreateDozent() {
             render={({ field }) => (
               <FormItem className="mb-4">
                 <FormControl>
-                  <DozentenPopover field={field} />
+                  <CountryPopover field={field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            name="geschlecht"
+            render={({ field }) => (
+              <FormItem className="mb-4">
+                <FormControl>
+                  <GenderPopover field={field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            name="telefon"
+            render={({ field }) => (
+              <FormItem className="mb-4">
+                <FormControl>
+                  <Input placeholder="Telefon" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            name="handy"
+            render={({ field }) => (
+              <FormItem className="mb-4">
+                <FormControl>
+                  <Input placeholder="Handy" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            name="email"
+            render={({ field }) => (
+              <FormItem className="mb-4">
+                <FormControl>
+                  <Input placeholder="E-Mail" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            name="birthdate"
+            render={({ field }) => (
+              <FormItem className="mb-4">
+                <FormControl>
+                  <DatePicker field={field} />
                 </FormControl>
               </FormItem>
             )}
