@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 type countryPickerElement = { value: string; label: string };
 
-function countryPickerData(): countryPickerElement[] {
+function CountryPickerData(): countryPickerElement[] {
   const [data, setData] = useState<Row_laender[]>([]);
   const hasFetchedData = useRef(false);
 
@@ -33,4 +33,4 @@ function countryPickerData(): countryPickerElement[] {
   }));
 }
 
-export default countryPickerData;
+export default CountryPickerData;
