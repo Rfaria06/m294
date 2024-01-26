@@ -1,7 +1,7 @@
 import * as z from "zod";
 import { numberRegex, phoneRegex, plzRegex } from "./regex";
 
-export const dozentFormSchema = z.object({
+export const dozentUploadFormSchema = z.object({
   vorname: z
     .string({
       required_error: "Vorname ist ein Pflichtfeld.",
@@ -48,9 +48,7 @@ export const dozentFormSchema = z.object({
   handy: z.string().regex(phoneRegex, "Ungültige Handynummer").optional(),
   email: z.string().min(1).email("Muss eine gültige E-Mail sein.").optional(),
   // birthate is a date picker,
-  birthdate: z.coerce
-    .date({ invalid_type_error: "Ungültiges Datum" })
-    .optional(),
+  birthdate: z.string().min(10).max(10).optional(),
 });
 
-export default dozentFormSchema;
+export default dozentUploadFormSchema;

@@ -18,12 +18,24 @@ import { Button } from "@/components/ui/button";
 import CountryPopover from "../../lib/popovers/CountryPopover";
 import GenderPopover from "@/lib/popovers/GenderPopover";
 import DatePicker from "@/lib/CustomComponents/DatePicker.tsx";
-
-function onSubmit(values: z.infer<typeof formSchema>) {
-  console.log(values);
-}
+import { format } from "date-fns";
+import {
+  QueryClient,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
+import { postDozenten } from "@/lib/querys.ts";
 
 function CreateDozent() {
+  const queryClient: QueryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: postDozenten,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["dozenten"] });
+    },
+    on,
+  });
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
@@ -31,13 +43,29 @@ function CreateDozent() {
     <div>
       <Form {...form} control={form.control}>
         <FormLabel className="mb-5">Neuer Dozent</FormLabel>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+        <form
+          onSubmit={form.handleSubmit(() => {
+            mutation.mutate({
+              ...form.getValues(),
+              birthdate: form.getValues().birthdate
+                ? format(
+                    form.getValues().birthdate ?? "1900-01-01",
+                    "yyyy-MM-dd",
+                  )
+                : undefined,
+            });
+          })}
+        >
           <FormField
             name="vorname"
             render={({ field }) => (
               <FormItem className="mb-4">
                 <FormControl>
-                  <Input placeholder="Vorname" {...field} />
+                  <Input
+                    className="bg-white"
+                    placeholder="Vorname"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -48,7 +76,11 @@ function CreateDozent() {
             render={({ field }) => (
               <FormItem className="mb-4">
                 <FormControl>
-                  <Input placeholder="Nachname" {...field} />
+                  <Input
+                    className="bg-white"
+                    placeholder="Nachname"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -59,7 +91,11 @@ function CreateDozent() {
             render={({ field }) => (
               <FormItem className="mb-4">
                 <FormControl>
-                  <Input placeholder="Strasse" {...field} />
+                  <Input
+                    className="bg-white"
+                    placeholder="Strasse"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -70,7 +106,13 @@ function CreateDozent() {
             render={({ field }) => (
               <FormItem className="mb-4">
                 <FormControl>
-                  <Input placeholder="PLZ" {...field} max={4} min={4} />
+                  <Input
+                    className="bg-white"
+                    placeholder="PLZ"
+                    {...field}
+                    max={4}
+                    min={4}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -81,7 +123,7 @@ function CreateDozent() {
             render={({ field }) => (
               <FormItem className="mb-4">
                 <FormControl>
-                  <Input placeholder="Ort" {...field} />
+                  <Input className="bg-white" placeholder="Ort" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -114,7 +156,11 @@ function CreateDozent() {
             render={({ field }) => (
               <FormItem className="mb-4">
                 <FormControl>
-                  <Input placeholder="Telefon" {...field} />
+                  <Input
+                    className="bg-white"
+                    placeholder="Telefon"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -125,7 +171,7 @@ function CreateDozent() {
             render={({ field }) => (
               <FormItem className="mb-4">
                 <FormControl>
-                  <Input placeholder="Handy" {...field} />
+                  <Input className="bg-white" placeholder="Handy" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -136,7 +182,7 @@ function CreateDozent() {
             render={({ field }) => (
               <FormItem className="mb-4">
                 <FormControl>
-                  <Input placeholder="E-Mail" {...field} />
+                  <Input className="bg-white" placeholder="E-Mail" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
