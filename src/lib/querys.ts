@@ -1,6 +1,10 @@
 import axios from "axios";
 import * as z from "zod";
-import { dozentFormSchema, dozentUploadFormSchema } from "./schemas";
+import {
+  dozentFormSchema,
+  dozentUploadFormSchema,
+  kursFormSchema,
+} from "./schemas";
 import {
   Row_dozenten,
   Row_kurse,
@@ -20,10 +24,8 @@ export async function getLernende(): Promise<Row_lernende[]> {
     const response = (await axios.get(url)) ?? [];
     return response.data.data;
   } catch (error) {
-    console.error("Error making GET request.");
-    console.error("URL =>", url);
-    console.error("Error =>", error);
-    throw error;
+    toast("Fehler bei Anfrage");
+    return [];
   }
 }
 
@@ -33,10 +35,8 @@ export async function getLehrbetriebe(): Promise<Row_lehrbetriebe[]> {
     const response = (await axios.get(url)) ?? [];
     return response.data.data;
   } catch (error) {
-    console.error("Error making GET request.");
-    console.error("URL =>", url);
-    console.error("Error =>", error);
-    throw error;
+    toast("Fehler bei Anfrage");
+    return [];
   }
 }
 
@@ -48,10 +48,8 @@ export async function getLehrbetriebLernende(): Promise<
     const response = (await axios.get(url)) ?? [];
     return response.data.data;
   } catch (error) {
-    console.error("Error making GET request.");
-    console.error("URL =>", url);
-    console.error("Error =>", error);
-    throw error;
+    toast("Fehler bei Anfrage");
+    return [];
   }
 }
 
@@ -61,10 +59,8 @@ export async function getLaender(): Promise<Row_laender[]> {
     const response = (await axios.get(url)) ?? [];
     return response.data.data;
   } catch (error) {
-    console.error("Error making GET request.");
-    console.error("URL =>", url);
-    console.error("Error =>", error);
-    throw error;
+    toast("Fehler bei Anfrage");
+    return [];
   }
 }
 
@@ -74,10 +70,8 @@ export async function getDozenten(): Promise<Row_dozenten[]> {
     const response = (await axios.get(url)) ?? [];
     return response.data.data;
   } catch (error) {
-    console.error("Error making GET request.");
-    console.error("URL =>", url);
-    console.error("Error =>", error);
-    throw error;
+    toast("Fehler bei Anfrage");
+    return [];
   }
 }
 
@@ -89,14 +83,11 @@ export async function postDozenten(params: {
     const paramData = params.data;
     const uploadData: z.infer<typeof dozentUploadFormSchema> = {
       ...paramData,
-      birthdate: paramData.birthdate
-        ? new Date(paramData.birthdate).toISOString().split("T")[0]
-        : "1900-00-00",
+      birthdate: getISODate(paramData.birthdate),
     };
-    console.log(JSON.stringify(uploadData));
     await axios.post(url, uploadData);
   } catch (error) {
-    if (error) toast("Fehler bei Anfrage");
+    toast("Fehler bei Anfrage");
   }
 }
 
@@ -106,10 +97,24 @@ export async function getKurse(): Promise<Row_kurse[]> {
     const response = (await axios.get(url)) ?? [];
     return response.data.data;
   } catch (error) {
-    console.error("Error making GET request.");
-    console.error("URL =>", url);
-    console.error("Error =>", error);
-    throw error;
+    toast("Fehler bei Anfrage");
+    return [];
+  }
+}
+
+export async function postKurs(params: {
+  data: z.infer<typeof kursFormSchema>;
+}) {
+  const url: string = BASE_URL + "kurse";
+  try {
+    const paramData = params.data;
+    await axios.post(url, {
+      ...paramData,
+      startdatum: getISODate(paramData.startdatum),
+      enddatum: getISODate(paramData.enddatum),
+    });
+  } catch (error) {
+    toast("Fehler bei Anfrage");
   }
 }
 
@@ -119,9 +124,15 @@ export async function getKurseLernende(): Promise<Row_kurse_lernende[]> {
     const response = (await axios.get(url)) ?? [];
     return response.data.data;
   } catch (error) {
-    console.error("Error making GET request.");
-    console.error("URL =>", url);
-    console.error("Error =>", error);
-    throw error;
+    toast("Fehler bei Anfrage");
+    return [];
   }
+}
+
+function getISODate(date?: Date) {
+  return date
+    ? new Date(new Date(date).getTime() + 24 * 60 * 60 * 1000)
+        .toISOString()
+        .split("T")[0]
+    : undefined;
 }

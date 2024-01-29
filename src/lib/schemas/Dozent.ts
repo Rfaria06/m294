@@ -1,7 +1,7 @@
 import * as z from "zod";
 import { numberRegex, phoneRegex, plzRegex } from "./regex";
 
-export const dozentFormSchema = z.object({
+const dozentFormSchema = z.object({
   vorname: z
     .string({
       required_error: "Vorname ist ein Pflichtfeld.",
