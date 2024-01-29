@@ -27,13 +27,13 @@ export default function DatePicker({ field }: DatePickerProps) {
             variant={"outline"}
             className={cn(
               "w-[250px] pl-3 text-left font-normal",
-              !field.value && "text-muted-foreground",
+              !field.value && "text-muted-foreground"
             )}
           >
             {field.value ? (
               format(field.value, "PPP")
             ) : (
-              <span>Pick a date</span>
+              <span>Geburtsdatum</span>
             )}
             <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
           </Button>
@@ -42,6 +42,7 @@ export default function DatePicker({ field }: DatePickerProps) {
       <PopoverContent className="w-auto p-0" align="start">
         <Calendar
           mode="single"
+          ISOWeek
           selected={new Date(field.value)}
           // @ts-expect-error no idea why field.onChange causes a type error, works perfectly at runtime
           onSelect={field.onChange}

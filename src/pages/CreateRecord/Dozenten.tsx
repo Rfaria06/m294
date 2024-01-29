@@ -18,7 +18,6 @@ import { Button } from "@/components/ui/button";
 import CountryPopover from "../../lib/popovers/CountryPopover";
 import GenderPopover from "@/lib/popovers/GenderPopover";
 import DatePicker from "@/lib/CustomComponents/DatePicker.tsx";
-import { format } from "date-fns";
 import {
   QueryClient,
   useMutation,
@@ -33,7 +32,6 @@ function CreateDozent() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["dozenten"] });
     },
-    on,
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -45,15 +43,7 @@ function CreateDozent() {
         <FormLabel className="mb-5">Neuer Dozent</FormLabel>
         <form
           onSubmit={form.handleSubmit(() => {
-            mutation.mutate({
-              ...form.getValues(),
-              birthdate: form.getValues().birthdate
-                ? format(
-                    form.getValues().birthdate ?? "1900-01-01",
-                    "yyyy-MM-dd",
-                  )
-                : undefined,
-            });
+            mutation.mutate({ data: form.getValues() });
           })}
         >
           <FormField
@@ -63,7 +53,7 @@ function CreateDozent() {
                 <FormControl>
                   <Input
                     className="bg-white"
-                    placeholder="Vorname"
+                    placeholder="Vorname*"
                     {...field}
                   />
                 </FormControl>
@@ -78,7 +68,7 @@ function CreateDozent() {
                 <FormControl>
                   <Input
                     className="bg-white"
-                    placeholder="Nachname"
+                    placeholder="Nachname*"
                     {...field}
                   />
                 </FormControl>

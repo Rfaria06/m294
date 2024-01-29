@@ -1,4 +1,6 @@
 import axios from "axios";
+import * as z from "zod";
+import { dozentFormSchema, dozentUploadFormSchema } from "./schemas";
 import {
   Row_dozenten,
   Row_kurse,
@@ -8,8 +10,7 @@ import {
   Row_lehrbetriebe,
   Row_lernende,
 } from "./types";
-import DozentUpload from "@/lib/schemas/DozentUpload.ts";
-import * as z from "zod";
+import { toast } from "sonner";
 
 const BASE_URL = "https://raul.undefiniert.ch/";
 
@@ -80,15 +81,22 @@ export async function getDozenten(): Promise<Row_dozenten[]> {
   }
 }
 
-export async function postDozenten(
-  data: z.infer<typeof DozentUpload>,
-): Promise<boolean> {
+export async function postDozenten(params: {
+  data: z.infer<typeof dozentFormSchema>;
+}): Promise<void> {
   const url: string = BASE_URL + "dozenten";
   try {
-    await axios.post(url, data);
-    return true;
+    const paramData = params.data;
+    const uploadData: z.infer<typeof dozentUploadFormSchema> = {
+      ...paramData,
+      birthdate: paramData.birthdate
+        ? new Date(paramData.birthdate).toISOString().split("T")[0]
+        : "1900-00-00",
+    };
+    console.log(JSON.stringify(uploadData));
+    await axios.post(url, uploadData);
   } catch (error) {
-    return false;
+    if (error) toast("Fehler bei Anfrage");
   }
 }
 
