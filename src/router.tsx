@@ -1,5 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
-import { CreateDozent, CreateKurs } from "./pages/CreateRecord";
+import {
+  CreateDozent,
+  CreateKurs,
+  CreateKurseLernende,
+} from "./pages/CreateRecord";
 import {
   DataTableDozenten,
   DataTableKurse,
@@ -90,7 +94,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "/kurse_lernende/create",
-    element: <DataTableKurseLernende />,
+    element: <CreateKurseLernende />,
     errorElement: <ErrorPage />,
   },
 ]);

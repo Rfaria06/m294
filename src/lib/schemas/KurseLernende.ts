@@ -11,11 +11,11 @@ const kurseLernendeFormSchema = z.object({
   note: z
     .string()
     .refine((value) => {
-      const intValue = parseInt(value, 10);
-      return !isNaN(intValue) && intValue >= 0 && intValue <= 6;
-    }, "Muss eine Zahl zwischen 0 und 6 sein.")
+      // Allow one decimal place, convert to float, and check the range
+      const floatValue = parseFloat(value.replace(",", "."));
+      return !isNaN(floatValue) && floatValue >= 1.0 && floatValue <= 6.0;
+    }, "Muss eine Zahl zwischen 1.0 und 6.0 sein.")
     .optional(),
 });
 
 export default kurseLernendeFormSchema;
-

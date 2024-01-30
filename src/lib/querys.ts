@@ -49,7 +49,7 @@ export async function getLehrbetriebLernende(): Promise<
   const url = BASE_URL + "lehrbetrieb_lernende";
   try {
     const response = (await axios.get(url)) ?? [];
-    toast("Lehrbetriebe -> Lernende erfolgreich geladen");
+    toast("Lehrbetriebe ➞ Lernende erfolgreich geladen");
     return response.data.data;
   } catch (error) {
     handleError(error);
@@ -131,7 +131,7 @@ export async function getKurseLernende(): Promise<Row_kurse_lernende[]> {
   const url: string = BASE_URL + "kurse_lernende";
   try {
     const response = (await axios.get(url)) ?? [];
-    toast("Kurse -> Lernende erfolgreich geladen");
+    toast("Kurse ➞ Lernende erfolgreich geladen");
     return response.data.data;
   } catch (error) {
     handleError(error);
@@ -146,7 +146,7 @@ export async function postKurseLernende(params: {
   try {
     const paramData = params.data;
     await axios.post(url, { ...paramData });
-    toast("Kurs -> Lernende erstellt");
+    toast("Kurs ➞ Lernende erstellt");
   } catch (error) {
     handleError(error);
   }
@@ -162,7 +162,7 @@ function getISODate(date?: Date): string | undefined {
 
 function handleError(error: unknown): void {
   if (!(error instanceof AxiosError) || !(error instanceof Error)) return;
-  toast("Fehler bei der Anfrage: " + error.name, {
+  toast("Fehler bei der Anfrage ➞ " + error.name, {
     description: error.message,
     className: "bg-red-75",
   });
