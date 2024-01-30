@@ -187,7 +187,7 @@ function CreateDozent() {
             render={({ field }) => (
               <FormItem className="mb-4">
                 <FormControl>
-                  <DatePicker field={field} />
+                  <DatePicker field={field} title="Geburtsdatum" />
                 </FormControl>
               </FormItem>
             )}

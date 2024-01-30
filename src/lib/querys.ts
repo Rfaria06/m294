@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "sonner";
 import * as z from "zod";
 import {
   dozentFormSchema,
@@ -14,7 +15,6 @@ import {
   Row_lehrbetriebe,
   Row_lernende,
 } from "./types";
-import { toast } from "sonner";
 
 const BASE_URL = "https://raul.undefiniert.ch/";
 

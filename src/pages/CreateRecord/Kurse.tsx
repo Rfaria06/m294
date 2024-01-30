@@ -1,3 +1,6 @@
+"use client";
+
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -7,17 +10,20 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { getDozenten, postKurs } from "@/lib/querys";
-import { kursFormSchema as formSchema } from "@/lib/schemas";
+import { Textarea } from "@/components/ui/textarea";
+import DatePicker from "@/lib/CustomComponents/DatePicker";
+import { postKurs } from "@/lib/querys";
+import { kursFormSchema as formSchema } from "@/lib/schemas/";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   QueryClient,
   useMutation,
-  useQuery,
   useQueryClient,
 } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import * as z from "zod";
+import "./CreateRecord.css";
 
 function CreateKurs() {
   const queryClient: QueryClient = useQueryClient();
@@ -26,10 +32,11 @@ function CreateKurs() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["kurse"] });
     },
-  });
-  const query = useQuery({
-    queryKey: ["kurse"],
-    queryFn: getDozenten,
+    onError: () => {
+      toast("Konnte nicht erstellt werden", {
+        className: "bg-red-75",
+      });
+    },
   });
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -38,7 +45,7 @@ function CreateKurs() {
   return (
     <div>
       <Form {...form} control={form.control}>
-        <FormLabel className="mb-5">Neuer Kurs</FormLabel>
+        <FormLabel className="mb-5">Neuer Dozent</FormLabel>
         <form
           onSubmit={form.handleSubmit(() => {
             mutation.mutate({ data: form.getValues() });
@@ -59,6 +66,83 @@ function CreateKurs() {
               </FormItem>
             )}
           />
+          <FormField
+            name="kursthema"
+            render={({ field }) => (
+              <FormItem className="mb-4">
+                <FormControl>
+                  <Textarea
+                    className="bg-white"
+                    placeholder="Kursthema"
+                    maxLength={100}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            name="inhalt"
+            render={({ field }) => (
+              <FormItem className="mb-4">
+                <FormControl>
+                  <Textarea
+                    className="bg-white"
+                    placeholder="Inhalt"
+                    maxLength={100}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            name="nr_dozent"
+            render={({ field }) => (
+              <FormItem className="mb-4">
+                <FormControl>
+                  <Input placeholder="WIP: Dozent" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            name="startdatum"
+            render={({ field }) => (
+              <FormItem className="mb-4">
+                <FormControl>
+                  <DatePicker field={field} title="Startdatum" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            name="enddatum"
+            render={({ field }) => (
+              <FormItem className="mb-4">
+                <FormControl>
+                  <DatePicker field={field} title="Enddatum" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            name="dauer"
+            render={({ field }) => (
+              <FormItem className="mb-4">
+                <FormControl>
+                  <Input className="bg-white" placeholder="Dauer" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button type="submit">Erstellen</Button>
         </form>
       </Form>
     </div>

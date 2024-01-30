@@ -1,14 +1,14 @@
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import { FormControl } from "@/components/ui/form.tsx";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Button } from "@/components/ui/button";
-import { Calendar as CalendarIcon } from "lucide-react";
-import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
+import { Calendar as CalendarIcon } from "lucide-react";
 import { cn } from "../utils";
-import { FormControl } from "@/components/ui/form.tsx";
 
 interface DatePickerProps {
   field: {
@@ -16,9 +16,10 @@ interface DatePickerProps {
     onChange: (value: string) => void;
     onBlur: () => void;
   };
+  title: string;
 }
 
-export default function DatePicker({ field }: DatePickerProps) {
+export default function DatePicker({ field, title }: DatePickerProps) {
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -31,9 +32,9 @@ export default function DatePicker({ field }: DatePickerProps) {
             )}
           >
             {field.value ? (
-              format(field.value, "PPP")
+              format(new Date(field.value), "PPP")
             ) : (
-              <span>Geburtsdatum</span>
+              <span>{title}</span>
             )}
             <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
           </Button>
