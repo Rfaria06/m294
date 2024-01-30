@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import Startpage from "./pages/Startpage/Startpage";
+import { CreateDozent, CreateKurs } from "./pages/CreateRecord";
 import {
   DataTableDozenten,
   DataTableKurse,
@@ -9,8 +9,8 @@ import {
   DataTableLehrbetriebeLernende,
   DataTableLernende,
 } from "./pages/DataTable";
-import { CreateDozent } from "./pages/CreateRecord";
 import ErrorPage from "./pages/Error/ErrorPage";
+import Startpage from "./pages/Startpage/Startpage";
 
 export const router = createBrowserRouter([
   {
@@ -85,7 +85,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "/kurse/create",
-    element: <DataTableKurse />,
+    element: <CreateKurs />,
     errorElement: <ErrorPage />,
   },
   {

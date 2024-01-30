@@ -1,7 +1,6 @@
 "use client";
 
-import { useForm } from "react-hook-form";
-import "./CreateRecord.css";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -11,19 +10,22 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { dozentFormSchema as formSchema } from "@/lib/schemas/";
-import { Button } from "@/components/ui/button";
-import CountryPopover from "../../lib/popovers/CountryPopover";
-import GenderPopover from "@/lib/popovers/GenderPopover";
 import DatePicker from "@/lib/CustomComponents/DatePicker.tsx";
+import GenderPopover from "@/lib/popovers/GenderPopover";
+import { postDozenten } from "@/lib/querys.ts";
+import { dozentFormSchema as formSchema } from "@/lib/schemas/";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   QueryClient,
   useMutation,
   useQueryClient,
 } from "@tanstack/react-query";
-import { postDozenten } from "@/lib/querys.ts";
+import { useForm } from "react-hook-form";
+import { redirect } from "react-router-dom";
+import { toast } from "sonner";
+import * as z from "zod";
+import CountryPopover from "../../lib/popovers/CountryPopover";
+import "./CreateRecord.css";
 
 function CreateDozent() {
   const queryClient: QueryClient = useQueryClient();
@@ -31,6 +33,8 @@ function CreateDozent() {
     mutationFn: postDozenten,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["dozenten"] });
+      toast("Anfrage erfolgreich");
+      redirect("/dozenten");
     },
   });
 

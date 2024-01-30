@@ -1,9 +1,4 @@
-import "./DataTable.css";
-import { useEffect, useRef, useState } from "react";
-import { Row_dozenten } from "@/lib/types";
-import { getDozenten } from "@/lib/querys";
-import { NavLink } from "react-router-dom";
-import { toast } from "sonner";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
   TableBody,
@@ -18,29 +13,19 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { getDozenten } from "@/lib/querys";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { NavLink } from "react-router-dom";
+import { toast } from "sonner";
+import "./DataTable.css";
 
 function DataTableDozenten() {
   const TABLE_NAME = "dozenten";
-
-  const [data, setData] = useState<Row_dozenten[]>([]);
-  const hasFetchedData = useRef(false);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await getDozenten();
-        setData(result);
-
-        if (!hasFetchedData.current) {
-          toast("Dozenten erfolgreich geladen");
-          hasFetchedData.current = true;
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    fetchData();
-  }, []);
+  useQueryClient();
+  const { data, error, isError, isPending, isSuccess } = useQuery({
+    queryKey: ["dozenten"],
+    queryFn: getDozenten,
+  });
 
   return (
     <div>
@@ -66,20 +51,36 @@ function DataTableDozenten() {
             <TableHead className="text-black">Email</TableHead>
           </TableHeader>
           <TableBody>
-            {data.map((row) => (
-              <TableRow key={row.id_dozent}>
-                <TableCell className="text-left">
-                  <NavLink to={`/${TABLE_NAME}/${row.id_dozent}`}>
-                    {row.id_dozent}
-                  </NavLink>
-                </TableCell>
-                <TableCell className="text-left">{row.vorname}</TableCell>
-                <TableCell className="text-left">{row.nachname}</TableCell>
-                <TableCell className="text-left">{row.email}</TableCell>
-              </TableRow>
-            ))}
+            {isPending
+              ? Array.from({ length: 4 }).map((_, index) => (
+                  <TableRow key={index}>
+                    {Array.from({ length: 4 }).map((_, colIndex) => (
+                      <TableCell className="text-left" key={colIndex}>
+                        <Skeleton className="w-full h-[25px] mb-2" />
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              : data?.map((row) => (
+                  <TableRow key={row.id_dozent}>
+                    <TableCell className="text-left">
+                      <NavLink to={`/${TABLE_NAME}/${row.id_dozent}`}>
+                        {row.id_dozent}
+                      </NavLink>
+                    </TableCell>
+                    <TableCell className="text-left">{row.vorname}</TableCell>
+                    <TableCell className="text-left">{row.nachname}</TableCell>
+                    <TableCell className="text-left">{row.email}</TableCell>
+                  </TableRow>
+                ))}
           </TableBody>
         </Table>
+        {isSuccess && toast("Dozenten erfolgreich geladen")}
+        {isError &&
+          toast(error.name, {
+            description: error.message ?? "",
+            className: "bg-red-75",
+          })}
       </div>
     </div>
   );
