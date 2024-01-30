@@ -1,5 +1,3 @@
-import { useEffect, useRef, useState } from "react";
-import { Row_lehrbetrieb_lernende } from "@/lib/types";
 import {
   Table,
   TableBody,
@@ -8,10 +6,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import "./DataTable.css";
 import { getLehrbetriebLernende } from "@/lib/querys";
+import { Row_lehrbetrieb_lernende } from "@/lib/types";
+import { useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { toast } from "sonner";
+import "./DataTable.css";
 
 function DataTableLehrbetriebeLernende() {
   const TABLE_NAME = "lehrbetriebe_lernende";
@@ -26,7 +25,6 @@ function DataTableLehrbetriebeLernende() {
         setData(result);
 
         if (!hasFetchedData.current) {
-          toast("Lehrbetriebe -> Lernende erfolgreich geladen.");
           hasFetchedData.current = true;
         }
       } catch (error) {

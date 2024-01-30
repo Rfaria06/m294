@@ -12,6 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import DatePicker from "@/lib/CustomComponents/DatePicker";
+import DozentenPopover from "@/lib/popovers/DozentenPopover";
 import { postKurs } from "@/lib/querys";
 import { kursFormSchema as formSchema } from "@/lib/schemas/";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -21,7 +22,6 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
 import * as z from "zod";
 import "./CreateRecord.css";
 
@@ -31,11 +31,6 @@ function CreateKurs() {
     mutationFn: postKurs,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["kurse"] });
-    },
-    onError: () => {
-      toast("Konnte nicht erstellt werden", {
-        className: "bg-red-75",
-      });
     },
   });
   const form = useForm<z.infer<typeof formSchema>>({
@@ -103,7 +98,7 @@ function CreateKurs() {
             render={({ field }) => (
               <FormItem className="mb-4">
                 <FormControl>
-                  <Input placeholder="WIP: Dozent" {...field} />
+                  <DozentenPopover field={field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

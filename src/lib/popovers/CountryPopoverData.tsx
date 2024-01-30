@@ -3,7 +3,6 @@
 import { getLaender } from "@/lib/querys";
 import { Row_laender } from "@/lib/types";
 import { useEffect, useRef, useState } from "react";
-import { toast } from "sonner";
 type countryPickerElement = { value: string; label: string };
 
 function CountryPickerData(): countryPickerElement[] {
@@ -15,9 +14,7 @@ function CountryPickerData(): countryPickerElement[] {
       try {
         const result = await getLaender();
         setData(result);
-
         if (!hasFetchedData.current) {
-          toast("Länder erfolgreich geladen.");
           hasFetchedData.current = true;
         }
       } catch (error) {

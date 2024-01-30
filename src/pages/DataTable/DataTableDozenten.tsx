@@ -16,13 +16,12 @@ import {
 import { getDozenten } from "@/lib/querys";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { NavLink } from "react-router-dom";
-import { toast } from "sonner";
 import "./DataTable.css";
 
 function DataTableDozenten() {
   const TABLE_NAME = "dozenten";
   useQueryClient();
-  const { data, error, isError, isPending, isSuccess } = useQuery({
+  const { data, isPending } = useQuery({
     queryKey: ["dozenten"],
     queryFn: getDozenten,
   });
@@ -75,12 +74,6 @@ function DataTableDozenten() {
                 ))}
           </TableBody>
         </Table>
-        {isSuccess && toast("Dozenten erfolgreich geladen")}
-        {isError &&
-          toast(error.name, {
-            description: error.message ?? "",
-            className: "bg-red-75",
-          })}
       </div>
     </div>
   );

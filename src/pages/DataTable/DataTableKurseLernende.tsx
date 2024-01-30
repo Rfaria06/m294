@@ -1,4 +1,3 @@
-import { useEffect, useRef, useState } from "react";
 import {
   Table,
   TableBody,
@@ -7,11 +6,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import "./DataTable.css";
-import { Row_kurse_lernende } from "@/lib/types";
 import { getKurseLernende } from "@/lib/querys";
+import { Row_kurse_lernende } from "@/lib/types";
+import { useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { toast } from "sonner";
+import "./DataTable.css";
 
 function DataTableKurseLernende() {
   const TABLE_NAME = "kurse_lernende";
@@ -27,7 +26,6 @@ function DataTableKurseLernende() {
 
         // Show toast only if it hasn't been shown before
         if (!hasFetchedData.current) {
-          toast("Kurse -> Lernende erfolgreich geladen.");
           hasFetchedData.current = true; // Set the ref to indicate that the toast has been shown
         }
       } catch (error) {

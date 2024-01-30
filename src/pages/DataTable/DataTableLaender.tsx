@@ -1,5 +1,3 @@
-import { useEffect, useRef, useState } from "react";
-import { Row_laender } from "@/lib/types";
 import {
   Table,
   TableBody,
@@ -8,10 +6,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import "./DataTable.css";
 import { getLaender } from "@/lib/querys";
+import { Row_laender } from "@/lib/types";
+import { useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { toast } from "sonner";
+import "./DataTable.css";
 
 function DataTableLaender() {
   const TABLE_NAME = "countries";
@@ -26,7 +25,6 @@ function DataTableLaender() {
         setData(result);
 
         if (!hasFetchedData.current) {
-          toast("Länder erfolgreich geladen.");
           hasFetchedData.current = true;
         }
       } catch (error) {
