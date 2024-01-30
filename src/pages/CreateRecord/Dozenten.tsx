@@ -21,8 +21,6 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
-import { redirect } from "react-router-dom";
-import { toast } from "sonner";
 import * as z from "zod";
 import CountryPopover from "../../lib/popovers/CountryPopover";
 import "./CreateRecord.css";
@@ -33,8 +31,6 @@ function CreateDozent() {
     mutationFn: postDozenten,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["dozenten"] });
-      toast("Anfrage erfolgreich");
-      redirect("/dozenten");
     },
   });
 

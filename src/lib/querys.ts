@@ -6,6 +6,7 @@ import {
   dozentUploadFormSchema,
   kursFormSchema,
   kurseLernendeFormSchema,
+  laenderFormSchema,
 } from "./schemas";
 import {
   Row_dozenten,
@@ -66,6 +67,19 @@ export async function getLaender(): Promise<Row_laender[]> {
   } catch (error) {
     handleError(error);
     return [];
+  }
+}
+
+export async function postLaender(params: {
+  data: z.infer<typeof laenderFormSchema>;
+}) {
+  const url: string = BASE_URL + "laender";
+  try {
+    const paramData = params.data;
+    await axios.post(url, { ...paramData });
+    toast("Land erstellt");
+  } catch (error) {
+    handleError(error);
   }
 }
 
