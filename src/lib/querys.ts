@@ -5,6 +5,7 @@ import {
   dozentFormSchema,
   dozentUploadFormSchema,
   kursFormSchema,
+  kurseLernendeFormSchema,
 } from "./schemas";
 import {
   Row_dozenten,
@@ -88,7 +89,7 @@ export async function postDozenten(params: {
     const paramData = params.data;
     const uploadData: z.infer<typeof dozentUploadFormSchema> = {
       ...paramData,
-      birthdate: getISODate(paramData.birthdate),
+      birthdate: new Date(getISODate(paramData.birthdate) ?? ""),
     };
     await axios.post(url, uploadData);
     toast("Dozent erstellt");
@@ -138,7 +139,20 @@ export async function getKurseLernende(): Promise<Row_kurse_lernende[]> {
   }
 }
 
-function getISODate(date?: Date) {
+export async function postKurseLernende(params: {
+  data: z.infer<typeof kurseLernendeFormSchema>;
+}) {
+  const url: string = BASE_URL + "kurse_lernende";
+  try {
+    const paramData = params.data;
+    await axios.post(url, { ...paramData });
+    toast("Kurs -> Lernende erstellt");
+  } catch (error) {
+    handleError(error);
+  }
+}
+
+function getISODate(date?: Date): string | undefined {
   return date
     ? new Date(new Date(date).getTime() + 24 * 60 * 60 * 1000)
         .toISOString()
