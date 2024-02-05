@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -8,27 +8,27 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import KursePopover from "@/lib/popovers/KursePopover";
-import LernendePopover from "@/lib/popovers/LernendePopover";
-import { postKurseLernende } from "@/lib/querys";
-import { kurseLernendeFormSchema as formSchema } from "@/lib/schemas";
-import { zodResolver } from "@hookform/resolvers/zod";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import KursePopover from '@/lib/popovers/KursePopover';
+import LernendePopover from '@/lib/popovers/LernendePopover';
+import { postKurseLernende } from '@/lib/querys';
+import { kurseLernendeFormSchema as formSchema } from '@/lib/schemas';
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
   QueryClient,
   useMutation,
   useQueryClient,
-} from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
+} from '@tanstack/react-query';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
 
 function CreateKurseLernende() {
   const queryClient: QueryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: postKurseLernende,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["kurseLernende"] });
+      queryClient.invalidateQueries({ queryKey: ['kurseLernende'] });
     },
   });
   const form = useForm<z.infer<typeof formSchema>>({
@@ -36,9 +36,9 @@ function CreateKurseLernende() {
   });
 
   return (
-    <div>
+    <div className='create-record'>
       <Form {...form} control={form.control}>
-        <FormLabel className="mb-5">
+        <FormLabel className='mb-5'>
           Neue Verbindung von Kurs zu Lernender
         </FormLabel>
         <form
@@ -47,9 +47,9 @@ function CreateKurseLernende() {
           })}
         >
           <FormField
-            name="nr_teilnehmer"
+            name='nr_teilnehmer'
             render={({ field }) => (
-              <FormItem className="mb-4">
+              <FormItem className='mb-4'>
                 <FormControl>
                   <LernendePopover field={field} />
                 </FormControl>
@@ -58,9 +58,9 @@ function CreateKurseLernende() {
             )}
           />
           <FormField
-            name="nr_kurs"
+            name='nr_kurs'
             render={({ field }) => (
-              <FormItem className="mb-4">
+              <FormItem className='mb-4'>
                 <FormControl>
                   <KursePopover field={field} />
                 </FormControl>
@@ -69,13 +69,13 @@ function CreateKurseLernende() {
             )}
           />
           <FormField
-            name="note"
+            name='note'
             render={({ field }) => (
-              <FormItem className="mb-4 flex justify-center">
+              <FormItem className='mb-4 flex justify-center'>
                 <FormControl>
                   <Input
-                    placeholder="Note"
-                    className="bg-white w-[250px]"
+                    placeholder='Note'
+                    className='bg-white w-[250px]'
                     {...field}
                   />
                 </FormControl>
@@ -83,7 +83,7 @@ function CreateKurseLernende() {
               </FormItem>
             )}
           />
-          <Button type="submit">Erstellen</Button>
+          <Button type='submit'>Erstellen</Button>
         </form>
       </Form>
     </div>

@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -8,29 +8,29 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import DatePicker from "@/lib/CustomComponents/DatePicker.tsx";
-import GenderPopover from "@/lib/popovers/GenderPopover";
-import { postDozenten } from "@/lib/querys.ts";
-import { dozentFormSchema as formSchema } from "@/lib/schemas/";
-import { zodResolver } from "@hookform/resolvers/zod";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import DatePicker from '@/lib/CustomComponents/DatePicker.tsx';
+import GenderPopover from '@/lib/popovers/GenderPopover';
+import { postDozenten } from '@/lib/querys.ts';
+import { dozentFormSchema as formSchema } from '@/lib/schemas/';
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
   QueryClient,
   useMutation,
   useQueryClient,
-} from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import CountryPopover from "../../lib/popovers/CountryPopover";
-import "./CreateRecord.css";
+} from '@tanstack/react-query';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
+import CountryPopover from '../../lib/popovers/CountryPopover';
+import './CreateRecord.css';
 
 function CreateDozent() {
   const queryClient: QueryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: postDozenten,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["dozenten"] });
+      queryClient.invalidateQueries({ queryKey: ['dozenten'] });
     },
   });
 
@@ -38,22 +38,22 @@ function CreateDozent() {
     resolver: zodResolver(formSchema),
   });
   return (
-    <div>
+    <div className='create-record'>
       <Form {...form} control={form.control}>
-        <FormLabel className="mb-5">Neuer Dozent</FormLabel>
+        <FormLabel className='mb-5'>Neuer Dozent</FormLabel>
         <form
           onSubmit={form.handleSubmit(() => {
             mutation.mutate({ data: form.getValues() });
           })}
         >
           <FormField
-            name="vorname"
+            name='vorname'
             render={({ field }) => (
-              <FormItem className="mb-4">
+              <FormItem className='mb-4'>
                 <FormControl>
                   <Input
-                    className="bg-white"
-                    placeholder="Vorname*"
+                    className='bg-white'
+                    placeholder='Vorname*'
                     {...field}
                   />
                 </FormControl>
@@ -62,13 +62,13 @@ function CreateDozent() {
             )}
           />
           <FormField
-            name="nachname"
+            name='nachname'
             render={({ field }) => (
-              <FormItem className="mb-4">
+              <FormItem className='mb-4'>
                 <FormControl>
                   <Input
-                    className="bg-white"
-                    placeholder="Nachname*"
+                    className='bg-white'
+                    placeholder='Nachname*'
                     {...field}
                   />
                 </FormControl>
@@ -77,13 +77,13 @@ function CreateDozent() {
             )}
           />
           <FormField
-            name="strasse"
+            name='strasse'
             render={({ field }) => (
-              <FormItem className="mb-4">
+              <FormItem className='mb-4'>
                 <FormControl>
                   <Input
-                    className="bg-white"
-                    placeholder="Strasse"
+                    className='bg-white'
+                    placeholder='Strasse'
                     {...field}
                   />
                 </FormControl>
@@ -92,13 +92,13 @@ function CreateDozent() {
             )}
           />
           <FormField
-            name="plz"
+            name='plz'
             render={({ field }) => (
-              <FormItem className="mb-4">
+              <FormItem className='mb-4'>
                 <FormControl>
                   <Input
-                    className="bg-white"
-                    placeholder="PLZ"
+                    className='bg-white'
+                    placeholder='PLZ'
                     {...field}
                     max={4}
                     min={4}
@@ -109,20 +109,20 @@ function CreateDozent() {
             )}
           />
           <FormField
-            name="ort"
+            name='ort'
             render={({ field }) => (
-              <FormItem className="mb-4">
+              <FormItem className='mb-4'>
                 <FormControl>
-                  <Input className="bg-white" placeholder="Ort" {...field} />
+                  <Input className='bg-white' placeholder='Ort' {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
           <FormField
-            name="nr_land"
+            name='nr_land'
             render={({ field }) => (
-              <FormItem className="mb-4">
+              <FormItem className='mb-4'>
                 <FormControl>
                   <CountryPopover field={field} />
                 </FormControl>
@@ -131,9 +131,9 @@ function CreateDozent() {
             )}
           />
           <FormField
-            name="geschlecht"
+            name='geschlecht'
             render={({ field }) => (
-              <FormItem className="mb-4">
+              <FormItem className='mb-4'>
                 <FormControl>
                   <GenderPopover field={field} />
                 </FormControl>
@@ -142,13 +142,13 @@ function CreateDozent() {
             )}
           />
           <FormField
-            name="telefon"
+            name='telefon'
             render={({ field }) => (
-              <FormItem className="mb-4">
+              <FormItem className='mb-4'>
                 <FormControl>
                   <Input
-                    className="bg-white"
-                    placeholder="Telefon"
+                    className='bg-white'
+                    placeholder='Telefon'
                     {...field}
                   />
                 </FormControl>
@@ -157,38 +157,38 @@ function CreateDozent() {
             )}
           />
           <FormField
-            name="handy"
+            name='handy'
             render={({ field }) => (
-              <FormItem className="mb-4">
+              <FormItem className='mb-4'>
                 <FormControl>
-                  <Input className="bg-white" placeholder="Handy" {...field} />
+                  <Input className='bg-white' placeholder='Handy' {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
           <FormField
-            name="email"
+            name='email'
             render={({ field }) => (
-              <FormItem className="mb-4">
+              <FormItem className='mb-4'>
                 <FormControl>
-                  <Input className="bg-white" placeholder="E-Mail" {...field} />
+                  <Input className='bg-white' placeholder='E-Mail' {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
           <FormField
-            name="birthdate"
+            name='birthdate'
             render={({ field }) => (
-              <FormItem className="mb-4">
+              <FormItem className='mb-4'>
                 <FormControl>
-                  <DatePicker field={field} title="Geburtsdatum" />
+                  <DatePicker field={field} title='Geburtsdatum' />
                 </FormControl>
               </FormItem>
             )}
           />
-          <Button type="submit">Erstellen</Button>
+          <Button type='submit'>Erstellen</Button>
         </form>
       </Form>
     </div>
