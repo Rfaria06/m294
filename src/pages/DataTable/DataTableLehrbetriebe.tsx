@@ -6,39 +6,25 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { getLehrbetriebe } from "@/lib/querys";
-import { Row_lehrbetriebe } from "@/lib/types";
-import { useEffect, useRef, useState } from "react";
-import { NavLink } from "react-router-dom";
-import "./DataTable.css";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { NavLink } from "react-router-dom";
+import "./DataTable.css";
+import { getLehrbetriebe } from "@/lib/querys";
+import { Skeleton } from "@/components/ui/skeleton";
 
 function DataTableLehrbetriebe() {
   const TABLE_NAME = "lehrbetriebe";
-
-  const [data, setData] = useState<Row_lehrbetriebe[]>([]);
-  const hasFetchedData = useRef(false);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await getLehrbetriebe();
-        setData(result);
-
-        if (!hasFetchedData.current) {
-          hasFetchedData.current = true;
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    fetchData();
-  }, []);
+  useQueryClient();
+  const { data, isPending } = useQuery({
+    queryKey: ["lehrbetriebe"],
+    queryFn: getLehrbetriebe,
+  });
 
   return (
     <div>
@@ -65,19 +51,29 @@ function DataTableLehrbetriebe() {
             <TableHead className="text-black">Ort</TableHead>
           </TableHeader>
           <TableBody>
-            {data.map((row) => (
-              <TableRow key={row.id_lehrbetrieb}>
-                <TableCell className="text-left">
-                  <NavLink to={`/${TABLE_NAME}/${row.id_lehrbetrieb}`}>
-                    {row.id_lehrbetrieb}
-                  </NavLink>
-                </TableCell>
-                <TableCell className="text-left">{row.firma}</TableCell>
-                <TableCell className="text-left">{row.strasse}</TableCell>
-                <TableCell className="text-left">{row.plz}</TableCell>
-                <TableCell className="text-left">{row.ort}</TableCell>
-              </TableRow>
-            ))}
+            {isPending
+              ? Array.from({ length: 4 }).map((_, index) => (
+                  <TableRow key={index}>
+                    {Array.from({ length: 5 }).map((_, colIndex) => (
+                      <TableCell className="text-left" key={colIndex}>
+                        <Skeleton className="w-full h-[25px] mb-2" />
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              : data?.map((row) => (
+                  <TableRow key={row.id_lehrbetrieb}>
+                    <TableCell className="text-left">
+                      <NavLink to={`/${TABLE_NAME}/${row.id_lehrbetrieb}`}>
+                        {row.id_lehrbetrieb}
+                      </NavLink>
+                    </TableCell>
+                    <TableCell className="text-left">{row.firma}</TableCell>
+                    <TableCell className="text-left">{row.strasse}</TableCell>
+                    <TableCell className="text-left">{row.plz}</TableCell>
+                    <TableCell className="text-left">{row.ort}</TableCell>
+                  </TableRow>
+                ))}
           </TableBody>
         </Table>
       </div>
