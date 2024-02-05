@@ -1,10 +1,29 @@
-import "./Startpage.css";
+import { NavLink } from 'react-router-dom';
+import './Startpage.css';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 function Startpage() {
   return (
-    <div className="container">
+    <div className='container'>
+      <div className='mb-3'>
+        <NavLink to={'/info'}>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>Wichtige Info</TooltipTrigger>
+              <TooltipContent>
+                <p>Wichtige Info - Vor der Benotung beachten</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </NavLink>
+      </div>
       <h1>M294</h1>
-      <div className="sub">
+      <div className='sub'>
         <h3>React - Frontend</h3>
       </div>
       <br />
