@@ -78,7 +78,7 @@ export default function LernendePopover({ field }: Props) {
                 <Check
                   className={cn(
                     "mr-2 h-4 w-4",
-                    value === element.value ? "opacity-100" : "opacity-0"
+                    value === element.value ? "opacity-100" : "opacity-0",
                   )}
                 />
                 {element.label}

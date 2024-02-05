@@ -1,9 +1,9 @@
-import { postLehrbetriebe } from '@/lib/querys';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useForm } from 'react-hook-form';
-import * as z from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { lehrbetriebeFormSchema as formSchema } from '@/lib/schemas';
+import { postLehrbetriebe } from "@/lib/querys";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { lehrbetriebeFormSchema as formSchema } from "@/lib/schemas";
 import {
   Form,
   FormControl,
@@ -11,16 +11,16 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 function CreateLehrbetrieb() {
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: postLehrbetriebe,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['lehrbetriebe'] });
+      queryClient.invalidateQueries({ queryKey: ["lehrbetriebe"] });
     },
   });
   const form = useForm<z.infer<typeof formSchema>>({
@@ -28,22 +28,22 @@ function CreateLehrbetrieb() {
   });
 
   return (
-    <div className='create-record'>
+    <div className="create-record">
       <Form {...form} control={form.control}>
-        <FormLabel className='mb-5'>Neuer Lehrbetrieb</FormLabel>
+        <FormLabel className="mb-5">Neuer Lehrbetrieb</FormLabel>
         <form
           onSubmit={form.handleSubmit(() => {
             mutation.mutate({ data: form.getValues() });
           })}
         >
           <FormField
-            name='firma'
+            name="firma"
             render={({ field }) => (
-              <FormItem className='mb-4 flex justify-center'>
+              <FormItem className="mb-4 flex justify-center">
                 <FormControl>
                   <Input
-                    placeholder='Firma'
-                    className='bg-white w-[250px]'
+                    placeholder="Firma"
+                    className="bg-white w-[250px]"
                     {...field}
                   />
                 </FormControl>
@@ -52,13 +52,13 @@ function CreateLehrbetrieb() {
             )}
           />
           <FormField
-            name='strasse'
+            name="strasse"
             render={({ field }) => (
-              <FormItem className='mb-4 flex justify-center'>
+              <FormItem className="mb-4 flex justify-center">
                 <FormControl>
                   <Input
-                    placeholder='Strasse'
-                    className='bg-white w-[250px]'
+                    placeholder="Strasse"
+                    className="bg-white w-[250px]"
                     {...field}
                   />
                 </FormControl>
@@ -67,13 +67,13 @@ function CreateLehrbetrieb() {
             )}
           />
           <FormField
-            name='plz'
+            name="plz"
             render={({ field }) => (
-              <FormItem className='mb-4 flex justify-center'>
+              <FormItem className="mb-4 flex justify-center">
                 <FormControl>
                   <Input
-                    placeholder='PLZ'
-                    className='bg-white w-[250px]'
+                    placeholder="PLZ"
+                    className="bg-white w-[250px]"
                     {...field}
                   />
                 </FormControl>
@@ -82,13 +82,13 @@ function CreateLehrbetrieb() {
             )}
           />
           <FormField
-            name='ort'
+            name="ort"
             render={({ field }) => (
-              <FormItem className='mb-4 flex justify-center'>
+              <FormItem className="mb-4 flex justify-center">
                 <FormControl>
                   <Input
-                    placeholder='Ort'
-                    className='bg-white w-[250px]'
+                    placeholder="Ort"
+                    className="bg-white w-[250px]"
                     {...field}
                   />
                 </FormControl>
@@ -96,7 +96,7 @@ function CreateLehrbetrieb() {
               </FormItem>
             )}
           />
-          <Button type='submit'>Erstellen</Button>
+          <Button type="submit">Erstellen</Button>
         </form>
       </Form>
     </div>

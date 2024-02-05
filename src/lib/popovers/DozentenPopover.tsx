@@ -1,15 +1,15 @@
 import { Button } from "@/components/ui/button";
 import {
-	Command,
-	CommandEmpty,
-	CommandGroup,
-	CommandInput,
-	CommandItem,
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
 } from "@/components/ui/command";
 import {
-	Popover,
-	PopoverContent,
-	PopoverTrigger,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
 } from "@/components/ui/popover";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Check, ChevronsUpDown } from "lucide-react";
@@ -73,7 +73,7 @@ function DozentenPopover({ field }: DozentenPopoverProps) {
                 <Check
                   className={cn(
                     "mr-2 h-4 w-4",
-                    value === element.value ? "opacity-100" : "opacity-0"
+                    value === element.value ? "opacity-100" : "opacity-0",
                   )}
                 />
                 {element.label}

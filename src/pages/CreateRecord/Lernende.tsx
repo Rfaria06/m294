@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -6,21 +6,21 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { postLernende } from '@/lib/querys';
-import { lernendeFormSchema as formSchema } from '@/lib/schemas';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { postLernende } from "@/lib/querys";
+import { lernendeFormSchema as formSchema } from "@/lib/schemas";
 import {
   QueryClient,
   useMutation,
   useQueryClient,
-} from '@tanstack/react-query';
-import { useForm } from 'react-hook-form';
-import * as z from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import CountryPopover from '@/lib/popovers/CountryPopover';
-import GenderPopover from '@/lib/popovers/GenderPopover';
-import DatePicker from '@/lib/CustomComponents/DatePicker';
+} from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import CountryPopover from "@/lib/popovers/CountryPopover";
+import GenderPopover from "@/lib/popovers/GenderPopover";
+import DatePicker from "@/lib/CustomComponents/DatePicker";
 
 function CreateLernende() {
   const queryClient: QueryClient = useQueryClient();
@@ -28,7 +28,7 @@ function CreateLernende() {
     mutationFn: postLernende,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['lernende'],
+        queryKey: ["lernende"],
       });
     },
   });
@@ -37,22 +37,22 @@ function CreateLernende() {
   });
 
   return (
-    <div className='create-record'>
+    <div className="create-record">
       <Form {...form} control={form.control}>
-        <FormLabel className='mb-5'>Neuer Lernender</FormLabel>
+        <FormLabel className="mb-5">Neuer Lernender</FormLabel>
         <form
           onSubmit={form.handleSubmit(() => {
             mutation.mutate({ data: form.getValues() });
           })}
         >
           <FormField
-            name='vorname'
+            name="vorname"
             render={({ field }) => (
-              <FormItem className='mb-4'>
+              <FormItem className="mb-4">
                 <FormControl>
                   <Input
-                    placeholder='Vorname'
-                    className='bg-white w-[250px]'
+                    placeholder="Vorname"
+                    className="bg-white w-[250px]"
                     {...field}
                   />
                 </FormControl>
@@ -61,13 +61,13 @@ function CreateLernende() {
             )}
           />
           <FormField
-            name='nachname'
+            name="nachname"
             render={({ field }) => (
-              <FormItem className='mb-4'>
+              <FormItem className="mb-4">
                 <FormControl>
                   <Input
-                    placeholder='Nachname'
-                    className='bg-white w-[250px]'
+                    placeholder="Nachname"
+                    className="bg-white w-[250px]"
                     {...field}
                   />
                 </FormControl>
@@ -76,13 +76,13 @@ function CreateLernende() {
             )}
           />
           <FormField
-            name='strasse'
+            name="strasse"
             render={({ field }) => (
-              <FormItem className='mb-4'>
+              <FormItem className="mb-4">
                 <FormControl>
                   <Input
-                    placeholder='Strasse'
-                    className='bg-white w-[250px]'
+                    placeholder="Strasse"
+                    className="bg-white w-[250px]"
                     {...field}
                   />
                 </FormControl>
@@ -91,13 +91,13 @@ function CreateLernende() {
             )}
           />
           <FormField
-            name='plz'
+            name="plz"
             render={({ field }) => (
-              <FormItem className='mb-4'>
+              <FormItem className="mb-4">
                 <FormControl>
                   <Input
-                    placeholder='PLZ'
-                    className='bg-white w-[250px]'
+                    placeholder="PLZ"
+                    className="bg-white w-[250px]"
                     {...field}
                   />
                 </FormControl>
@@ -106,13 +106,13 @@ function CreateLernende() {
             )}
           />
           <FormField
-            name='ort'
+            name="ort"
             render={({ field }) => (
-              <FormItem className='mb-4'>
+              <FormItem className="mb-4">
                 <FormControl>
                   <Input
-                    placeholder='Ort'
-                    className='bg-white w-[250px]'
+                    placeholder="Ort"
+                    className="bg-white w-[250px]"
                     {...field}
                   />
                 </FormControl>
@@ -121,9 +121,9 @@ function CreateLernende() {
             )}
           />
           <FormField
-            name='nr_land'
+            name="nr_land"
             render={({ field }) => (
-              <FormItem className='mb-4'>
+              <FormItem className="mb-4">
                 <FormControl>
                   <CountryPopover field={field} />
                 </FormControl>
@@ -132,9 +132,9 @@ function CreateLernende() {
             )}
           />
           <FormField
-            name='geschlecht'
+            name="geschlecht"
             render={({ field }) => (
-              <FormItem className='mb-4'>
+              <FormItem className="mb-4">
                 <FormControl>
                   <GenderPopover field={field} />
                 </FormControl>
@@ -143,13 +143,13 @@ function CreateLernende() {
             )}
           />
           <FormField
-            name='telefon'
+            name="telefon"
             render={({ field }) => (
-              <FormItem className='mb-4'>
+              <FormItem className="mb-4">
                 <FormControl>
                   <Input
-                    placeholder='Telefon'
-                    className='bg-white w-[250px]'
+                    placeholder="Telefon"
+                    className="bg-white w-[250px]"
                     {...field}
                   />
                 </FormControl>
@@ -158,13 +158,13 @@ function CreateLernende() {
             )}
           />
           <FormField
-            name='handy'
+            name="handy"
             render={({ field }) => (
-              <FormItem className='mb-4'>
+              <FormItem className="mb-4">
                 <FormControl>
                   <Input
-                    placeholder='Handy'
-                    className='bg-white w-[250px]'
+                    placeholder="Handy"
+                    className="bg-white w-[250px]"
                     {...field}
                   />
                 </FormControl>
@@ -173,13 +173,13 @@ function CreateLernende() {
             )}
           />
           <FormField
-            name='email'
+            name="email"
             render={({ field }) => (
-              <FormItem className='mb-4'>
+              <FormItem className="mb-4">
                 <FormControl>
                   <Input
-                    placeholder='E-Mail'
-                    className='bg-white w-[250px]'
+                    placeholder="E-Mail"
+                    className="bg-white w-[250px]"
                     {...field}
                   />
                 </FormControl>
@@ -188,13 +188,13 @@ function CreateLernende() {
             )}
           />
           <FormField
-            name='email_privat'
+            name="email_privat"
             render={({ field }) => (
-              <FormItem className='mb-4'>
+              <FormItem className="mb-4">
                 <FormControl>
                   <Input
-                    placeholder='E-Mail privat'
-                    className='bg-white w-[250px]'
+                    placeholder="E-Mail privat"
+                    className="bg-white w-[250px]"
                     {...field}
                   />
                 </FormControl>
@@ -203,17 +203,17 @@ function CreateLernende() {
             )}
           />
           <FormField
-            name='birthdate'
+            name="birthdate"
             render={({ field }) => (
-              <FormItem className='mb-4'>
+              <FormItem className="mb-4">
                 <FormControl>
-                  <DatePicker field={field} title='Geburtsdatum' />
+                  <DatePicker field={field} title="Geburtsdatum" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button type='submit'>Erstellen</Button>
+          <Button type="submit">Erstellen</Button>
         </form>
       </Form>
     </div>

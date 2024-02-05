@@ -1,12 +1,12 @@
-import { postLehrbetriebeLernende } from '@/lib/querys';
+import { postLehrbetriebeLernende } from "@/lib/querys";
 import {
   QueryClient,
   useMutation,
   useQueryClient,
-} from '@tanstack/react-query';
-import { useForm } from 'react-hook-form';
-import { lehrbetriebeLernendeFormSchema as formSchema } from '@/lib/schemas';
-import { zodResolver } from '@hookform/resolvers/zod';
+} from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import { lehrbetriebeLernendeFormSchema as formSchema } from "@/lib/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
   FormControl,
@@ -14,13 +14,13 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import * as z from 'zod';
-import LehrbetriebePopover from '@/lib/popovers/LehrbetriebePopover';
-import LernendePopover from '@/lib/popovers/LernendePopover';
-import DatePicker from '@/lib/CustomComponents/DatePicker';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+} from "@/components/ui/form";
+import * as z from "zod";
+import LehrbetriebePopover from "@/lib/popovers/LehrbetriebePopover";
+import LernendePopover from "@/lib/popovers/LernendePopover";
+import DatePicker from "@/lib/CustomComponents/DatePicker";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 function CreateLehrbetriebeLernende() {
   const queryClient: QueryClient = useQueryClient();
@@ -28,7 +28,7 @@ function CreateLehrbetriebeLernende() {
     mutationFn: postLehrbetriebeLernende,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['lehrbetriebeLernende'],
+        queryKey: ["lehrbetriebeLernende"],
       });
     },
   });
@@ -37,9 +37,9 @@ function CreateLehrbetriebeLernende() {
   });
 
   return (
-    <div className='create-record'>
+    <div className="create-record">
       <Form {...form} control={form.control}>
-        <FormLabel className='mb-5'>
+        <FormLabel className="mb-5">
           Neue Verbindung von Lehrbetrieb zu Lernender
         </FormLabel>
         <form
@@ -48,9 +48,9 @@ function CreateLehrbetriebeLernende() {
           })}
         >
           <FormField
-            name='nr_lehrbetrieb'
+            name="nr_lehrbetrieb"
             render={({ field }) => (
-              <FormItem className='mb-4 flex justify-center'>
+              <FormItem className="mb-4 flex justify-center">
                 <FormControl>
                   <LehrbetriebePopover field={field} />
                 </FormControl>
@@ -59,9 +59,9 @@ function CreateLehrbetriebeLernende() {
             )}
           />
           <FormField
-            name='nr_lernende'
+            name="nr_lernende"
             render={({ field }) => (
-              <FormItem className='mb-4'>
+              <FormItem className="mb-4">
                 <FormControl>
                   <LernendePopover field={field} />
                 </FormControl>
@@ -70,35 +70,35 @@ function CreateLehrbetriebeLernende() {
             )}
           />
           <FormField
-            name='start'
+            name="start"
             render={({ field }) => (
-              <FormItem className='mb-4'>
+              <FormItem className="mb-4">
                 <FormControl>
-                  <DatePicker field={field} title='Start' />
+                  <DatePicker field={field} title="Start" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
           <FormField
-            name='ende'
+            name="ende"
             render={({ field }) => (
-              <FormItem className='mb-4'>
+              <FormItem className="mb-4">
                 <FormControl>
-                  <DatePicker field={field} title='Ende' />
+                  <DatePicker field={field} title="Ende" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
           <FormField
-            name='beruf'
+            name="beruf"
             render={({ field }) => (
-              <FormItem className='mb-4 flex justify-center'>
+              <FormItem className="mb-4 flex justify-center">
                 <FormControl>
                   <Input
-                    placeholder='Beruf'
-                    className='bg-white w-[250px]'
+                    placeholder="Beruf"
+                    className="bg-white w-[250px]"
                     {...field}
                   />
                 </FormControl>
@@ -106,7 +106,7 @@ function CreateLehrbetriebeLernende() {
               </FormItem>
             )}
           />
-          <Button type='submit'>Erstellen</Button>
+          <Button type="submit">Erstellen</Button>
         </form>
       </Form>
     </div>
