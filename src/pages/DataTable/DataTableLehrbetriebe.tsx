@@ -5,30 +5,31 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from '@/components/ui/table';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { NavLink } from "react-router-dom";
-import "./DataTable.css";
-import { getLehrbetriebe } from "@/lib/querys";
-import { Skeleton } from "@/components/ui/skeleton";
+} from '@/components/ui/tooltip';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { NavLink } from 'react-router-dom';
+import './DataTable.css';
+import { getLehrbetriebe } from '@/lib/querys';
+import { Skeleton } from '@/components/ui/skeleton';
+import { router } from '@/router';
 
 function DataTableLehrbetriebe() {
-  const TABLE_NAME = "lehrbetriebe";
+  const TABLE_NAME = 'lehrbetriebe';
   useQueryClient();
   const { data, isPending } = useQuery({
-    queryKey: ["lehrbetriebe"],
+    queryKey: ['lehrbetriebe'],
     queryFn: getLehrbetriebe,
   });
 
   return (
     <div>
-      <div className="mb-3">
+      <div className='mb-3'>
         <NavLink to={`/${TABLE_NAME}/create`}>
           <TooltipProvider>
             <Tooltip>
@@ -40,38 +41,44 @@ function DataTableLehrbetriebe() {
           </TooltipProvider>
         </NavLink>
       </div>
-      <div className="table">
+      <div className='table'>
         <h1>Lehrbetriebe</h1>
         <Table>
           <TableHeader>
-            <TableHead className="text-black">ID</TableHead>
-            <TableHead className="text-black">Firma</TableHead>
-            <TableHead className="text-black">Strasse</TableHead>
-            <TableHead className="text-black">PLZ</TableHead>
-            <TableHead className="text-black">Ort</TableHead>
+            <TableHead className='text-black'>ID</TableHead>
+            <TableHead className='text-black'>Firma</TableHead>
+            <TableHead className='text-black'>Strasse</TableHead>
+            <TableHead className='text-black'>PLZ</TableHead>
+            <TableHead className='text-black'>Ort</TableHead>
           </TableHeader>
           <TableBody>
             {isPending
               ? Array.from({ length: 4 }).map((_, index) => (
                   <TableRow key={index}>
                     {Array.from({ length: 5 }).map((_, colIndex) => (
-                      <TableCell className="text-left" key={colIndex}>
-                        <Skeleton className="w-full h-[25px] mb-2" />
+                      <TableCell className='text-left' key={colIndex}>
+                        <Skeleton className='w-full h-[25px] mb-2' />
                       </TableCell>
                     ))}
                   </TableRow>
                 ))
               : data?.map((row) => (
-                  <TableRow key={row.id_lehrbetrieb}>
-                    <TableCell className="text-left">
-                      <NavLink to={`/${TABLE_NAME}/${row.id_lehrbetrieb}`}>
-                        {row.id_lehrbetrieb}
-                      </NavLink>
+                  <TableRow
+                    key={row.id_lehrbetrieb}
+                    onClick={() =>
+                      router.navigate({
+                        pathname: `/${TABLE_NAME}/${row.id_lehrbetrieb}`,
+                      })
+                    }
+                    className='cursor-pointer'
+                  >
+                    <TableCell className='text-left'>
+                      {row.id_lehrbetrieb}
                     </TableCell>
-                    <TableCell className="text-left">{row.firma}</TableCell>
-                    <TableCell className="text-left">{row.strasse}</TableCell>
-                    <TableCell className="text-left">{row.plz}</TableCell>
-                    <TableCell className="text-left">{row.ort}</TableCell>
+                    <TableCell className='text-left'>{row.firma}</TableCell>
+                    <TableCell className='text-left'>{row.strasse}</TableCell>
+                    <TableCell className='text-left'>{row.plz}</TableCell>
+                    <TableCell className='text-left'>{row.ort}</TableCell>
                   </TableRow>
                 ))}
           </TableBody>

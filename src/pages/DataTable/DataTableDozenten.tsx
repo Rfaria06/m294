@@ -17,6 +17,7 @@ import { getDozenten } from '@/lib/querys';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { NavLink } from 'react-router-dom';
 import './DataTable.css';
+import { router } from '@/router';
 
 function DataTableDozenten() {
   const TABLE_NAME = 'dozenten';
@@ -61,12 +62,16 @@ function DataTableDozenten() {
                   </TableRow>
                 ))
               : data?.map((row) => (
-                  <TableRow key={row.id_dozent}>
-                    <TableCell className='text-left'>
-                      <NavLink to={`/${TABLE_NAME}/${row.id_dozent}`}>
-                        {row.id_dozent}
-                      </NavLink>
-                    </TableCell>
+                  <TableRow
+                    key={row.id_dozent}
+                    onClick={() =>
+                      router.navigate({
+                        pathname: `/${TABLE_NAME}/${row.id_dozent}`,
+                      })
+                    }
+                    className='cursor-pointer'
+                  >
+                    <TableCell className='text-left'>{row.id_dozent}</TableCell>
                     <TableCell className='text-left'>{row.vorname}</TableCell>
                     <TableCell className='text-left'>{row.nachname}</TableCell>
                     <TableCell className='text-left'>{row.email}</TableCell>
