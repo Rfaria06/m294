@@ -25,7 +25,7 @@ const components: { title: string; href: string; description: string }[] = [
     description: "Zeige die Tabelle 'Lernende' an.",
   },
   {
-    title: "Lehrbetriebe-lernende",
+    title: "Lehrbetriebe ➞ lernende",
     href: "/lehrbetriebe_lernende",
     description:
       "Diese Tabelle zeigt die Zuordnung von Lehrbetrieben zu Lernenden an.",
@@ -46,7 +46,7 @@ const components: { title: string; href: string; description: string }[] = [
     description: "Zeige die Tabelle 'Kurse' an.",
   },
   {
-    title: "Kurse-lernende",
+    title: "Kurse ➞ lernende",
     href: "/kurse_lernende",
     description:
       "Diese Tabelle zeigt die Zuordnung von Kursen zu Lernenden an.",
@@ -107,7 +107,7 @@ const ListItem = React.forwardRef<
           ref={ref}
           className={cn(
             "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-            className
+            className,
           )}
           {...props}
         >

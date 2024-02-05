@@ -20,11 +20,10 @@ export type Row_lernende = {
   email: string;
   email_privat: string;
   birthdate: string;
-  nr_lehrbetrieb: string;
 };
 
 export type Row_lehrbetrieb_lernende = {
-  id_lehrbetrieb_lernende: string;
+  id_lehrbetriebe_lernende: string;
   nr_lehrbetrieb: string;
   nr_lernende: string;
   start: string;

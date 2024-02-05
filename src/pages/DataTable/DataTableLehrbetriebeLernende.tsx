@@ -1,61 +1,90 @@
-import { useEffect, useState } from "react";
-import { Row_lehrbetrieb_lernende } from "@/lib/types";
 import {
   Table,
   TableBody,
+  TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import "./DataTable.css";
 import { getLehrbetriebLernende } from "@/lib/querys";
+import { NavLink } from "react-router-dom";
+import "./DataTable.css";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { Skeleton } from "@/components/ui/skeleton";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 function DataTableLehrbetriebeLernende() {
   const TABLE_NAME = "lehrbetriebe_lernende";
-
-  const [data, setData] = useState<Row_lehrbetrieb_lernende[]>([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await getLehrbetriebLernende();
-        setData(result);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    fetchData();
-  }, []);
+  useQueryClient();
+  const { data, isPending } = useQuery({
+    queryKey: ["lehrbetriebeLernende"],
+    queryFn: getLehrbetriebLernende,
+  });
 
   return (
-    <div className="table">
-      <h1>Lehrbetriebe -{`>`} Lernende</h1>
-      <Table>
-        <TableHeader>
-          <TableHead className="text-white">ID</TableHead>
-          <TableHead className="text-white">Nr. Lehrbetrieb</TableHead>
-          <TableHead className="text-white">Nr. Lernende</TableHead>
-          <TableHead className="text-white">Start</TableHead>
-          <TableHead className="text-white">Ende</TableHead>
-          <TableHead className="text-white">Beruf</TableHead>
-        </TableHeader>
-        <TableBody>
-          {data.map((row) => (
-            <TableRow key={row.id_lehrbetrieb_lernende}>
-              <td>
-                <a href={`/${TABLE_NAME}/${row.id_lehrbetrieb_lernende}`}>
-                  {row.id_lehrbetrieb_lernende}
-                </a>
-              </td>
-              <td>{row.nr_lehrbetrieb}</td>
-              <td>{row.nr_lernende}</td>
-              <td>{row.start}</td>
-              <td>{row.ende}</td>
-              <td>{row.beruf}</td>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+    <div>
+      <div className="mb-3">
+        <NavLink to={`/${TABLE_NAME}/create`}>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>Neu</TooltipTrigger>
+              <TooltipContent>
+                <p>Eine neue Verbindung Lehrbetriebe ➞ Lernende erstellen</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </NavLink>
+      </div>
+      <div className="table">
+        <h1>Lehrbetriebe ➞ Lernende</h1>
+        <Table>
+          <TableHeader>
+            <TableHead className="text-black">ID</TableHead>
+            <TableHead className="text-black">Nr. Lehrbetrieb</TableHead>
+            <TableHead className="text-black">Nr. Lernende</TableHead>
+            <TableHead className="text-black">Start</TableHead>
+            <TableHead className="text-black">Ende</TableHead>
+            <TableHead className="text-black">Beruf</TableHead>
+          </TableHeader>
+          <TableBody>
+            {isPending
+              ? Array.from({ length: 4 }).map((_, index) => (
+                  <TableRow key={index}>
+                    {Array.from({ length: 6 }).map((_, colIndex) => (
+                      <TableCell className="text-left" key={colIndex}>
+                        <Skeleton className="w-full h-[25px] mb-2" />
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              : data?.map((row) => (
+                  <TableRow key={row.id_lehrbetriebe_lernende}>
+                    <TableCell className="text-left">
+                      <NavLink
+                        to={`/${TABLE_NAME}/${row.id_lehrbetriebe_lernende}`}
+                      >
+                        {row.id_lehrbetriebe_lernende ?? "id"}
+                      </NavLink>
+                    </TableCell>
+                    <TableCell className="text-left">
+                      {row.nr_lehrbetrieb}
+                    </TableCell>
+                    <TableCell className="text-left">
+                      {row.nr_lernende}
+                    </TableCell>
+                    <TableCell className="text-left">{row.start}</TableCell>
+                    <TableCell className="text-left">{row.ende}</TableCell>
+                    <TableCell className="text-left">{row.beruf}</TableCell>
+                  </TableRow>
+                ))}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
 }
