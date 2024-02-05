@@ -8,6 +8,7 @@ import {
   kurseLernendeFormSchema,
   laenderFormSchema,
   lehrbetriebeFormSchema,
+  lehrbetriebeLernendeFormSchema,
 } from "./schemas";
 import {
   Row_dozenten,
@@ -51,7 +52,6 @@ export async function postLehrbetriebe(params: {
   const url = BASE_URL + "lehrbetriebe";
   try {
     const paramData = params.data;
-    debugger;
     await axios.post(url, JSON.stringify(paramData), {
       headers: { "Content-Type": "Application/json" },
     });
@@ -64,7 +64,7 @@ export async function postLehrbetriebe(params: {
 export async function getLehrbetriebLernende(): Promise<
   Row_lehrbetrieb_lernende[]
 > {
-  const url = BASE_URL + "lehrbetrieb_lernende";
+  const url = BASE_URL + "lehrbetriebe_lernende";
   try {
     const response = (await axios.get(url)) ?? [];
     toast("Lehrbetriebe ➞ Lernende erfolgreich geladen");
@@ -72,6 +72,23 @@ export async function getLehrbetriebLernende(): Promise<
   } catch (error) {
     handleError(error);
     return [];
+  }
+}
+
+export async function postLehrbetriebeLernende(params: {
+  data: z.infer<typeof lehrbetriebeLernendeFormSchema>;
+}) {
+  const url = BASE_URL + "lehrbetriebe_lernende";
+  try {
+    const paramData = params.data;
+    await axios.post(url, {
+      ...paramData,
+      start: getISODate(paramData.start),
+      ende: getISODate(paramData.ende),
+    });
+    toast("Lehrbetriebe ➞ Lernende erfolgreich erstellt");
+  } catch (error) {
+    handleError(error);
   }
 }
 
@@ -184,11 +201,10 @@ export async function postKurseLernende(params: {
 }
 
 function getISODate(date?: Date): string | undefined {
-  return date
-    ? new Date(new Date(date).getTime() + 24 * 60 * 60 * 1000)
-        .toISOString()
-        .split("T")[0]
-    : undefined;
+  if (!date) return undefined;
+  const dateObject = typeof date === "string" ? new Date(date) : date;
+  const nextDay = new Date(dateObject.getTime() + 24 * 60 * 60 * 1000);
+  return nextDay.toISOString().split("T")[0];
 }
 
 function handleError(error: unknown): void {

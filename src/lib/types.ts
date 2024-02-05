@@ -24,7 +24,7 @@ export type Row_lernende = {
 };
 
 export type Row_lehrbetrieb_lernende = {
-  id_lehrbetrieb_lernende: string;
+  id_lehrbetriebe_lernende: string;
   nr_lehrbetrieb: string;
   nr_lernende: string;
   start: string;
