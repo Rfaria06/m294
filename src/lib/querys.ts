@@ -9,6 +9,7 @@ import {
   laenderFormSchema,
   lehrbetriebeFormSchema,
   lehrbetriebeLernendeFormSchema,
+  lernendeFormSchema,
 } from "./schemas";
 import {
   Row_dozenten,
@@ -31,6 +32,22 @@ export async function getLernende(): Promise<Row_lernende[]> {
   } catch (error) {
     handleError(error);
     return [];
+  }
+}
+
+export async function postLernende(params: {
+  data: z.infer<typeof lernendeFormSchema>;
+}) {
+  const url = BASE_URL + "lernende";
+  try {
+    const paramData = params.data;
+    await axios.post(url, {
+      ...paramData,
+      birthdate: getISODate(paramData.birthdate),
+    });
+    toast("Lernender erstellt");
+  } catch (error) {
+    handleError(error);
   }
 }
 
@@ -200,7 +217,7 @@ export async function postKurseLernende(params: {
   }
 }
 
-function getISODate(date?: Date): string | undefined {
+function getISODate(date?: Date | null): string | undefined {
   if (!date) return undefined;
   const dateObject = typeof date === "string" ? new Date(date) : date;
   const nextDay = new Date(dateObject.getTime() + 24 * 60 * 60 * 1000);

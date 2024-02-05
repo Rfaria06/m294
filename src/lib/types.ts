@@ -20,7 +20,6 @@ export type Row_lernende = {
   email: string;
   email_privat: string;
   birthdate: string;
-  nr_lehrbetrieb: string;
 };
 
 export type Row_lehrbetrieb_lernende = {
