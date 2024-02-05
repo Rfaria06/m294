@@ -11,6 +11,12 @@ import { Row_laender } from "@/lib/types";
 import { useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
 import "./DataTable.css";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 function DataTableLaender() {
   const TABLE_NAME = "countries";
@@ -35,26 +41,40 @@ function DataTableLaender() {
   }, []);
 
   return (
-    <div className="table">
-      <h1>Länder</h1>
-      <Table>
-        <TableHeader>
-          <TableHead className="text-black">ID</TableHead>
-          <TableHead className="text-black">Land</TableHead>
-        </TableHeader>
-        <TableBody>
-          {data.map((row) => (
-            <TableRow key={row.id_country}>
-              <TableCell className="text-left">
-                <NavLink to={`/${TABLE_NAME}/${row.id_country}`}>
-                  {row.id_country}
-                </NavLink>
-              </TableCell>
-              <TableCell className="text-left">{row.country}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+    <div>
+      <div className="mb-3">
+        <NavLink to={`/${TABLE_NAME}/create`}>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>Neu</TooltipTrigger>
+              <TooltipContent>
+                <p>Ein neues Land erstellen</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </NavLink>
+      </div>
+      <div className="table">
+        <h1>Länder</h1>
+        <Table>
+          <TableHeader>
+            <TableHead className="text-black">ID</TableHead>
+            <TableHead className="text-black">Land</TableHead>
+          </TableHeader>
+          <TableBody>
+            {data.map((row) => (
+              <TableRow key={row.id_country}>
+                <TableCell className="text-left">
+                  <NavLink to={`/${TABLE_NAME}/${row.id_country}`}>
+                    {row.id_country}
+                  </NavLink>
+                </TableCell>
+                <TableCell className="text-left">{row.country}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
 }
