@@ -7,6 +7,7 @@ import {
   kursFormSchema,
   kurseLernendeFormSchema,
   laenderFormSchema,
+  lehrbetriebeFormSchema,
 } from "./schemas";
 import {
   Row_dozenten,
@@ -41,6 +42,22 @@ export async function getLehrbetriebe(): Promise<Row_lehrbetriebe[]> {
   } catch (error) {
     handleError(error);
     return [];
+  }
+}
+
+export async function postLehrbetriebe(params: {
+  data: z.infer<typeof lehrbetriebeFormSchema>;
+}) {
+  const url = BASE_URL + "lehrbetriebe";
+  try {
+    const paramData = params.data;
+    debugger;
+    await axios.post(url, JSON.stringify(paramData), {
+      headers: { "Content-Type": "Application/json" },
+    });
+    toast("Lehrbetrieb erstellt");
+  } catch (error) {
+    handleError(error);
   }
 }
 

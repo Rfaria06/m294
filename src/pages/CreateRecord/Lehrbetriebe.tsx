@@ -1,0 +1,106 @@
+import { postLehrbetriebe } from "@/lib/querys";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { lehrbetriebeFormSchema as formSchema } from "@/lib/schemas";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+
+function CreateLehrbetrieb() {
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: postLehrbetriebe,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["lehrbetriebe"] });
+    },
+  });
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+  });
+
+  return (
+    <div>
+      <Form {...form} control={form.control}>
+        <FormLabel className="mb-5">Neuer Lehrbetrieb</FormLabel>
+        <form
+          onSubmit={form.handleSubmit(() => {
+            mutation.mutate({ data: form.getValues() });
+          })}
+        >
+          <FormField
+            name="firma"
+            render={({ field }) => (
+              <FormItem className="mb-4 flex justify-center">
+                <FormControl>
+                  <Input
+                    placeholder="Firma"
+                    className="bg-white w-[250px]"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            name="strasse"
+            render={({ field }) => (
+              <FormItem className="mb-4 flex justify-center">
+                <FormControl>
+                  <Input
+                    placeholder="Strasse"
+                    className="bg-white w-[250px]"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            name="plz"
+            render={({ field }) => (
+              <FormItem className="mb-4 flex justify-center">
+                <FormControl>
+                  <Input
+                    placeholder="PLZ"
+                    className="bg-white w-[250px]"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            name="ort"
+            render={({ field }) => (
+              <FormItem className="mb-4 flex justify-center">
+                <FormControl>
+                  <Input
+                    placeholder="Ort"
+                    className="bg-white w-[250px]"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button type="submit">Erstellen</Button>
+        </form>
+      </Form>
+    </div>
+  );
+}
+
+export default CreateLehrbetrieb;

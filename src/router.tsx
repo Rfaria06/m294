@@ -4,6 +4,7 @@ import {
   CreateKurs,
   CreateKurseLernende,
   CreateLand,
+  CreateLehrbetrieb,
 } from "./pages/CreateRecord";
 import {
   DataTableDozenten,
@@ -70,7 +71,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "/lehrbetriebe/create",
-    element: <DataTableLehrbetriebe />,
+    element: <CreateLehrbetrieb />,
     errorElement: <ErrorPage />,
   },
   {
