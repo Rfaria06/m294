@@ -4,10 +4,26 @@ type Props = {
   darkColor: boolean;
 };
 
+function format(label: string, value: string): string {
+  if (label !== "geschlecht") return value;
+  switch (value) {
+    case "m":
+      value = "Männlich";
+      break;
+    case "w":
+      value = "Weiblich";
+      break;
+    case "d":
+      value = "Divers";
+      break;
+  }
+  return value;
+}
+
 function DetailRow({ label, value, darkColor }: Props) {
   const background: string = darkColor ? "#ced2eb" : "#e7eaf6";
   label = typeof label === "string" ? label : "Schlüssel";
-  value = typeof value === "string" ? value : "Wert";
+  value = typeof value === "string" ? format(label, value) : "Wert";
 
   return (
     <div className="w-full mt-2 rounded" style={{ background }}>
