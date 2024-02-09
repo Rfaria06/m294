@@ -2,6 +2,7 @@ import { getSingle } from "@/lib/querys";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { toast } from "sonner";
+import "./DetailView.css";
 
 type Params = { tableName: string; id: string };
 
@@ -23,7 +24,7 @@ function DetailView() {
     }) || {};
 
   return (
-    <div>
+    <div className="container">
       <h1>Test</h1>
       {Object.keys(data ?? {}).map((key) => (
         <p key={key}>{String(key)}</p>
