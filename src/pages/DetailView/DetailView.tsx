@@ -1,16 +1,24 @@
-import { getSingle } from '@/lib/querys';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { useParams } from 'react-router-dom';
+import { getSingle } from "@/lib/querys";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useParams } from "react-router-dom";
+import { toast } from "sonner";
+
+type Params = { tableName: string; id: string };
 
 function DetailView() {
   useQueryClient();
   const { tableName, id } = useParams();
-  if (!tableName || !id) return null; // Return null or another component when tableName or id is falsy
+  let params: Params = { tableName: "", id: "" };
 
-  debugger;
+  if (!tableName || !id) {
+    toast("Ungültige URL");
+  } else {
+    params = { tableName, id };
+  }
+
   const { data } =
     useQuery({
-      queryFn: () => getSingle({ tableName, id }),
+      queryFn: () => getSingle(params),
       queryKey: [tableName],
     }) || {};
 
