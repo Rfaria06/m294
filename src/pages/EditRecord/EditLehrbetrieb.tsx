@@ -1,22 +1,31 @@
 import { useParams } from 'react-router-dom';
 import './EditRecord.css';
 import { toast } from 'sonner';
-import { QueryClient, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { getSingle } from '@/lib/querys';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { getSingle, updateLehrbetriebe } from '@/lib/querys';
+import {
+	Form,
+	FormControl,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
+} from '@/components/ui/form';
 import { useForm } from 'react-hook-form';
-import { lehrbetriebeFormSchema as formSchema } from '@/lib/schemas';}
-import * as z from "zod";
+import { lehrbetriebeFormSchema as formSchema } from '@/lib/schemas';
+import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '@/components/ui/input';
+import { Row_lehrbetriebe } from '@/lib/types';
+import { Button } from '@/components/ui/button';
 
 function EditLehrbetrieb() {
-	const queryClient: QueryClient = useQueryClient();
+	useQueryClient();
 
-	const { id } = useParams() ?? '';
+	const { id } = useParams();
 	if (!id) toast('Ungültige ID');
 
-	const { data, isFetching } = useQuery({
+	const { data } = useQuery({
 		queryKey: ['lehrbetriebe'],
 		queryFn: () =>
 			getSingle({
@@ -24,22 +33,39 @@ function EditLehrbetrieb() {
 				id: id ?? '',
 			}),
 	});
+	const rowData = data as Row_lehrbetriebe | undefined;
 
 	const form = useForm<z.infer<typeof formSchema>>({
-		resolver: zodResolver(formSchema)
-	})
+		resolver: zodResolver(formSchema),
+		defaultValues: {
+			firma: rowData?.firma,
+			strasse: rowData?.strasse,
+			plz: rowData?.plz,
+			ort: rowData?.ort,
+		},
+	});
 
 	const mutation = useMutation({
-		mutationFn: 
-	})
+		mutationFn: () =>
+			updateLehrbetriebe({
+				data: form.getValues(),
+				id: id ?? '0',
+			}),
+	});
 
 	return (
-		<div className="create-record">
+		<div className="edit-record">
 			<Form {...form} control={form.control}>
 				<FormLabel className="mb-5">Neuer Lehrbetrieb</FormLabel>
 				<form
 					onSubmit={form.handleSubmit(() => {
-						mutation.mutate({ data: form.getValues() });
+						const formData = { ...form.getValues() };
+						for (const key in formData) {
+							if (formData[key as keyof typeof formData] === '') {
+								formData[key as keyof typeof formData] = undefined;
+							}
+						}
+						mutation.mutate();
 					})}
 				>
 					<FormField
@@ -48,7 +74,7 @@ function EditLehrbetrieb() {
 							<FormItem className="mb-4 flex justify-center">
 								<FormControl>
 									<Input
-										placeholder="Firma"
+										placeholder={rowData?.firma || 'Firma'}
 										className="bg-white w-[250px]"
 										{...field}
 									/>
@@ -60,10 +86,10 @@ function EditLehrbetrieb() {
 					<FormField
 						name="strasse"
 						render={({ field }) => (
-							<FormItem className="mb-4 flex justify-center">
+							<FormItem className="mb-4">
 								<FormControl>
 									<Input
-										placeholder="Strasse"
+										placeholder={rowData?.strasse || 'Strasse'}
 										className="bg-white w-[250px]"
 										{...field}
 									/>
@@ -78,7 +104,7 @@ function EditLehrbetrieb() {
 							<FormItem className="mb-4 flex justify-center">
 								<FormControl>
 									<Input
-										placeholder="PLZ"
+										placeholder={rowData?.plz || 'PLZ'}
 										className="bg-white w-[250px]"
 										{...field}
 									/>
@@ -93,7 +119,7 @@ function EditLehrbetrieb() {
 							<FormItem className="mb-4 flex justify-center">
 								<FormControl>
 									<Input
-										placeholder="Ort"
+										placeholder={rowData?.ort || 'Ort'}
 										className="bg-white w-[250px]"
 										{...field}
 									/>
