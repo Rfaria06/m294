@@ -23,6 +23,23 @@ import {
 
 const BASE_URL = "https://raul.undefiniert.ch/";
 
+export async function getSingle(params: {
+  tableName: string;
+  id: string;
+}): Promise<object> {
+  const url: string = `${BASE_URL}${params.tableName}/id/${params.id}`;
+  try {
+    const response = await axios.get(url);
+    toast("Eintrag erfolgreich geladen");
+    return response.data.data[0];
+  } catch (error) {
+    handleError(error);
+    return {
+      daten: "Keine Daten gefunden.",
+    };
+  }
+}
+
 export async function getLernende(): Promise<Row_lernende[]> {
   const url = BASE_URL + "lernende";
   try {

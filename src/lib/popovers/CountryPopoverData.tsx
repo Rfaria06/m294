@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { getLaender } from "@/lib/querys";
-import { Row_laender } from "@/lib/types";
-import { useEffect, useRef, useState } from "react";
+import { getLaender } from '@/lib/querys';
+import { Row_laender } from '@/lib/types';
+import { useEffect, useRef, useState } from 'react';
 type countryPickerElement = { value: string; label: string };
 
 function CountryPickerData(): countryPickerElement[] {
@@ -18,14 +18,14 @@ function CountryPickerData(): countryPickerElement[] {
           hasFetchedData.current = true;
         }
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error('Error fetching data:', error);
       }
     };
     fetchData();
   }, []);
 
   return data.map((row) => ({
-    value: row.id_country,
+    value: row.id,
     label: row.country,
   }));
 }

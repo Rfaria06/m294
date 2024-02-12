@@ -61,17 +61,15 @@ function DataTableLaender() {
                 ))
               : data?.map((row) => (
                   <TableRow
-                    key={row.id_country}
+                    key={row.id}
                     onClick={() =>
                       router.navigate({
-                        pathname: `/${TABLE_NAME}/${row.id_country}`,
+                        pathname: `/${TABLE_NAME}/${row.id}`,
                       })
                     }
                     className='cursor-pointer'
                   >
-                    <TableCell className='text-left'>
-                      {row.id_country}
-                    </TableCell>
+                    <TableCell className='text-left'>{row.id}</TableCell>
                     <TableCell className='text-left'>{row.country}</TableCell>
                   </TableRow>
                 ))}

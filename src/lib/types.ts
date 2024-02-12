@@ -1,5 +1,5 @@
 export type Row_lehrbetriebe = {
-  id_lehrbetrieb: string;
+  id: string;
   firma: string;
   strasse: string;
   plz: string;
@@ -7,7 +7,7 @@ export type Row_lehrbetriebe = {
 };
 
 export type Row_lernende = {
-  id_lernende: string;
+  id: string;
   vorname: string;
   nachname: string;
   strasse: string;
@@ -23,7 +23,7 @@ export type Row_lernende = {
 };
 
 export type Row_lehrbetrieb_lernende = {
-  id_lehrbetriebe_lernende: string;
+  id: string;
   nr_lehrbetrieb: string;
   nr_lernende: string;
   start: string;
@@ -32,12 +32,12 @@ export type Row_lehrbetrieb_lernende = {
 };
 
 export type Row_laender = {
-  id_country: string;
+  id: string;
   country: string;
 };
 
 export type Row_dozenten = {
-  id_dozent: string;
+  id: string;
   vorname: string;
   nachname: string;
   strasse: string;
@@ -52,7 +52,7 @@ export type Row_dozenten = {
 };
 
 export type Row_kurse = {
-  id_kurs: string;
+  id: string;
   kursnummer: string;
   kursthema: string;
   inhalt: string;
@@ -63,7 +63,7 @@ export type Row_kurse = {
 };
 
 export type Row_kurse_lernende = {
-  id_kurs_teilnehmer: string;
+  id: string;
   nr_teilnehmer: string;
   nr_kurs: string;
   note: string;

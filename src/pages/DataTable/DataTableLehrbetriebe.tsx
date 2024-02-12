@@ -64,17 +64,15 @@ function DataTableLehrbetriebe() {
                 ))
               : data?.map((row) => (
                   <TableRow
-                    key={row.id_lehrbetrieb}
+                    key={row.id}
                     onClick={() =>
                       router.navigate({
-                        pathname: `/${TABLE_NAME}/${row.id_lehrbetrieb}`,
+                        pathname: `/${TABLE_NAME}/${row.id}`,
                       })
                     }
                     className='cursor-pointer'
                   >
-                    <TableCell className='text-left'>
-                      {row.id_lehrbetrieb}
-                    </TableCell>
+                    <TableCell className='text-left'>{row.id}</TableCell>
                     <TableCell className='text-left'>{row.firma}</TableCell>
                     <TableCell className='text-left'>{row.strasse}</TableCell>
                     <TableCell className='text-left'>{row.plz}</TableCell>

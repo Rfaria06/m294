@@ -20,6 +20,7 @@ import {
 import ErrorPage from './pages/Error/ErrorPage';
 import Startpage from './pages/Startpage/Startpage';
 import InfoPage from './pages/Info/InfoPage';
+import DetailView from './pages/DetailView/DetailView';
 
 export const router = createBrowserRouter([
   {
@@ -105,6 +106,11 @@ export const router = createBrowserRouter([
   {
     path: '/kurse_lernende/create',
     element: <CreateKurseLernende />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: '/:tableName/:id',
+    element: <DetailView />,
     errorElement: <ErrorPage />,
   },
 ]);

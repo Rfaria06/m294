@@ -1,4 +1,5 @@
 import "./App.css";
+import { Suspense } from "react";
 import Header from "./components/Header/Header";
 import { RouterProvider } from "react-router-dom";
 import { router } from "./router";
@@ -10,13 +11,15 @@ const queryClient: QueryClient = new QueryClient();
 function App() {
   return (
     <main>
-      <QueryClientProvider client={queryClient}>
-        <div className="header">
-          <Header />
-        </div>
-        <Toaster />
-        <RouterProvider router={router} />
-      </QueryClientProvider>
+      <Suspense fallback={<div>Loading...</div>}>
+        <QueryClientProvider client={queryClient}>
+          <div className="header">
+            <Header />
+          </div>
+          <Toaster />
+          <RouterProvider router={router} />
+        </QueryClientProvider>
+      </Suspense>
     </main>
   );
 }
