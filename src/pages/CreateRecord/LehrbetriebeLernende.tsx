@@ -1,12 +1,12 @@
-import { postLehrbetriebeLernende } from "@/lib/querys";
+import { postLehrbetriebeLernende } from '@/lib/querys';
 import {
   QueryClient,
   useMutation,
   useQueryClient,
-} from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
-import { lehrbetriebeLernendeFormSchema as formSchema } from "@/lib/schemas";
-import { zodResolver } from "@hookform/resolvers/zod";
+} from '@tanstack/react-query';
+import { useForm } from 'react-hook-form';
+import { lehrbetriebeLernendeFormSchema as formSchema } from '@/lib/schemas';
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Form,
   FormControl,
@@ -14,13 +14,12 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import * as z from "zod";
-import LehrbetriebePopover from "@/lib/popovers/LehrbetriebePopover";
-import LernendePopover from "@/lib/popovers/LernendePopover";
-import DatePicker from "@/lib/CustomComponents/DatePicker";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+} from '@/components/ui/form';
+import * as z from 'zod';
+import LehrbetriebePopover from '@/lib/popovers/LehrbetriebePopover';
+import LernendePopover from '@/lib/popovers/LernendePopover';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 
 function CreateLehrbetriebeLernende() {
   const queryClient: QueryClient = useQueryClient();
@@ -28,7 +27,7 @@ function CreateLehrbetriebeLernende() {
     mutationFn: postLehrbetriebeLernende,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["lehrbetriebeLernende"],
+        queryKey: ['lehrbetriebeLernende'],
       });
     },
   });
@@ -74,7 +73,11 @@ function CreateLehrbetriebeLernende() {
             render={({ field }) => (
               <FormItem className="mb-4">
                 <FormControl>
-                  <DatePicker field={field} title="Start" />
+                  <Input
+                    placeholder="Start"
+                    className="bg-white w-[250px]"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -85,7 +88,11 @@ function CreateLehrbetriebeLernende() {
             render={({ field }) => (
               <FormItem className="mb-4">
                 <FormControl>
-                  <DatePicker field={field} title="Ende" />
+                  <Input
+                    placeholder="Ende"
+                    className="bg-white w-[250px]"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -6,21 +6,20 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { postLernende } from "@/lib/querys";
-import { lernendeFormSchema as formSchema } from "@/lib/schemas";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { postLernende } from '@/lib/querys';
+import { lernendeFormSchema as formSchema } from '@/lib/schemas';
 import {
   QueryClient,
   useMutation,
   useQueryClient,
-} from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import CountryPopover from "@/lib/popovers/CountryPopover";
-import GenderPopover from "@/lib/popovers/GenderPopover";
-import DatePicker from "@/lib/CustomComponents/DatePicker";
+} from '@tanstack/react-query';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import CountryPopover from '@/lib/popovers/CountryPopover';
+import GenderPopover from '@/lib/popovers/GenderPopover';
 
 function CreateLernende() {
   const queryClient: QueryClient = useQueryClient();
@@ -28,7 +27,7 @@ function CreateLernende() {
     mutationFn: postLernende,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["lernende"],
+        queryKey: ['lernende'],
       });
     },
   });
@@ -207,7 +206,11 @@ function CreateLernende() {
             render={({ field }) => (
               <FormItem className="mb-4">
                 <FormControl>
-                  <DatePicker field={field} title="Geburtsdatum" />
+                  <Input
+                    className="bg-white w-[250px]"
+                    placeholder="Geburtsdatum"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
