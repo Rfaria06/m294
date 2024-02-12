@@ -72,10 +72,10 @@ export async function updateLernende(params: {
 	data: z.infer<typeof lernendeFormSchema>;
 	id: string;
 }) {
-	const url = BASE_URL + 'lernende';
+	const url = BASE_URL + 'lernende/id/' + params.id;
 	try {
 		const paramData = params.data;
-		await axios.put(url, JSON.stringify({ ...paramData, id: params.id }), {
+		await axios.put(url, JSON.stringify({ ...paramData }), {
 			headers: { 'Content-Type': 'Application/json' },
 		});
 		toast(`Lernender ${params.id} erfolgreich geändert.`);
@@ -115,10 +115,10 @@ export async function updateLehrbetriebe(params: {
 	data: z.infer<typeof lehrbetriebeFormSchema>;
 	id: string;
 }) {
-	const url = BASE_URL + 'lehrbetriebe';
+	const url = BASE_URL + 'lehrbetriebe/id/' + params.id;
 	try {
 		const paramData = params.data;
-		await axios.put(url, JSON.stringify({ ...paramData, id: params.id }), {
+		await axios.put(url, JSON.stringify({ ...paramData }), {
 			headers: { 'Content-Type': 'Application/json' },
 		});
 		toast(`Lehrbetrieb ${params.id} erfolgreich geändert.`);
@@ -162,10 +162,10 @@ export async function updateLehrbetriebeLernende(params: {
 	data: z.infer<typeof lehrbetriebeLernendeFormSchema>;
 	id: string;
 }) {
-	const url = BASE_URL + 'lehrbetriebe_lernende';
+	const url = BASE_URL + 'lehrbetriebe_lernende/id/' + params.id;
 	try {
 		const paramData = params.data;
-		await axios.put(url, JSON.stringify({ ...paramData, id: params.id }), {
+		await axios.put(url, JSON.stringify({ ...paramData }), {
 			headers: { 'Content-Type': 'Application/json' },
 		});
 		toast(`Lehrbetriebe ➞ Lernende ${params.id} erfolgreich geändert.`);
@@ -203,10 +203,10 @@ export async function updateLaender(params: {
 	data: z.infer<typeof laenderFormSchema>;
 	id: string;
 }) {
-	const url = BASE_URL + 'laender';
+	const url = BASE_URL + 'laender/id/' + params.id;
 	try {
 		const paramData = params.data;
-		await axios.put(url, JSON.stringify({ ...paramData, id: params.id }), {
+		await axios.put(url, JSON.stringify({ ...paramData }), {
 			headers: { 'Content-Type': 'Application/json' },
 		});
 		toast(`Land ${params.id} erfolgreich geändert.`);
@@ -248,14 +248,14 @@ export async function updateDozenten(params: {
 	data: z.infer<typeof dozentFormSchema>;
 	id: string;
 }) {
-	const url = BASE_URL + 'dozenten';
+	const url = BASE_URL + 'dozenten/id/' + params.id;
 	try {
 		const paramData = params.data;
 		const uploadData: z.infer<typeof dozentUploadFormSchema> = {
 			...paramData,
 			birthdate: new Date(getISODate(paramData.birthdate) ?? ''),
 		};
-		await axios.put(url, JSON.stringify({ ...uploadData, id: params.id }), {
+		await axios.put(url, JSON.stringify({ ...uploadData }), {
 			headers: { 'Content-Type': 'Application/json' },
 		});
 		toast(`Dozent ${params.id} erfolgreich geändert.`);
@@ -297,7 +297,7 @@ export async function updateKurs(params: {
 	data: z.infer<typeof kursFormSchema>;
 	id: string;
 }) {
-	const url = BASE_URL + 'kurse';
+	const url = BASE_URL + 'kurse/id/' + params.id;
 	try {
 		const paramData = params.data;
 		const uploadData: z.infer<typeof kursFormSchema> = {
@@ -305,7 +305,7 @@ export async function updateKurs(params: {
 			startdatum: new Date(getISODate(paramData.startdatum) ?? ''),
 			enddatum: new Date(getISODate(paramData.enddatum) ?? ''),
 		};
-		await axios.put(url, JSON.stringify({ ...uploadData, id: params.id }), {
+		await axios.put(url, JSON.stringify({ ...uploadData }), {
 			headers: { 'Content-Type': 'Application/json' },
 		});
 		toast(`Kurs ${params.id} erfolgreich geändert.`);
@@ -343,10 +343,10 @@ export async function updateKurseLernende(params: {
 	data: z.infer<typeof kurseLernendeFormSchema>;
 	id: string;
 }) {
-	const url = BASE_URL + 'kurse_lernende';
+	const url = BASE_URL + 'kurse_lernende/id/' + params.id;
 	try {
 		const paramData = params.data;
-		await axios.put(url, JSON.stringify({ ...paramData, id: params.id }), {
+		await axios.put(url, JSON.stringify({ ...paramData }), {
 			headers: { 'Content-Type': 'Application/json' },
 		});
 		toast(`Kurs ➞ Lernender  ${params.id} erfolgreich geändert.`);
