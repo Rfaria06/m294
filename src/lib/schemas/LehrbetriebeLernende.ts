@@ -1,4 +1,4 @@
-import { numberRegex } from '@/lib/schemas/regex';
+import { dateRegex, numberRegex } from '@/lib/schemas/regex';
 import * as z from 'zod';
 
 const lehrbetriebeLernendeFormSchema = z.object({
@@ -8,8 +8,14 @@ const lehrbetriebeLernendeFormSchema = z.object({
   nr_lernende: z.string().regex(numberRegex, {
     message: 'Muss eine Zahl sein.',
   }),
-  start: z.string().optional(),
-  ende: z.string().optional(),
+  start: z
+    .string()
+    .regex(dateRegex, 'Muss im Format JJJJ-MM-DD sein.')
+    .optional(),
+  ende: z
+    .string()
+    .regex(dateRegex, 'Muss im Format JJJJ-MM-DD sein.')
+    .optional(),
   beruf: z
     .string()
     .max(100, {

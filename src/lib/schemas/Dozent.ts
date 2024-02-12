@@ -1,5 +1,5 @@
 import * as z from 'zod';
-import { numberRegex, phoneRegex, plzRegex } from './regex';
+import { dateRegex, numberRegex, phoneRegex, plzRegex } from './regex';
 
 const dozentFormSchema = z.object({
   vorname: z
@@ -48,8 +48,9 @@ const dozentFormSchema = z.object({
   handy: z.string().regex(phoneRegex, 'Ungültige Handynummer').optional(),
   email: z.string().min(1).email('Muss eine gültige E-Mail sein.').optional(),
   // birthate is a date picker,
-  birthdate: z.coerce
-    .date({ invalid_type_error: 'Ungültiges Datum' })
+  birthdate: z
+    .string()
+    .regex(dateRegex, 'Muss im Format JJJJ-MM-DD sein.')
     .optional(),
 });
 
