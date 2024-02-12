@@ -23,6 +23,7 @@ import { Button } from '@/components/ui/button';
 import { router } from '@/router';
 import LehrbetriebePopover from '@/lib/popovers/LehrbetriebePopover';
 import LernendePopover from '@/lib/popovers/LernendePopover';
+import LoadingIcons from 'react-loading-icons';
 
 function EditLehrbetriebeLernende() {
   const tableName: string = 'lehrbetriebe_lernende';
@@ -65,7 +66,7 @@ function EditLehrbetriebeLernende() {
   return (
     <div className="edit-record">
       {isPending ? (
-        <h1>Lädt...</h1>
+        <LoadingIcons.TailSpin fill="black" />
       ) : (
         <Form {...form} control={form.control}>
           <FormLabel className="mb-5">
@@ -101,7 +102,7 @@ function EditLehrbetriebeLernende() {
             <FormField
               name="start"
               render={({ field }) => (
-                <FormItem className="mb-4">
+                <FormItem className="mb-4 flex justify-center">
                   <FormControl>
                     <Input
                       placeholder={rowData?.start || 'Start'}
@@ -116,7 +117,7 @@ function EditLehrbetriebeLernende() {
             <FormField
               name="ende"
               render={({ field }) => (
-                <FormItem className="mb-4">
+                <FormItem className="mb-4 flex justify-center">
                   <FormControl>
                     <Input
                       placeholder={rowData?.ende || 'Ende'}

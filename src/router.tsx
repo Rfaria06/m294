@@ -21,7 +21,11 @@ import ErrorPage from './pages/Error/ErrorPage';
 import Startpage from './pages/Startpage/Startpage';
 import InfoPage from './pages/Info/InfoPage';
 import DetailView from './pages/DetailView/DetailView';
-import { EditLehrbetrieb, EditLehrbetriebeLernende } from './pages/EditRecord';
+import {
+  EditDozent,
+  EditLehrbetrieb,
+  EditLehrbetriebeLernende,
+} from './pages/EditRecord';
 
 export const router = createBrowserRouter([
   {
@@ -136,7 +140,7 @@ export const router = createBrowserRouter([
   },
   {
     path: '/dozenten/:id/edit',
-    element: <DataTableDozenten />,
+    element: <EditDozent />,
     errorElement: <ErrorPage />,
   },
   {
