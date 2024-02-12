@@ -24,8 +24,10 @@ function ErrorPage() {
       <div className="flex justify-center">
         <LoadingIcons.TailSpin fill="black" />
       </div>
-      <h1>500 - Serverseitiger Fehler</h1>
-      <h2>Seite wird in {countdown} Sekunde/n neu geladen.</h2>
+      <h1 className="text-white">500 - Serverseitiger Fehler</h1>
+      <h2 className="text-white">
+        Seite wird in {countdown} Sekunde/n neu geladen.
+      </h2>
     </div>
   );
 }
