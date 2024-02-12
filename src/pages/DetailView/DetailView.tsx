@@ -11,6 +11,12 @@ import {
 	TableHeader,
 	TableRow,
 } from '@/components/ui/table';
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 type Params = { tableName: string; id: string };
 
@@ -101,46 +107,60 @@ function DetailView() {
 	};
 
 	return (
-		<div className="container p-2">
-			<div>
-				<h1>{title()}</h1>
+		<div>
+			<div className="mb-3">
+				<NavLink to={`${window.location.pathname}/edit`}>
+					<TooltipProvider>
+						<Tooltip>
+							<TooltipTrigger>Bearbeiten</TooltipTrigger>
+							<TooltipContent>
+								<p>Diesen Eintrag bearbeiten</p>
+							</TooltipContent>
+						</Tooltip>
+					</TooltipProvider>
+				</NavLink>
 			</div>
-			<Table className="text-left">
-				<TableHeader>
-					<TableRow>
-						<TableHead>Schlüssel</TableHead>
-						<TableHead>Wert</TableHead>
-					</TableRow>
-				</TableHeader>
-				<TableBody>
-					{isFetching ? (
+			<div className="container p-2">
+				<div>
+					<h1>{title()}</h1>
+				</div>
+				<Table className="text-left">
+					<TableHeader>
 						<TableRow>
-							<TableCell colSpan={2}>Lade Daten...</TableCell>
+							<TableHead>Schlüssel</TableHead>
+							<TableHead>Wert</TableHead>
 						</TableRow>
-					) : (
-						Object.keys(data ?? {}).map((key) => (
-							<TableRow key={key}>
-								<TableCell>{formatKey(key)}</TableCell>
-								{isForeignKey ? (
-									<TableCell>
-										<NavLink
-											to={`/${constraintTable}/${
-												data![key as keyof typeof data]
-											}`}
-										>
-											{formatValue(data![key as keyof typeof data]) ?? ''}
-										</NavLink>
-									</TableCell>
-								) : (
-									<TableCell>
-										{formatValue(data![key as keyof typeof data]) ?? ''}
-									</TableCell>
-								)}
+					</TableHeader>
+					<TableBody>
+						{isFetching ? (
+							<TableRow>
+								<TableCell colSpan={2}>Lade Daten...</TableCell>
 							</TableRow>
-						))
-					)}
-				</TableBody>
-			</Table>
+						) : (
+							Object.keys(data ?? {}).map((key) => (
+								<TableRow key={key}>
+									<TableCell>{formatKey(key)}</TableCell>
+									{isForeignKey ? (
+										<TableCell>
+											<NavLink
+												to={`/${constraintTable}/${
+													data![key as keyof typeof data]
+												}`}
+											>
+												{formatValue(data![key as keyof typeof data]) ?? ''}
+											</NavLink>
+										</TableCell>
+									) : (
+										<TableCell>
+											{formatValue(data![key as keyof typeof data]) ?? ''}
+										</TableCell>
+									)}
+								</TableRow>
+							))
+						)}
+					</TableBody>
+				</Table>
+			</div>
 		</div>
 	);
 }
