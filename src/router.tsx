@@ -23,6 +23,7 @@ import InfoPage from './pages/Info/InfoPage';
 import DetailView from './pages/DetailView/DetailView';
 import {
   EditDozent,
+  EditKurs,
   EditLehrbetrieb,
   EditLehrbetriebeLernende,
 } from './pages/EditRecord';
@@ -145,7 +146,7 @@ export const router = createBrowserRouter([
   },
   {
     path: '/kurse/:id/edit',
-    element: <DataTableKurse />,
+    element: <EditKurs />,
     errorElement: <ErrorPage />,
   },
   {
