@@ -10,7 +10,7 @@ import {
 import { Input } from '@/components/ui/input';
 import CountryPopover from '@/lib/popovers/CountryPopover';
 import GenderPopover from '@/lib/popovers/GenderPopover';
-import { getSingle, updateDozenten } from '@/lib/querys';
+import { deleteSingle, getSingle, updateDozenten } from '@/lib/querys';
 import { Row_dozenten } from '@/lib/types';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
@@ -64,6 +64,16 @@ function EditDozent() {
         queryKey: ['dozenten'],
       });
       router.navigate(`/${tableName}/${id}`);
+    },
+  });
+
+  const deleteEntry = useMutation({
+    mutationFn: () => deleteSingle({ tableName: tableName, id: id ?? '0' }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['dozenten'],
+      });
+      router.navigate(`/${tableName}`);
     },
   });
 
@@ -237,7 +247,18 @@ function EditDozent() {
                 </FormItem>
               )}
             />
-            <Button type="submit">Speichern</Button>
+            <div className="grid grid-cols-2">
+              <Button
+                type="button"
+                onClick={() => deleteEntry.mutate()}
+                className="bg-red-500 mr-1"
+              >
+                Löschen
+              </Button>
+              <Button type="submit" className="ml-1">
+                Speichern
+              </Button>
+            </div>
           </form>
         </Form>
       )}

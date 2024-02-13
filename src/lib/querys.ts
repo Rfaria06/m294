@@ -40,6 +40,19 @@ export async function getSingle(params: {
   }
 }
 
+export async function deleteSingle(params: {
+  tableName: string;
+  id: string;
+}): Promise<void> {
+  const url: string = `${BASE_URL}${params.tableName}/id/${params.id}`;
+  try {
+    await axios.delete(url);
+    toast('Eintrag erfolgreich gelöscht');
+  } catch (error) {
+    handleError(error);
+  }
+}
+
 export async function getLernende(): Promise<Row_lernende[]> {
   const url = BASE_URL + 'lernende';
   try {
