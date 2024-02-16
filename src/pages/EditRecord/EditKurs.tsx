@@ -7,7 +7,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { getSingle, updateKurs } from '@/lib/querys';
+import { deleteSingle, getDozenten, getSingle, updateKurs } from '@/lib/querys';
 import { Row_kurse } from '@/lib/types';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
@@ -20,7 +20,13 @@ import { router } from '@/router';
 import LoadingIcons from 'react-loading-icons';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import DozentenPopover from '@/lib/popovers/DozentenPopover';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 function EditKurs() {
   const tableName: string = 'kurse';
@@ -37,6 +43,11 @@ function EditKurs() {
         tableName: 'kurse',
         id: id || '',
       }),
+  });
+  let { data: dozentData } = useQuery({
+    queryKey: ['dozenten'],
+    queryFn: getDozenten,
+    initialData: [],
   });
   const rowData = data as Row_kurse | undefined;
 
@@ -62,13 +73,41 @@ function EditKurs() {
       router.navigate(`/${tableName}/${id}`);
     },
   });
+  const deleteEntry = useMutation({
+    mutationFn: () => deleteSingle({ tableName: tableName, id: id ?? '0' }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['kurse'],
+      });
+      router.navigate(`/${tableName}`);
+    },
+  });
+
+  if (!dozentData)
+    dozentData = [
+      {
+        id: '0',
+        vorname: '',
+        nachname: '',
+        strasse: '',
+        plz: '',
+        ort: '',
+        nr_land: '',
+        geschlecht: 'm',
+        telefon: '',
+        handy: '',
+        email: '',
+        birthdate: '',
+      },
+    ];
   return (
     <div className="edit-record">
       {isPending ? (
         <LoadingIcons.TailSpin fill="black" />
       ) : (
         <Form {...form} control={form.control}>
-          <FormLabel className="mb-5">Kurs bearbeiten</FormLabel>
+          <FormLabel className="mb-5 font-bold">Kurs bearbeiten</FormLabel>
+          <div className="w-full border-t border-black mt-4"></div>
           <form
             onSubmit={form.handleSubmit(() => {
               mutation.mutate({ data: form.getValues(), id: id ?? '0' });
@@ -77,7 +116,8 @@ function EditKurs() {
             <FormField
               name="kursnummer"
               render={({ field }) => (
-                <FormItem className="mb-4">
+                <FormItem>
+                  <FormLabel>Kursnummer</FormLabel>
                   <FormControl>
                     <Input
                       className="bg-white"
@@ -92,7 +132,8 @@ function EditKurs() {
             <FormField
               name="kursthema"
               render={({ field }) => (
-                <FormItem className="mb-4">
+                <FormItem>
+                  <FormLabel>Kursthema</FormLabel>
                   <FormControl>
                     <Textarea
                       className="bg-white"
@@ -108,7 +149,8 @@ function EditKurs() {
             <FormField
               name="inhalt"
               render={({ field }) => (
-                <FormItem className="mb-4">
+                <FormItem>
+                  <FormLabel>Inhalt</FormLabel>
                   <FormControl>
                     <Textarea
                       className="bg-white"
@@ -124,10 +166,22 @@ function EditKurs() {
             <FormField
               name="nr_dozent"
               render={({ field }) => (
-                <FormItem className="mb-4">
-                  <FormControl>
-                    <DozentenPopover field={field} />
-                  </FormControl>
+                <FormItem>
+                  <FormLabel>Dozent</FormLabel>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Dozent..." />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {dozentData?.map((dozent) => (
+                        <SelectItem key={dozent.id} value={dozent.id}>
+                          {dozent.vorname + ' ' + dozent.nachname}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
@@ -135,7 +189,8 @@ function EditKurs() {
             <FormField
               name="startdatum"
               render={({ field }) => (
-                <FormItem className="mb-4">
+                <FormItem>
+                  <FormLabel>Startdatum</FormLabel>
                   <FormControl>
                     <Input
                       className="bg-white w-[250px]"
@@ -150,7 +205,8 @@ function EditKurs() {
             <FormField
               name="enddatum"
               render={({ field }) => (
-                <FormItem className="mb-4">
+                <FormItem>
+                  <FormLabel>Enddatum</FormLabel>
                   <FormControl>
                     <Input
                       className="bg-white w-[250px]"
@@ -165,7 +221,8 @@ function EditKurs() {
             <FormField
               name="dauer"
               render={({ field }) => (
-                <FormItem className="mb-4">
+                <FormItem>
+                  <FormLabel>Dauer</FormLabel>
                   <FormControl>
                     <Input
                       className="bg-white"
@@ -177,7 +234,18 @@ function EditKurs() {
                 </FormItem>
               )}
             />
-            <Button type="submit">Speichern</Button>
+            <div className="grid grid-cols-2 mt-4">
+              <Button
+                type="button"
+                onClick={() => deleteEntry.mutate()}
+                className="bg-red-500 mr-1"
+              >
+                Löschen
+              </Button>
+              <Button type="submit" className="ml-1">
+                Speichern
+              </Button>
+            </div>
           </form>
         </Form>
       )}

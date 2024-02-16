@@ -12,14 +12,14 @@ import {
   deleteSingle,
   getLaender,
   getSingle,
-  updateDozenten,
+  updateLernende,
 } from '@/lib/querys';
-import { Row_dozenten } from '@/lib/types';
+import { Row_lernende } from '@/lib/types';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import { toast } from 'sonner';
-import { dozentFormSchema as formSchema } from '@/lib/schemas';
+import { lernendeFormSchema as formSchema } from '@/lib/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import LoadingIcons from 'react-loading-icons';
 import { router } from '@/router';
@@ -32,26 +32,23 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
-function EditDozent() {
-  const tableName: string = 'dozenten';
+function EditLernende() {
+  const tableName: string = 'lernende';
   const queryClient = useQueryClient();
   const { id } = useParams();
   if (!id) toast('Ungültige ID');
 
   const { data, isPending } = useQuery({
-    queryKey: ['dozenten'],
-    queryFn: () =>
-      getSingle({
-        tableName: 'dozenten',
-        id: id || '',
-      }),
+    queryKey: ['lernende'],
+    queryFn: () => getSingle({ tableName: tableName, id: id ?? '0' }),
+    initialData: [],
   });
   let { data: landData } = useQuery({
     queryKey: ['laender'],
     queryFn: getLaender,
     initialData: [],
   });
-  const rowData = data as Row_dozenten | undefined;
+  const rowData = data as Row_lernende | undefined;
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -63,28 +60,28 @@ function EditDozent() {
       ort: rowData?.ort || '',
       nr_land: rowData?.nr_land || '',
       geschlecht: (rowData?.geschlecht as 'm' | 'w' | 'd') || 'd',
+      email: rowData?.email || '',
+      email_privat: rowData?.email_privat || '',
       telefon: rowData?.telefon || '',
       handy: rowData?.handy || '',
-      email: rowData?.email || '',
       birthdate: rowData?.birthdate || '',
     },
   });
 
   const mutation = useMutation({
-    mutationFn: updateDozenten,
+    mutationFn: updateLernende,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['dozenten'],
+        queryKey: ['lernende'],
       });
       router.navigate(`/${tableName}/${id}`);
     },
   });
-
   const deleteEntry = useMutation({
     mutationFn: () => deleteSingle({ tableName: tableName, id: id ?? '0' }),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['dozenten'],
+        queryKey: ['lernende'],
       });
       router.navigate(`/${tableName}`);
     },
@@ -97,7 +94,9 @@ function EditDozent() {
         <LoadingIcons.TailSpin fill="black" />
       ) : (
         <Form {...form} control={form.control}>
-          <FormLabel className="mb-5 font-bold">Dozent bearbeiten</FormLabel>
+          <FormLabel className="mb-5 font-bold">
+            Lernende/r bearbeiten
+          </FormLabel>
           <div className="w-full border-t border-black mt-4"></div>
           <form
             onSubmit={form.handleSubmit(() => {
@@ -283,6 +282,22 @@ function EditDozent() {
               )}
             />
             <FormField
+              name="email_privat"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email Privat</FormLabel>
+                  <FormControl>
+                    <Input
+                      className="bg-white"
+                      placeholder={rowData?.email_privat || 'Email Privat'}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
               name="birthdate"
               render={({ field }) => (
                 <FormItem>
@@ -317,4 +332,4 @@ function EditDozent() {
   );
 }
 
-export default EditDozent;
+export default EditLernende;

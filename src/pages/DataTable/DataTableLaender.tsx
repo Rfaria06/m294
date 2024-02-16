@@ -20,7 +20,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { router } from '@/router';
 
 function DataTableLaender() {
-  const TABLE_NAME = 'countries';
+  const TABLE_NAME = 'laender';
   useQueryClient();
   // eslint-disable-next-line prefer-const
   let { data, isPending, refetch } = useQuery({

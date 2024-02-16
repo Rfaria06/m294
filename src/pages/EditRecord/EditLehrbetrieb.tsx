@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import './EditRecord.css';
 import { toast } from 'sonner';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { getSingle, updateLehrbetriebe } from '@/lib/querys';
+import { deleteSingle, getSingle, updateLehrbetriebe } from '@/lib/querys';
 import {
   Form,
   FormControl,
@@ -59,10 +59,20 @@ function EditLehrbetrieb() {
       router.navigate(`/${tableName}/${id}`);
     },
   });
+  const deleteEntry = useMutation({
+    mutationFn: () => deleteSingle({ tableName: tableName, id: id ?? '0' }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['lehrbetriebe'],
+      });
+      router.navigate(`/${tableName}`);
+    },
+  });
   return (
     <div className="edit-record">
       <Form {...form} control={form.control}>
         <FormLabel className="mb-5">Lehrbetrieb bearbeiten</FormLabel>
+        <div className="mt-4 border-t border-black"></div>
         <form
           onSubmit={form.handleSubmit(() => {
             mutation.mutate({ data: form.getValues(), id: id ?? '0' });
@@ -71,7 +81,8 @@ function EditLehrbetrieb() {
           <FormField
             name="firma"
             render={({ field }) => (
-              <FormItem className="mb-4 flex justify-center">
+              <FormItem>
+                <FormLabel>Firma</FormLabel>
                 <FormControl>
                   <Input
                     placeholder={rowData?.firma || 'Firma'}
@@ -86,7 +97,8 @@ function EditLehrbetrieb() {
           <FormField
             name="strasse"
             render={({ field }) => (
-              <FormItem className="mb-4">
+              <FormItem>
+                <FormLabel>Strasse</FormLabel>
                 <FormControl>
                   <Input
                     placeholder={rowData?.strasse || 'Strasse'}
@@ -101,7 +113,8 @@ function EditLehrbetrieb() {
           <FormField
             name="plz"
             render={({ field }) => (
-              <FormItem className="mb-4 flex justify-center">
+              <FormItem>
+                <FormLabel>PLZ</FormLabel>
                 <FormControl>
                   <Input
                     placeholder={rowData?.plz || 'PLZ'}
@@ -116,7 +129,8 @@ function EditLehrbetrieb() {
           <FormField
             name="ort"
             render={({ field }) => (
-              <FormItem className="mb-4 flex justify-center">
+              <FormItem>
+                <FormLabel>Ort</FormLabel>
                 <FormControl>
                   <Input
                     placeholder={rowData?.ort || 'Ort'}
@@ -128,7 +142,18 @@ function EditLehrbetrieb() {
               </FormItem>
             )}
           />
-          <Button type="submit">Speichern</Button>
+          <div className="grid grid-cols-2 mt-4">
+            <Button
+              type="button"
+              onClick={() => deleteEntry.mutate()}
+              className="bg-red-500 mr-1"
+            >
+              Löschen
+            </Button>
+            <Button type="submit" className="ml-1">
+              Speichern
+            </Button>
+          </div>
         </form>
       </Form>
     </div>

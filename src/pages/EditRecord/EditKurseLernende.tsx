@@ -1,32 +1,19 @@
-'use client';
-
-import { useParams } from 'react-router-dom';
 import './EditRecord.css';
-import { toast } from 'sonner';
+import * as z from 'zod';
+import { router } from '@/router';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
 import {
   deleteSingle,
-  getLehrbetriebe,
+  getKurse,
   getLernende,
   getSingle,
-  updateLehrbetriebeLernende,
+  updateKurseLernende,
 } from '@/lib/querys';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
+import { kurseLernendeFormSchema as formSchema } from '@/lib/schemas';
+import { Row_kurse_lernende } from '@/lib/types';
 import { useForm } from 'react-hook-form';
-import { lehrbetriebeLernendeFormSchema as formSchema } from '@/lib/schemas';
-import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Input } from '@/components/ui/input';
-import { Row_lehrbetrieb_lernende } from '@/lib/types';
-import { Button } from '@/components/ui/button';
-import { router } from '@/router';
 import LoadingIcons from 'react-loading-icons';
 import {
   Select,
@@ -35,49 +22,54 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { Button } from '@/components/ui/button';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import { useParams } from 'react-router-dom';
+import { Input } from '@/components/ui/input';
 
-function EditLehrbetriebeLernende() {
-  const tableName: string = 'lehrbetriebe_lernende';
-
+function EditKurseLernende() {
+  const tableName: string = 'kurse_lernende';
   const queryClient = useQueryClient();
 
   const { id } = useParams();
   if (!id) toast('Ungültige ID');
 
   const { data, isPending } = useQuery({
-    queryKey: ['lehrbetriebe_lernende'],
-    queryFn: () =>
-      getSingle({
-        tableName: 'lehrbetriebe_lernende',
-        id: id ?? '',
-      }),
+    queryKey: ['kurse_lernende'],
+    queryFn: () => getSingle({ tableName: tableName, id: id ?? '0' }),
   });
-  let { data: lehrbetriebData } = useQuery({
-    queryKey: ['lehrbetriebe'],
-    queryFn: getLehrbetriebe,
+  let { data: kurseData } = useQuery({
+    queryKey: ['kurse'],
+    queryFn: getKurse,
   });
   let { data: lernendeData } = useQuery({
     queryKey: ['lernende'],
     queryFn: getLernende,
   });
-  const rowData = data as Row_lehrbetrieb_lernende | undefined;
+
+  const rowData = data as Row_kurse_lernende | undefined;
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      nr_lehrbetrieb: rowData?.nr_lehrbetrieb ?? '',
-      nr_lernende: rowData?.nr_lernende ?? '',
-      start: rowData?.start ?? '',
-      ende: rowData?.ende ?? '',
-      beruf: rowData?.beruf ?? '',
+      nr_teilnehmer: rowData?.nr_teilnehmer || '',
+      nr_kurs: rowData?.nr_kurs || '',
+      note: rowData?.note || '',
     },
   });
 
   const mutation = useMutation({
-    mutationFn: updateLehrbetriebeLernende,
+    mutationFn: updateKurseLernende,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['lehrbetriebe'],
+        queryKey: ['kurse_lernende'],
       });
       router.navigate(`/${tableName}/${id}`);
     },
@@ -86,19 +78,23 @@ function EditLehrbetriebeLernende() {
     mutationFn: () => deleteSingle({ tableName: tableName, id: id ?? '0' }),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['lehrbetriebe', 'lernende'],
+        queryKey: ['kurse_lernende'],
       });
       router.navigate(`/${tableName}`);
     },
   });
-  if (!lehrbetriebData)
-    lehrbetriebData = [
+
+  if (!kurseData)
+    kurseData = [
       {
         id: '0',
-        firma: '',
-        strasse: '',
-        plz: '',
-        ort: '',
+        kursnummer: '',
+        kursthema: '',
+        inhalt: '',
+        nr_dozent: '',
+        startdatum: '',
+        enddatum: '',
+        dauer: '',
       },
     ];
   if (!lernendeData)
@@ -107,65 +103,44 @@ function EditLehrbetriebeLernende() {
         id: '0',
         vorname: '',
         nachname: '',
+        email: '',
+        email_privat: '',
+        telefon: '',
+        handy: '',
         strasse: '',
         plz: '',
         ort: '',
+        birthdate: '',
         nr_land: '',
         geschlecht: 'm',
-        telefon: '',
-        handy: '',
-        email: '',
-        email_privat: '',
-        birthdate: '',
       },
     ];
+
   return (
     <div className="edit-record">
       {isPending ? (
         <LoadingIcons.TailSpin fill="black" />
       ) : (
         <Form {...form} control={form.control}>
-          <FormLabel className="mb-5">
-            Verbindung von Lehrbetrieb zu Lernender bearbeiten
-          </FormLabel>
-          <div className="mt-4 border-t border-black"></div>
+          <FormLabel className="mb-5">Kurse ➞ Lernende bearbeiten</FormLabel>
+          <div className="w-full border-t border-black mt-4"></div>
           <form
             onSubmit={form.handleSubmit(() => {
-              mutation.mutate({ data: form.getValues(), id: id ?? '0' });
+              mutation.mutate({
+                data: form.getValues(),
+                id: id ?? '0',
+              });
             })}
           >
             <FormField
-              name="nr_lehrbetrieb"
+              name="nr_teilnehmer"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Lehrbetrieb</FormLabel>
+                  <FormLabel>Teilnehmer</FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Lehrbetrieb..." />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {lehrbetriebData?.map((lehrbetrieb) => (
-                        <SelectItem key={lehrbetrieb.id} value={lehrbetrieb.id}>
-                          {lehrbetrieb.firma}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              name="nr_lernende"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Lernende/r</FormLabel>
-                  <Select onValueChange={field.onChange} value={field.value}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Lernende/r..." />
+                        <SelectValue placeholder="Teilnehmer..." />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -181,46 +156,37 @@ function EditLehrbetriebeLernende() {
               )}
             />
             <FormField
-              name="start"
+              name="nr_kurs"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Start</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder={rowData?.start || 'Start'}
-                      className="bg-white"
-                      {...field}
-                    />
-                  </FormControl>
+                  <FormLabel>Kurs</FormLabel>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Kurs..." />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {kurseData?.map((kurs) => (
+                        <SelectItem key={kurs.id} value={kurs.id}>
+                          {kurs.kursnummer}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <FormField
-              name="ende"
+              name="note"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Ende</FormLabel>
+                  <FormLabel>Note</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder={rowData?.ende || 'Ende'}
                       className="bg-white"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              name="beruf"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Beruf</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Beruf"
-                      className="bg-white"
+                      placeholder={rowData?.note || 'Note'}
                       {...field}
                     />
                   </FormControl>
@@ -247,4 +213,4 @@ function EditLehrbetriebeLernende() {
   );
 }
 
-export default EditLehrbetriebeLernende;
+export default EditKurseLernende;

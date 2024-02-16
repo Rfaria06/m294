@@ -24,14 +24,17 @@ import DetailView from './pages/DetailView/DetailView';
 import {
   EditDozent,
   EditKurs,
+  EditKurseLernende,
+  EditLand,
   EditLehrbetrieb,
   EditLehrbetriebeLernende,
+  EditLernende,
 } from './pages/EditRecord';
 
 export const router = createBrowserRouter([
   {
     path: '*',
-    element: <h1>404 - Not found</h1>,
+    element: <h1 className="font-bold text-white">404 - Not found</h1>,
     errorElement: <ErrorPage />,
   },
   {
@@ -121,7 +124,7 @@ export const router = createBrowserRouter([
   },
   {
     path: '/lernende/:id/edit',
-    element: <DataTableLernende />,
+    element: <EditLernende />,
     errorElement: <ErrorPage />,
   },
   {
@@ -136,7 +139,7 @@ export const router = createBrowserRouter([
   },
   {
     path: '/laender/:id/edit',
-    element: <DataTableLaender />,
+    element: <EditLand />,
     errorElement: <ErrorPage />,
   },
   {
@@ -151,7 +154,7 @@ export const router = createBrowserRouter([
   },
   {
     path: '/kurse_lernende/:id/edit',
-    element: <DataTableKurseLernende />,
+    element: <EditKurseLernende />,
     errorElement: <ErrorPage />,
   },
 ]);
