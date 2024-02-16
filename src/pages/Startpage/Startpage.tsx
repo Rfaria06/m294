@@ -9,8 +9,8 @@ import {
 
 function Startpage() {
   return (
-    <div className='container'>
-      <div className='mb-3'>
+    <div className="container p-5">
+      <div className="mb-3">
         <NavLink to={'/info'}>
           <TooltipProvider>
             <Tooltip>
@@ -23,7 +23,7 @@ function Startpage() {
         </NavLink>
       </div>
       <h1>M294</h1>
-      <div className='sub'>
+      <div className="sub">
         <h3>React - Frontend</h3>
       </div>
       <br />

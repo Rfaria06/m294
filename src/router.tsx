@@ -21,11 +21,20 @@ import ErrorPage from './pages/Error/ErrorPage';
 import Startpage from './pages/Startpage/Startpage';
 import InfoPage from './pages/Info/InfoPage';
 import DetailView from './pages/DetailView/DetailView';
+import {
+  EditDozent,
+  EditKurs,
+  EditKurseLernende,
+  EditLand,
+  EditLehrbetrieb,
+  EditLehrbetriebeLernende,
+  EditLernende,
+} from './pages/EditRecord';
 
 export const router = createBrowserRouter([
   {
     path: '*',
-    element: <h1>404 - Not found</h1>,
+    element: <h1 className="font-bold text-white">404 - Not found</h1>,
     errorElement: <ErrorPage />,
   },
   {
@@ -111,6 +120,41 @@ export const router = createBrowserRouter([
   {
     path: '/:tableName/:id',
     element: <DetailView />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: '/lernende/:id/edit',
+    element: <EditLernende />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: '/lehrbetriebe/:id/edit',
+    element: <EditLehrbetrieb />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: '/lehrbetriebe_lernende/:id/edit',
+    element: <EditLehrbetriebeLernende />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: '/laender/:id/edit',
+    element: <EditLand />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: '/dozenten/:id/edit',
+    element: <EditDozent />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: '/kurse/:id/edit',
+    element: <EditKurs />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: '/kurse_lernende/:id/edit',
+    element: <EditKurseLernende />,
     errorElement: <ErrorPage />,
   },
 ]);

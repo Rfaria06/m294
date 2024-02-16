@@ -20,16 +20,25 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { router } from '@/router';
 
 function DataTableLaender() {
-  const TABLE_NAME = 'countries';
+  const TABLE_NAME = 'laender';
   useQueryClient();
-  const { data, isPending } = useQuery({
+  // eslint-disable-next-line prefer-const
+  let { data, isPending, refetch } = useQuery({
     queryKey: ['laender'],
     queryFn: getLaender,
   });
-
+  if (!JSON.stringify(data || {}).startsWith('[') || data === undefined) {
+    refetch();
+    data = [
+      {
+        id: '1',
+        country: '',
+      },
+    ];
+  }
   return (
     <div>
-      <div className='mb-3'>
+      <div className="mb-3">
         <NavLink to={`/laender/create`}>
           <TooltipProvider>
             <Tooltip>
@@ -41,20 +50,20 @@ function DataTableLaender() {
           </TooltipProvider>
         </NavLink>
       </div>
-      <div className='table'>
+      <div className="table">
         <h1>Länder</h1>
         <Table>
           <TableHeader>
-            <TableHead className='text-black'>ID</TableHead>
-            <TableHead className='text-black'>Land</TableHead>
+            <TableHead className="text-black">ID</TableHead>
+            <TableHead className="text-black">Land</TableHead>
           </TableHeader>
           <TableBody>
             {isPending
               ? Array.from({ length: 4 }).map((_, index) => (
                   <TableRow key={index}>
                     {Array.from({ length: 2 }).map((_, colIndex) => (
-                      <TableCell className='text-left' key={colIndex}>
-                        <Skeleton className='w-full h-[25px] mb-2' />
+                      <TableCell className="text-left" key={colIndex}>
+                        <Skeleton className="w-full h-[25px] mb-2" />
                       </TableCell>
                     ))}
                   </TableRow>
@@ -67,10 +76,10 @@ function DataTableLaender() {
                         pathname: `/${TABLE_NAME}/${row.id}`,
                       })
                     }
-                    className='cursor-pointer'
+                    className="cursor-pointer"
                   >
-                    <TableCell className='text-left'>{row.id}</TableCell>
-                    <TableCell className='text-left'>{row.country}</TableCell>
+                    <TableCell className="text-left">{row.id}</TableCell>
+                    <TableCell className="text-left">{row.country}</TableCell>
                   </TableRow>
                 ))}
           </TableBody>

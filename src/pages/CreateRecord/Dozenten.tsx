@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -8,29 +8,28 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import DatePicker from "@/lib/CustomComponents/DatePicker.tsx";
-import GenderPopover from "@/lib/popovers/GenderPopover";
-import { postDozenten } from "@/lib/querys.ts";
-import { dozentFormSchema as formSchema } from "@/lib/schemas/";
-import { zodResolver } from "@hookform/resolvers/zod";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import GenderPopover from '@/lib/popovers/GenderPopover';
+import { postDozenten } from '@/lib/querys.ts';
+import { dozentFormSchema as formSchema } from '@/lib/schemas/';
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
   QueryClient,
   useMutation,
   useQueryClient,
-} from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import CountryPopover from "../../lib/popovers/CountryPopover";
-import "./CreateRecord.css";
+} from '@tanstack/react-query';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
+import CountryPopover from '../../lib/popovers/CountryPopover';
+import './CreateRecord.css';
 
 function CreateDozent() {
   const queryClient: QueryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: postDozenten,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["dozenten"] });
+      queryClient.invalidateQueries({ queryKey: ['dozenten'] });
     },
   });
 
@@ -183,7 +182,11 @@ function CreateDozent() {
             render={({ field }) => (
               <FormItem className="mb-4">
                 <FormControl>
-                  <DatePicker field={field} title="Geburtsdatum" />
+                  <Input
+                    className="bg-white w-[250px]"
+                    placeholder="Geburtsdatum"
+                    {...field}
+                  />
                 </FormControl>
               </FormItem>
             )}
