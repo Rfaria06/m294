@@ -2,10 +2,12 @@ import { dateRegex, numberRegex } from '@/lib/schemas/regex';
 import * as z from 'zod';
 
 const lehrbetriebeLernendeFormSchema = z.object({
-  nr_lehrbetrieb: z.string().regex(numberRegex, {
-    message: 'Muss eine Zahl sein.',
-  }),
-  nr_lernende: z.string().regex(numberRegex, {
+  nr_lehrbetrieb: z
+    .string({ required_error: 'Pflichtfeld.' })
+    .regex(numberRegex, {
+      message: 'Muss eine Zahl sein.',
+    }),
+  nr_lernende: z.string({ required_error: 'Pflichtfeld.' }).regex(numberRegex, {
     message: 'Muss eine Zahl sein.',
   }),
   start: z

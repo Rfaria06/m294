@@ -138,7 +138,7 @@ function EditLehrbetriebeLernende() {
               name="nr_lehrbetrieb"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Lehrbetrieb</FormLabel>
+                  <FormLabel>Lehrbetrieb*</FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger>
@@ -161,7 +161,7 @@ function EditLehrbetriebeLernende() {
               name="nr_lernende"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Lernende/r</FormLabel>
+                  <FormLabel>Lernende/r*</FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger>

@@ -3,11 +3,11 @@ import { dateRegex, numberRegex, phoneRegex, plzRegex } from './regex';
 
 const lernendeFormSchema = z.object({
   vorname: z
-    .string()
+    .string({ required_error: 'Pflichtfeld.' })
     .min(1, 'Muss mindestens 1 Zeichen lang sein.')
     .max(50, 'Darf höchstens 50 Zeichen lang sein'),
   nachname: z
-    .string()
+    .string({ required_error: 'Pflichtfeld.' })
     .min(1, 'Muss mindestens 1 Zeichen lang sein.')
     .max(50, 'Darf höchstens 50 Zeichen lang sein'),
   strasse: z

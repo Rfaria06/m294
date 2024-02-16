@@ -1,9 +1,9 @@
-import { postLehrbetriebe } from "@/lib/querys";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { lehrbetriebeFormSchema as formSchema } from "@/lib/schemas";
+import { postLehrbetriebe } from '@/lib/querys';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { lehrbetriebeFormSchema as formSchema } from '@/lib/schemas';
 import {
   Form,
   FormControl,
@@ -11,16 +11,16 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 
 function CreateLehrbetrieb() {
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: postLehrbetriebe,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["lehrbetriebe"] });
+      queryClient.invalidateQueries({ queryKey: ['lehrbetriebe'] });
     },
   });
   const form = useForm<z.infer<typeof formSchema>>({
@@ -39,7 +39,8 @@ function CreateLehrbetrieb() {
           <FormField
             name="firma"
             render={({ field }) => (
-              <FormItem className="mb-4 flex justify-center">
+              <FormItem>
+                <FormLabel>Firma*</FormLabel>
                 <FormControl>
                   <Input
                     placeholder="Firma"
@@ -54,7 +55,8 @@ function CreateLehrbetrieb() {
           <FormField
             name="strasse"
             render={({ field }) => (
-              <FormItem className="mb-4 flex justify-center">
+              <FormItem>
+                <FormLabel>Strasse</FormLabel>
                 <FormControl>
                   <Input
                     placeholder="Strasse"
@@ -69,7 +71,8 @@ function CreateLehrbetrieb() {
           <FormField
             name="plz"
             render={({ field }) => (
-              <FormItem className="mb-4 flex justify-center">
+              <FormItem>
+                <FormLabel>PLZ</FormLabel>
                 <FormControl>
                   <Input
                     placeholder="PLZ"
@@ -84,7 +87,8 @@ function CreateLehrbetrieb() {
           <FormField
             name="ort"
             render={({ field }) => (
-              <FormItem className="mb-4 flex justify-center">
+              <FormItem>
+                <FormLabel>Ort</FormLabel>
                 <FormControl>
                   <Input
                     placeholder="Ort"
@@ -96,7 +100,9 @@ function CreateLehrbetrieb() {
               </FormItem>
             )}
           />
-          <Button type="submit">Erstellen</Button>
+          <Button type="submit" className="mt-4">
+            Erstellen
+          </Button>
         </form>
       </Form>
     </div>

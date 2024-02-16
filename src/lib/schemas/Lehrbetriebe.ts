@@ -2,7 +2,7 @@ import * as z from 'zod';
 import { plzRegex } from './regex';
 
 const lehrbetriebeFormSchema = z.object({
-  firma: z.string().max(100, {
+  firma: z.string({ required_error: 'Pflichtfeld' }).max(100, {
     message: 'Darf nicht länger als 100 Zeichen sein.',
   }),
   strasse: z
