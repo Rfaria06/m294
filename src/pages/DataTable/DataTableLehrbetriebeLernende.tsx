@@ -22,14 +22,27 @@ import { router } from '@/router';
 function DataTableLehrbetriebeLernende() {
   const TABLE_NAME = 'lehrbetriebe_lernende';
   useQueryClient();
-  const { data, isPending } = useQuery({
+  // eslint-disable-next-line prefer-const
+  let { data, isPending, refetch } = useQuery({
     queryKey: ['lehrbetriebeLernende'],
     queryFn: getLehrbetriebLernende,
   });
-
+  if (!JSON.stringify(data || {}).startsWith('[') || data === undefined) {
+    refetch();
+    data = [
+      {
+        id: '1',
+        nr_lehrbetrieb: '',
+        nr_lernende: '',
+        start: '',
+        ende: '',
+        beruf: '',
+      },
+    ];
+  }
   return (
     <div>
-      <div className='mb-3'>
+      <div className="mb-3">
         <NavLink to={`/${TABLE_NAME}/create`}>
           <TooltipProvider>
             <Tooltip>
@@ -41,24 +54,24 @@ function DataTableLehrbetriebeLernende() {
           </TooltipProvider>
         </NavLink>
       </div>
-      <div className='table'>
+      <div className="table">
         <h1>Lehrbetriebe ➞ Lernende</h1>
         <Table>
           <TableHeader>
-            <TableHead className='text-black'>ID</TableHead>
-            <TableHead className='text-black'>Nr. Lehrbetrieb</TableHead>
-            <TableHead className='text-black'>Nr. Lernende</TableHead>
-            <TableHead className='text-black'>Start</TableHead>
-            <TableHead className='text-black'>Ende</TableHead>
-            <TableHead className='text-black'>Beruf</TableHead>
+            <TableHead className="text-black">ID</TableHead>
+            <TableHead className="text-black">Nr. Lehrbetrieb</TableHead>
+            <TableHead className="text-black">Nr. Lernende</TableHead>
+            <TableHead className="text-black">Start</TableHead>
+            <TableHead className="text-black">Ende</TableHead>
+            <TableHead className="text-black">Beruf</TableHead>
           </TableHeader>
           <TableBody>
             {isPending
               ? Array.from({ length: 4 }).map((_, index) => (
                   <TableRow key={index}>
                     {Array.from({ length: 6 }).map((_, colIndex) => (
-                      <TableCell className='text-left' key={colIndex}>
-                        <Skeleton className='w-full h-[25px] mb-2' />
+                      <TableCell className="text-left" key={colIndex}>
+                        <Skeleton className="w-full h-[25px] mb-2" />
                       </TableCell>
                     ))}
                   </TableRow>
@@ -71,20 +84,20 @@ function DataTableLehrbetriebeLernende() {
                         pathname: `/${TABLE_NAME}/${row.id}`,
                       })
                     }
-                    className='cursor-pointer'
+                    className="cursor-pointer"
                   >
-                    <TableCell className='text-left'>
+                    <TableCell className="text-left">
                       {row.id ?? 'id'}
                     </TableCell>
-                    <TableCell className='text-left'>
+                    <TableCell className="text-left">
                       {row.nr_lehrbetrieb}
                     </TableCell>
-                    <TableCell className='text-left'>
+                    <TableCell className="text-left">
                       {row.nr_lernende}
                     </TableCell>
-                    <TableCell className='text-left'>{row.start}</TableCell>
-                    <TableCell className='text-left'>{row.ende}</TableCell>
-                    <TableCell className='text-left'>{row.beruf}</TableCell>
+                    <TableCell className="text-left">{row.start}</TableCell>
+                    <TableCell className="text-left">{row.ende}</TableCell>
+                    <TableCell className="text-left">{row.beruf}</TableCell>
                   </TableRow>
                 ))}
           </TableBody>
