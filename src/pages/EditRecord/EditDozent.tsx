@@ -8,9 +8,12 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import CountryPopover from '@/lib/popovers/CountryPopover';
-import GenderPopover from '@/lib/popovers/GenderPopover';
-import { deleteSingle, getSingle, updateDozenten } from '@/lib/querys';
+import {
+  deleteSingle,
+  getLaender,
+  getSingle,
+  updateDozenten,
+} from '@/lib/querys';
 import { Row_dozenten } from '@/lib/types';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
@@ -21,6 +24,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import LoadingIcons from 'react-loading-icons';
 import { router } from '@/router';
 import * as z from 'zod';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 function EditDozent() {
   const tableName: string = 'dozenten';
@@ -37,6 +47,11 @@ function EditDozent() {
         tableName: 'dozenten',
         id: id || '',
       }),
+  });
+  let { data: landData } = useQuery({
+    queryKey: ['laender'],
+    queryFn: getLaender,
+    initialData: [],
   });
   const rowData = data as Row_dozenten | undefined;
 
@@ -76,6 +91,7 @@ function EditDozent() {
       router.navigate(`/${tableName}`);
     },
   });
+  if (!landData) landData = [{ id: '0', country: '' }];
 
   return (
     <div className="create-record">
@@ -83,7 +99,8 @@ function EditDozent() {
         <LoadingIcons.TailSpin fill="black" />
       ) : (
         <Form {...form} control={form.control}>
-          <FormLabel className="mb-5">Dozent bearbeiten</FormLabel>
+          <FormLabel className="mb-5 font-bold">Dozent bearbeiten</FormLabel>
+          <div className="w-full border-t border-black mt-4"></div>
           <form
             onSubmit={form.handleSubmit(() => {
               mutation.mutate({ data: form.getValues(), id: id || '0' });
@@ -92,11 +109,12 @@ function EditDozent() {
             <FormField
               name="vorname"
               render={({ field }) => (
-                <FormItem className="mb-4">
+                <FormItem>
+                  <FormLabel>Vorname*</FormLabel>
                   <FormControl>
                     <Input
                       className="bg-white"
-                      placeholder={rowData?.vorname || 'Vorname*'}
+                      placeholder={rowData?.vorname || 'Vorname'}
                       {...field}
                     />
                   </FormControl>
@@ -107,11 +125,12 @@ function EditDozent() {
             <FormField
               name="nachname"
               render={({ field }) => (
-                <FormItem className="mb-4">
+                <FormItem>
+                  <FormLabel>Nachname*</FormLabel>
                   <FormControl>
                     <Input
                       className="bg-white"
-                      placeholder={rowData?.nachname || 'Nachname*'}
+                      placeholder={rowData?.nachname || 'Nachname'}
                       {...field}
                     />
                   </FormControl>
@@ -122,11 +141,12 @@ function EditDozent() {
             <FormField
               name="strasse"
               render={({ field }) => (
-                <FormItem className="mb-4">
+                <FormItem>
+                  <FormLabel>Strasse*</FormLabel>
                   <FormControl>
                     <Input
                       className="bg-white"
-                      placeholder={rowData?.strasse || 'Strasse*'}
+                      placeholder={rowData?.strasse || 'Strasse'}
                       {...field}
                     />
                   </FormControl>
@@ -137,7 +157,8 @@ function EditDozent() {
             <FormField
               name="plz"
               render={({ field }) => (
-                <FormItem className="mb-4">
+                <FormItem>
+                  <FormLabel>PLZ</FormLabel>
                   <FormControl>
                     <Input
                       className="bg-white"
@@ -154,7 +175,8 @@ function EditDozent() {
             <FormField
               name="ort"
               render={({ field }) => (
-                <FormItem className="mb-4">
+                <FormItem>
+                  <FormLabel>Ort</FormLabel>
                   <FormControl>
                     <Input
                       className="bg-white"
@@ -169,10 +191,25 @@ function EditDozent() {
             <FormField
               name="nr_land"
               render={({ field }) => (
-                <FormItem className="mb-4">
-                  <FormControl>
-                    <CountryPopover field={field} />
-                  </FormControl>
+                <FormItem>
+                  <FormLabel>Land</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Land..." />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {landData?.map((land) => (
+                        <SelectItem key={land.id} value={land.id}>
+                          {land.country}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
@@ -180,10 +217,23 @@ function EditDozent() {
             <FormField
               name="geschlecht"
               render={({ field }) => (
-                <FormItem className="mb-4">
-                  <FormControl>
-                    <GenderPopover field={field} />
-                  </FormControl>
+                <FormItem>
+                  <FormLabel>Geschlecht</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Geschlecht..." />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="m">Männlich</SelectItem>
+                      <SelectItem value="w">Weiblich</SelectItem>
+                      <SelectItem value="d">Divers</SelectItem>
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
@@ -191,7 +241,8 @@ function EditDozent() {
             <FormField
               name="telefon"
               render={({ field }) => (
-                <FormItem className="mb-4">
+                <FormItem>
+                  <FormLabel>Telefon</FormLabel>
                   <FormControl>
                     <Input
                       className="bg-white"
@@ -206,7 +257,8 @@ function EditDozent() {
             <FormField
               name="handy"
               render={({ field }) => (
-                <FormItem className="mb-4">
+                <FormItem>
+                  <FormLabel>Handy</FormLabel>
                   <FormControl>
                     <Input
                       className="bg-white"
@@ -221,7 +273,8 @@ function EditDozent() {
             <FormField
               name="email"
               render={({ field }) => (
-                <FormItem className="mb-4">
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
                   <FormControl>
                     <Input
                       className="bg-white"
@@ -236,10 +289,11 @@ function EditDozent() {
             <FormField
               name="birthdate"
               render={({ field }) => (
-                <FormItem className="mb-4">
+                <FormItem>
+                  <FormLabel>Geburtsdatum</FormLabel>
                   <FormControl>
                     <Input
-                      className="bg-white w-[250px]"
+                      className="bg-white"
                       placeholder={rowData?.birthdate || 'Geburtsdatum'}
                       {...field}
                     />
@@ -247,7 +301,7 @@ function EditDozent() {
                 </FormItem>
               )}
             />
-            <div className="grid grid-cols-2">
+            <div className="grid grid-cols-2 mt-4">
               <Button
                 type="button"
                 onClick={() => deleteEntry.mutate()}
