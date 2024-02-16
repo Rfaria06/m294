@@ -11,17 +11,20 @@ const lehrbetriebeLernendeFormSchema = z.object({
   start: z
     .string()
     .regex(dateRegex, 'Muss im Format JJJJ-MM-DD sein.')
-    .optional(),
+    .optional()
+    .or(z.literal('')),
   ende: z
     .string()
     .regex(dateRegex, 'Muss im Format JJJJ-MM-DD sein.')
-    .optional(),
+    .optional()
+    .or(z.literal('')),
   beruf: z
     .string()
     .max(100, {
       message: 'Darf nicht länger als 100 Zeichen sein.',
     })
-    .optional(),
+    .optional()
+    .or(z.literal('')),
 });
 
 export default lehrbetriebeLernendeFormSchema;

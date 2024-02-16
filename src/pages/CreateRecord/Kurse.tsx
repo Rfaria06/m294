@@ -49,10 +49,11 @@ function CreateKurs() {
             name="kursnummer"
             render={({ field }) => (
               <FormItem className="mb-4">
+                <FormLabel>Kursnummer*</FormLabel>
                 <FormControl>
                   <Input
                     className="bg-white"
-                    placeholder="Kursnummer"
+                    placeholder="Kursnummer*"
                     {...field}
                   />
                 </FormControl>

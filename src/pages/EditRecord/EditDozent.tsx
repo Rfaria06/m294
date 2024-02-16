@@ -140,7 +140,7 @@ function EditDozent() {
               name="strasse"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Strasse*</FormLabel>
+                  <FormLabel>Strasse</FormLabel>
                   <FormControl>
                     <Input
                       className="bg-white"

@@ -14,31 +14,50 @@ const dozentFormSchema = z.object({
       required_error: 'Nachname ist ein Pflichtfeld.',
     })
     .min(1, {
-      message: 'Nachname muss mindestens 1 Zeichen lang sein.',
+      message: 'Nachname ist ein Pflichtfeld.',
     }),
   strasse: z
     .string()
     .max(255, 'Darf maximal 255 Zeichen lang sein.')
-    .optional(),
+    .optional()
+    .or(z.literal('')),
   plz: z
     .string({
       invalid_type_error: 'Muss 4 Zeichen lang sein.',
     })
     .regex(plzRegex, 'Muss 4 zeichen lang sein.')
-    .optional(),
-  ort: z.string().max(255, 'Darf maximal 255 Zeichen lang sein.').optional(),
+    .optional()
+    .or(z.literal('')),
+  ort: z
+    .string()
+    .max(255, 'Darf maximal 255 Zeichen lang sein.')
+    .optional()
+    .or(z.literal('')),
   // nr_land is a picker (constraint),
-  nr_land: z.string().regex(numberRegex).optional(),
+  nr_land: z.string().regex(numberRegex).optional().or(z.literal('')),
   // geschlecht is a picker [m, w, d],
-  geschlecht: z.enum(['m', 'w', 'd']).optional(),
-  telefon: z.string().regex(phoneRegex, 'Ungültige Telefonnummer.').optional(),
-  handy: z.string().regex(phoneRegex, 'Ungültige Handynummer').optional(),
-  email: z.string().email('Muss eine gültige E-Mail sein.').optional(),
+  geschlecht: z.enum(['m', 'w', 'd']).optional().or(z.literal('')),
+  telefon: z
+    .string()
+    .regex(phoneRegex, 'Ungültige Telefonnummer.')
+    .optional()
+    .or(z.literal('')),
+  handy: z
+    .string()
+    .regex(phoneRegex, 'Ungültige Handynummer')
+    .optional()
+    .or(z.literal('')),
+  email: z
+    .string()
+    .email('Muss eine gültige E-Mail sein.')
+    .optional()
+    .or(z.literal('')),
   // birthate is a date picker,
   birthdate: z
     .string()
     .regex(dateRegex, 'Muss im Format JJJJ-MM-DD sein.')
-    .optional(),
+    .optional()
+    .or(z.literal('')),
 });
 
 export const dozentUploadFormSchema = z.object({
@@ -61,7 +80,8 @@ export const dozentUploadFormSchema = z.object({
     .min(1, {
       message: 'Straße muss mindestens 1 Zeichen lang sein.',
     })
-    .optional(),
+    .optional()
+    .or(z.literal('')),
   plz: z
     .string({
       invalid_type_error: 'Muss 4 Zeichen lang sein.',
@@ -73,22 +93,37 @@ export const dozentUploadFormSchema = z.object({
     .max(4, {
       message: 'Muss 4 Zeichen lang sein.',
     })
-    .optional(),
+    .optional()
+    .or(z.literal('')),
   ort: z
     .string()
     .min(1, {
       message: 'Ort muss mindestens 1 Zeichen lang sein.',
     })
-    .optional(),
+    .optional()
+    .or(z.literal('')),
   // nr_land is a picker (constraint),
-  nr_land: z.string().regex(numberRegex).optional(),
+  nr_land: z.string().regex(numberRegex).optional().or(z.literal('')),
   // geschlecht is a picker [m, w, d],
-  geschlecht: z.enum(['m', 'w', 'd']).optional(),
-  telefon: z.string().regex(phoneRegex, 'Ungültige Telefonnummer.').optional(),
-  handy: z.string().regex(phoneRegex, 'Ungültige Handynummer').optional(),
-  email: z.string().min(1).email('Muss eine gültige E-Mail sein.').optional(),
+  geschlecht: z.enum(['m', 'w', 'd']).optional().or(z.literal('')),
+  telefon: z
+    .string()
+    .regex(phoneRegex, 'Ungültige Telefonnummer.')
+    .optional()
+    .or(z.literal('')),
+  handy: z
+    .string()
+    .regex(phoneRegex, 'Ungültige Handynummer')
+    .optional()
+    .or(z.literal('')),
+  email: z
+    .string()
+    .min(1)
+    .email('Muss eine gültige E-Mail sein.')
+    .optional()
+    .or(z.literal('')),
   // birthate is a date picker,
-  birthdate: z.string().min(10).max(10).optional(),
+  birthdate: z.string().min(10).max(10).optional().or(z.literal('')),
 });
 
 export default dozentFormSchema;

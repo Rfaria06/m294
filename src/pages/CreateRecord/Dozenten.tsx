@@ -49,6 +49,7 @@ function CreateDozent() {
             name="vorname"
             render={({ field }) => (
               <FormItem className="mb-4">
+                <FormLabel>Vorname*</FormLabel>
                 <FormControl>
                   <Input
                     className="bg-white"
@@ -64,6 +65,7 @@ function CreateDozent() {
             name="nachname"
             render={({ field }) => (
               <FormItem className="mb-4">
+                <FormLabel>Nachname*</FormLabel>
                 <FormControl>
                   <Input
                     className="bg-white"
