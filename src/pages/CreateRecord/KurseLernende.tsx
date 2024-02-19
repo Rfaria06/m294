@@ -87,6 +87,7 @@ function CreateKurseLernende() {
         <FormLabel className="mb-5">
           Neue Verbindung von Kurs zu Lernender
         </FormLabel>
+        <div className="w-full border-t border-black mt-4"></div>
         <form
           onSubmit={form.handleSubmit(() => {
             mutation.mutate({ data: form.getValues() });
@@ -115,6 +116,7 @@ function CreateKurseLernende() {
               </FormItem>
             )}
           />
+          <div className="w-full border-t border-grey mt-4"></div>
           <FormField
             name="nr_kurs"
             render={({ field }) => (
@@ -138,22 +140,20 @@ function CreateKurseLernende() {
               </FormItem>
             )}
           />
+          <div className="w-full border-t border-grey mt-4"></div>
           <FormField
             name="note"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Note</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="Note"
-                    className="bg-white w-[250px]"
-                    {...field}
-                  />
+                  <Input placeholder="Note" className="bg-white" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
+          <div className="w-full border-t border-grey mt-4"></div>
           <Button type="submit" className="mt-4">
             Erstellen
           </Button>

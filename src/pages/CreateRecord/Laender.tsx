@@ -52,16 +52,13 @@ function CreateLand() {
               <FormItem>
                 <FormLabel>Land*</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="Land*"
-                    className="bg-white w-[250px]"
-                    {...field}
-                  />
+                  <Input placeholder="Land*" className="bg-white" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
+          <div className="w-full border-t border-grey mt-4"></div>
           <Button type="submit" className="mt-4">
             Erstellen
           </Button>

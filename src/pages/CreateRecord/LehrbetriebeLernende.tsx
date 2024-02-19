@@ -87,6 +87,7 @@ function CreateLehrbetriebeLernende() {
         <FormLabel className="mb-5">
           Neue Verbindung von Lehrbetrieb zu Lernender
         </FormLabel>
+        <div className="w-full border-t border-black mt-4"></div>
         <form
           onSubmit={form.handleSubmit(() => {
             mutation.mutate({ data: form.getValues() });
@@ -115,6 +116,7 @@ function CreateLehrbetriebeLernende() {
               </FormItem>
             )}
           />
+          <div className="w-full border-t border-grey mt-4"></div>
           <FormField
             name="nr_lernende"
             render={({ field }) => (
@@ -138,6 +140,7 @@ function CreateLehrbetriebeLernende() {
               </FormItem>
             )}
           />
+          <div className="w-full border-t border-grey mt-4"></div>
           <FormField
             name="start"
             render={({ field }) => (
@@ -150,6 +153,7 @@ function CreateLehrbetriebeLernende() {
               </FormItem>
             )}
           />
+          <div className="w-full border-t border-grey mt-4"></div>
           <FormField
             name="ende"
             render={({ field }) => (
@@ -162,6 +166,7 @@ function CreateLehrbetriebeLernende() {
               </FormItem>
             )}
           />
+          <div className="w-full border-t border-grey mt-4"></div>
           <FormField
             name="beruf"
             render={({ field }) => (
@@ -174,6 +179,7 @@ function CreateLehrbetriebeLernende() {
               </FormItem>
             )}
           />
+          <div className="w-full border-t border-grey mt-4"></div>
           <Button type="submit" className="mt-4">
             Erstellen
           </Button>

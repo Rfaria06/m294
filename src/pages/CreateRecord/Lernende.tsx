@@ -51,6 +51,7 @@ function CreateLernende() {
     <div className="create-record">
       <Form {...form} control={form.control}>
         <FormLabel className="mb-5">Neuer Lernender</FormLabel>
+        <div className="w-full border-t border-black mt-4"></div>
         <form
           onSubmit={form.handleSubmit(() => {
             mutation.mutate({ data: form.getValues() });
@@ -72,6 +73,7 @@ function CreateLernende() {
               </FormItem>
             )}
           />
+          <div className="w-full border-t border-grey mt-4"></div>
           <FormField
             name="nachname"
             render={({ field }) => (
@@ -88,6 +90,7 @@ function CreateLernende() {
               </FormItem>
             )}
           />
+          <div className="w-full border-t border-grey mt-4"></div>
           <FormField
             name="strasse"
             render={({ field }) => (
@@ -104,6 +107,7 @@ function CreateLernende() {
               </FormItem>
             )}
           />
+          <div className="w-full border-t border-grey mt-4"></div>
           <FormField
             name="plz"
             render={({ field }) => (
@@ -116,6 +120,7 @@ function CreateLernende() {
               </FormItem>
             )}
           />
+          <div className="w-full border-t border-grey mt-4"></div>
           <FormField
             name="ort"
             render={({ field }) => (
@@ -128,6 +133,7 @@ function CreateLernende() {
               </FormItem>
             )}
           />
+          <div className="w-full border-t border-grey mt-4"></div>
           <FormField
             name="nr_land"
             render={({ field }) => (
@@ -154,6 +160,7 @@ function CreateLernende() {
               </FormItem>
             )}
           />
+          <div className="w-full border-t border-grey mt-4"></div>
           <FormField
             name="geschlecht"
             render={({ field }) => (
@@ -178,6 +185,7 @@ function CreateLernende() {
               </FormItem>
             )}
           />
+          <div className="w-full border-t border-grey mt-4"></div>
           <FormField
             name="telefon"
             render={({ field }) => (
@@ -194,6 +202,7 @@ function CreateLernende() {
               </FormItem>
             )}
           />
+          <div className="w-full border-t border-grey mt-4"></div>
           <FormField
             name="handy"
             render={({ field }) => (
@@ -206,6 +215,7 @@ function CreateLernende() {
               </FormItem>
             )}
           />
+          <div className="w-full border-t border-grey mt-4"></div>
           <FormField
             name="email"
             render={({ field }) => (
@@ -218,6 +228,7 @@ function CreateLernende() {
               </FormItem>
             )}
           />
+          <div className="w-full border-t border-grey mt-4"></div>
           <FormField
             name="email_privat"
             render={({ field }) => (
@@ -234,6 +245,7 @@ function CreateLernende() {
               </FormItem>
             )}
           />
+          <div className="w-full border-t border-grey mt-4"></div>
           <FormField
             name="birthdate"
             render={({ field }) => (
@@ -250,6 +262,7 @@ function CreateLernende() {
               </FormItem>
             )}
           />
+          <div className="w-full border-t border-grey mt-4"></div>
           <Button type="submit" className="mt-4">
             Erstellen
           </Button>

@@ -31,6 +31,7 @@ function CreateLehrbetrieb() {
     <div className="create-record">
       <Form {...form} control={form.control}>
         <FormLabel className="mb-5">Neuer Lehrbetrieb</FormLabel>
+        <div className="w-full border-t border-black mt-4"></div>
         <form
           onSubmit={form.handleSubmit(() => {
             mutation.mutate({ data: form.getValues() });
@@ -42,16 +43,13 @@ function CreateLehrbetrieb() {
               <FormItem>
                 <FormLabel>Firma*</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="Firma"
-                    className="bg-white w-[250px]"
-                    {...field}
-                  />
+                  <Input placeholder="Firma" className="bg-white" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
+          <div className="w-full border-t border-grey mt-4"></div>
           <FormField
             name="strasse"
             render={({ field }) => (
@@ -60,7 +58,7 @@ function CreateLehrbetrieb() {
                 <FormControl>
                   <Input
                     placeholder="Strasse"
-                    className="bg-white w-[250px]"
+                    className="bg-white"
                     {...field}
                   />
                 </FormControl>
@@ -68,38 +66,33 @@ function CreateLehrbetrieb() {
               </FormItem>
             )}
           />
+          <div className="w-full border-t border-grey mt-4"></div>
           <FormField
             name="plz"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>PLZ</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="PLZ"
-                    className="bg-white w-[250px]"
-                    {...field}
-                  />
+                  <Input placeholder="PLZ" className="bg-white" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
+          <div className="w-full border-t border-grey mt-4"></div>
           <FormField
             name="ort"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Ort</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="Ort"
-                    className="bg-white w-[250px]"
-                    {...field}
-                  />
+                  <Input placeholder="Ort" className="bg-white" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
+          <div className="w-full border-t border-grey mt-4"></div>
           <Button type="submit" className="mt-4">
             Erstellen
           </Button>
