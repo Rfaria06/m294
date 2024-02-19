@@ -86,7 +86,7 @@ function EditLehrbetrieb() {
                 <FormControl>
                   <Input
                     placeholder={rowData?.firma || 'Firma'}
-                    className="bg-white w-[250px]"
+                    className="bg-white"
                     {...field}
                   />
                 </FormControl>
@@ -102,7 +102,7 @@ function EditLehrbetrieb() {
                 <FormControl>
                   <Input
                     placeholder={rowData?.strasse || 'Strasse'}
-                    className="bg-white w-[250px]"
+                    className="bg-white"
                     {...field}
                   />
                 </FormControl>
@@ -118,7 +118,7 @@ function EditLehrbetrieb() {
                 <FormControl>
                   <Input
                     placeholder={rowData?.plz || 'PLZ'}
-                    className="bg-white w-[250px]"
+                    className="bg-white"
                     {...field}
                   />
                 </FormControl>
@@ -134,7 +134,7 @@ function EditLehrbetrieb() {
                 <FormControl>
                   <Input
                     placeholder={rowData?.ort || 'Ort'}
-                    className="bg-white w-[250px]"
+                    className="bg-white"
                     {...field}
                   />
                 </FormControl>

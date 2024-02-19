@@ -194,7 +194,7 @@ function EditKurs() {
                   <FormLabel>Startdatum</FormLabel>
                   <FormControl>
                     <Input
-                      className="bg-white w-[250px]"
+                      className="bg-white"
                       placeholder={rowData?.startdatum || 'Startdatum'}
                       {...field}
                     />
@@ -210,7 +210,7 @@ function EditKurs() {
                   <FormLabel>Enddatum</FormLabel>
                   <FormControl>
                     <Input
-                      className="bg-white w-[250px]"
+                      className="bg-white"
                       placeholder={rowData?.enddatum || 'Enddatum'}
                       {...field}
                     />

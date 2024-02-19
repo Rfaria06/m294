@@ -161,7 +161,7 @@ function CreateKurs() {
                 <FormLabel>Startdatum</FormLabel>
                 <FormControl>
                   <Input
-                    className="bg-white w-[250px]"
+                    className="bg-white"
                     placeholder="Startdatum"
                     {...field}
                   />
@@ -178,7 +178,7 @@ function CreateKurs() {
                 <FormLabel>Enddatum</FormLabel>
                 <FormControl>
                   <Input
-                    className="bg-white w-[250px]"
+                    className="bg-white"
                     placeholder="Enddatum"
                     {...field}
                   />

@@ -245,7 +245,7 @@ function CreateDozent() {
                 <FormLabel>Geburtsdatum</FormLabel>
                 <FormControl>
                   <Input
-                    className="bg-white w-[250px]"
+                    className="bg-white"
                     placeholder="Geburtsdatum"
                     {...field}
                   />
