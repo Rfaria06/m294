@@ -1,4 +1,4 @@
-import { Skeleton } from '@/components/ui/skeleton';
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
   TableBody,
@@ -6,75 +6,75 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
+} from "@/components/ui/table";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '@/components/ui/tooltip';
-import { getDozenten, getKurse } from '@/lib/querys';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { NavLink } from 'react-router-dom';
-import './DataTable.css';
-import { router } from '@/router';
+} from "@/components/ui/tooltip";
+import { getDozenten, getKurse } from "@/lib/querys";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { NavLink } from "react-router-dom";
+import "./DataTable.css";
+import { router } from "@/router";
 
 function DataTableKurse() {
-  const TABLE_NAME = 'kurse';
+  const TABLE_NAME = "kurse";
   useQueryClient();
   // eslint-disable-next-line prefer-const
   let { data, isPending, refetch } = useQuery({
-    queryKey: ['kurse'],
+    queryKey: ["kurse"],
     queryFn: getKurse,
     initialData: [],
   });
 
   let { data: dozentData } = useQuery({
-    queryKey: ['dozenten'],
+    queryKey: ["dozenten"],
     queryFn: getDozenten,
     initialData: [],
   });
 
   const getDozentFullName = (id: string): string => {
-    if (!id) return '';
+    if (!id) return "";
     const dozent = dozentData.find((id) => id === id);
-    if (!dozent) return '';
+    if (!dozent) return "";
     return ` - ${dozent.vorname} ${dozent.nachname}`;
   };
 
-  if (!JSON.stringify(data || {}).startsWith('[') || data === undefined) {
+  if (!JSON.stringify(data || {}).startsWith("[") || data === undefined) {
     refetch();
     data = [
       {
-        id: '1',
-        kursnummer: '',
-        kursthema: '',
-        inhalt: '',
-        nr_dozent: '',
-        startdatum: '',
-        enddatum: '',
-        dauer: '',
+        id: "1",
+        kursnummer: "",
+        kursthema: "",
+        inhalt: "",
+        nr_dozent: "",
+        startdatum: "",
+        enddatum: "",
+        dauer: "",
       },
     ];
   }
   if (
-    !JSON.stringify(dozentData || {}).startsWith('[') ||
+    !JSON.stringify(dozentData || {}).startsWith("[") ||
     dozentData === undefined
   ) {
     dozentData = [
       {
-        id: '1',
-        vorname: 'Max',
-        nachname: 'Mustermann',
-        email: 'max@mustermann.com',
-        strasse: 'Musterstrasse 1',
-        plz: '12345',
-        ort: 'Musterstadt',
-        nr_land: '',
-        geschlecht: 'm',
-        telefon: '123456789',
-        handy: '987654321',
-        birthdate: '01.01.1970',
+        id: "1",
+        vorname: "Max",
+        nachname: "Mustermann",
+        email: "max@mustermann.com",
+        strasse: "Musterstrasse 1",
+        plz: "12345",
+        ort: "Musterstadt",
+        nr_land: "",
+        geschlecht: "m",
+        telefon: "123456789",
+        handy: "987654321",
+        birthdate: "01.01.1970",
       },
     ];
   }

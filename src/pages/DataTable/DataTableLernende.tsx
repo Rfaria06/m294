@@ -5,45 +5,45 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
+} from "@/components/ui/table";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '@/components/ui/tooltip';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { NavLink } from 'react-router-dom';
-import './DataTable.css';
-import { getLernende } from '@/lib/querys';
-import { Skeleton } from '@/components/ui/skeleton';
-import { router } from '@/router';
+} from "@/components/ui/tooltip";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { NavLink } from "react-router-dom";
+import "./DataTable.css";
+import { getLernende } from "@/lib/querys";
+import { Skeleton } from "@/components/ui/skeleton";
+import { router } from "@/router";
 
 function DataTableLernende() {
-  const TABLE_NAME = 'lernende';
+  const TABLE_NAME = "lernende";
   useQueryClient();
   // eslint-disable-next-line prefer-const
   let { data, isPending, refetch } = useQuery({
     queryFn: getLernende,
-    queryKey: ['lernende'],
+    queryKey: ["lernende"],
   });
-  if (!JSON.stringify(data || {}).startsWith('[') || data === undefined) {
+  if (!JSON.stringify(data || {}).startsWith("[") || data === undefined) {
     refetch();
     data = [
       {
-        id: '1',
-        vorname: '',
-        nachname: '',
-        email: '',
-        email_privat: '',
-        telefon: '',
-        handy: '',
-        strasse: '',
-        plz: '',
-        ort: '',
-        birthdate: '',
-        nr_land: '',
-        geschlecht: 'm',
+        id: "1",
+        vorname: "",
+        nachname: "",
+        email: "",
+        email_privat: "",
+        telefon: "",
+        handy: "",
+        strasse: "",
+        plz: "",
+        ort: "",
+        birthdate: "",
+        nr_land: "",
+        geschlecht: "m",
       },
     ];
   }

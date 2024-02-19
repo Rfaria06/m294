@@ -1,28 +1,28 @@
-import './EditRecord.css';
-import * as z from 'zod';
-import { router } from '@/router';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { toast } from 'sonner';
+import "./EditRecord.css";
+import * as z from "zod";
+import { router } from "@/router";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 import {
   deleteSingle,
   getKurse,
   getLernende,
   getSingle,
   updateKurseLernende,
-} from '@/lib/querys';
-import { kurseLernendeFormSchema as formSchema } from '@/lib/schemas';
-import { Row_kurse_lernende } from '@/lib/types';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import LoadingIcons from 'react-loading-icons';
+} from "@/lib/querys";
+import { kurseLernendeFormSchema as formSchema } from "@/lib/schemas";
+import { Row_kurse_lernende } from "@/lib/types";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import LoadingIcons from "react-loading-icons";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Button } from '@/components/ui/button';
+} from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -30,27 +30,27 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { useParams } from 'react-router-dom';
-import { Input } from '@/components/ui/input';
+} from "@/components/ui/form";
+import { useParams } from "react-router-dom";
+import { Input } from "@/components/ui/input";
 
 function EditKurseLernende() {
-  const tableName: string = 'kurse_lernende';
+  const tableName: string = "kurse_lernende";
   const queryClient = useQueryClient();
 
   const { id } = useParams();
-  if (!id) toast('Ungültige ID');
+  if (!id) toast("Ungültige ID");
 
   const { data, isPending } = useQuery({
-    queryKey: ['kurse_lernende'],
-    queryFn: () => getSingle({ tableName: tableName, id: id ?? '0' }),
+    queryKey: ["kurse_lernende"],
+    queryFn: () => getSingle({ tableName: tableName, id: id ?? "0" }),
   });
   let { data: kurseData } = useQuery({
-    queryKey: ['kurse'],
+    queryKey: ["kurse"],
     queryFn: getKurse,
   });
   let { data: lernendeData } = useQuery({
-    queryKey: ['lernende'],
+    queryKey: ["lernende"],
     queryFn: getLernende,
   });
 
@@ -59,9 +59,9 @@ function EditKurseLernende() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      nr_teilnehmer: rowData?.nr_teilnehmer || '',
-      nr_kurs: rowData?.nr_kurs || '',
-      note: rowData?.note || '',
+      nr_teilnehmer: rowData?.nr_teilnehmer || "",
+      nr_kurs: rowData?.nr_kurs || "",
+      note: rowData?.note || "",
     },
   });
 
@@ -69,16 +69,16 @@ function EditKurseLernende() {
     mutationFn: updateKurseLernende,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['kurse_lernende'],
+        queryKey: ["kurse_lernende"],
       });
       router.navigate(`/${tableName}/${id}`);
     },
   });
   const deleteEntry = useMutation({
-    mutationFn: () => deleteSingle({ tableName: tableName, id: id ?? '0' }),
+    mutationFn: () => deleteSingle({ tableName: tableName, id: id ?? "0" }),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['kurse_lernende'],
+        queryKey: ["kurse_lernende"],
       });
       router.navigate(`/${tableName}`);
     },
@@ -87,32 +87,32 @@ function EditKurseLernende() {
   if (!kurseData)
     kurseData = [
       {
-        id: '0',
-        kursnummer: '',
-        kursthema: '',
-        inhalt: '',
-        nr_dozent: '',
-        startdatum: '',
-        enddatum: '',
-        dauer: '',
+        id: "0",
+        kursnummer: "",
+        kursthema: "",
+        inhalt: "",
+        nr_dozent: "",
+        startdatum: "",
+        enddatum: "",
+        dauer: "",
       },
     ];
   if (!lernendeData)
     lernendeData = [
       {
-        id: '0',
-        vorname: '',
-        nachname: '',
-        email: '',
-        email_privat: '',
-        telefon: '',
-        handy: '',
-        strasse: '',
-        plz: '',
-        ort: '',
-        birthdate: '',
-        nr_land: '',
-        geschlecht: 'm',
+        id: "0",
+        vorname: "",
+        nachname: "",
+        email: "",
+        email_privat: "",
+        telefon: "",
+        handy: "",
+        strasse: "",
+        plz: "",
+        ort: "",
+        birthdate: "",
+        nr_land: "",
+        geschlecht: "m",
       },
     ];
 
@@ -128,7 +128,7 @@ function EditKurseLernende() {
             onSubmit={form.handleSubmit(() => {
               mutation.mutate({
                 data: form.getValues(),
-                id: id ?? '0',
+                id: id ?? "0",
               });
             })}
           >
@@ -186,7 +186,7 @@ function EditKurseLernende() {
                   <FormControl>
                     <Input
                       className="bg-white"
-                      placeholder={rowData?.note || 'Note'}
+                      placeholder={rowData?.note || "Note"}
                       {...field}
                     />
                   </FormControl>

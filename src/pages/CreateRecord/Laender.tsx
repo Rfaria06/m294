@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import { postLaender } from '@/lib/querys';
+import { postLaender } from "@/lib/querys";
 import {
   QueryClient,
   useMutation,
   useQueryClient,
-} from '@tanstack/react-query';
-import { useForm } from 'react-hook-form';
-import { laenderFormSchema as formSchema } from '@/lib/schemas';
-import * as z from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
+} from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import { laenderFormSchema as formSchema } from "@/lib/schemas";
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
   FormControl,
@@ -17,10 +17,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { router } from '@/router';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { router } from "@/router";
 
 function CreateLand() {
   const queryClient: QueryClient = useQueryClient();
@@ -28,9 +28,9 @@ function CreateLand() {
     mutationFn: postLaender,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['laender'],
+        queryKey: ["laender"],
       });
-      router.navigate('/laender');
+      router.navigate("/laender");
     },
   });
 

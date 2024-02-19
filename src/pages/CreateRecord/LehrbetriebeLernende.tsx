@@ -2,16 +2,16 @@ import {
   getLehrbetriebe,
   getLernende,
   postLehrbetriebeLernende,
-} from '@/lib/querys';
+} from "@/lib/querys";
 import {
   QueryClient,
   useMutation,
   useQuery,
   useQueryClient,
-} from '@tanstack/react-query';
-import { useForm } from 'react-hook-form';
-import { lehrbetriebeLernendeFormSchema as formSchema } from '@/lib/schemas';
-import { zodResolver } from '@hookform/resolvers/zod';
+} from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import { lehrbetriebeLernendeFormSchema as formSchema } from "@/lib/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
   FormControl,
@@ -19,18 +19,18 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import * as z from 'zod';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+} from "@/components/ui/form";
+import * as z from "zod";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { router } from '@/router';
+} from "@/components/ui/select";
+import { router } from "@/router";
 
 function CreateLehrbetriebeLernende() {
   const queryClient: QueryClient = useQueryClient();
@@ -38,17 +38,17 @@ function CreateLehrbetriebeLernende() {
     mutationFn: postLehrbetriebeLernende,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['lehrbetriebeLernende'],
+        queryKey: ["lehrbetriebeLernende"],
       });
-      router.navigate('/lehrbetriebe_lernende');
+      router.navigate("/lehrbetriebe_lernende");
     },
   });
   let { data: lehrbetriebData } = useQuery({
-    queryKey: ['lehrbetriebe'],
+    queryKey: ["lehrbetriebe"],
     queryFn: getLehrbetriebe,
   });
   let { data: lernendeData } = useQuery({
-    queryKey: ['lernende'],
+    queryKey: ["lernende"],
     queryFn: getLernende,
   });
   const form = useForm<z.infer<typeof formSchema>>({
@@ -58,29 +58,29 @@ function CreateLehrbetriebeLernende() {
   if (!lehrbetriebData)
     lehrbetriebData = [
       {
-        id: '0',
-        firma: '',
-        strasse: '',
-        plz: '',
-        ort: '',
+        id: "0",
+        firma: "",
+        strasse: "",
+        plz: "",
+        ort: "",
       },
     ];
   if (!lernendeData)
     lernendeData = [
       {
-        id: '0',
-        vorname: '',
-        nachname: '',
-        strasse: '',
-        plz: '',
-        ort: '',
-        nr_land: '',
-        geschlecht: 'm',
-        telefon: '',
-        handy: '',
-        email: '',
-        email_privat: '',
-        birthdate: '',
+        id: "0",
+        vorname: "",
+        nachname: "",
+        strasse: "",
+        plz: "",
+        ort: "",
+        nr_land: "",
+        geschlecht: "m",
+        telefon: "",
+        handy: "",
+        email: "",
+        email_privat: "",
+        birthdate: "",
       },
     ];
   return (

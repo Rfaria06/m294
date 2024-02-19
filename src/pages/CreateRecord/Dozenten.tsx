@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -8,40 +8,40 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { getLaender, postDozenten } from '@/lib/querys.ts';
-import { dozentFormSchema as formSchema } from '@/lib/schemas/';
-import { zodResolver } from '@hookform/resolvers/zod';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { getLaender, postDozenten } from "@/lib/querys.ts";
+import { dozentFormSchema as formSchema } from "@/lib/schemas/";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   QueryClient,
   useMutation,
   useQuery,
   useQueryClient,
-} from '@tanstack/react-query';
-import { useForm } from 'react-hook-form';
-import * as z from 'zod';
-import './CreateRecord.css';
+} from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import "./CreateRecord.css";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { router } from '@/router';
+} from "@/components/ui/select";
+import { router } from "@/router";
 
 function CreateDozent() {
   const queryClient: QueryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: postDozenten,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['dozenten'] });
-      router.navigate('/dozenten');
+      queryClient.invalidateQueries({ queryKey: ["dozenten"] });
+      router.navigate("/dozenten");
     },
   });
   let { data: landData } = useQuery({
-    queryKey: ['laender'],
+    queryKey: ["laender"],
     queryFn: getLaender,
   });
 
@@ -49,7 +49,7 @@ function CreateDozent() {
     resolver: zodResolver(formSchema),
   });
 
-  if (!landData) landData = [{ id: '0', country: '' }];
+  if (!landData) landData = [{ id: "0", country: "" }];
   return (
     <div className="create-record">
       <Form {...form} control={form.control}>

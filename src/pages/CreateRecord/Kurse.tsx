@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -8,41 +8,41 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { getDozenten, postKurs } from '@/lib/querys';
-import { kursFormSchema as formSchema } from '@/lib/schemas/';
-import { zodResolver } from '@hookform/resolvers/zod';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { getDozenten, postKurs } from "@/lib/querys";
+import { kursFormSchema as formSchema } from "@/lib/schemas/";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   QueryClient,
   useMutation,
   useQuery,
   useQueryClient,
-} from '@tanstack/react-query';
-import { useForm } from 'react-hook-form';
-import * as z from 'zod';
-import './CreateRecord.css';
+} from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import "./CreateRecord.css";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { router } from '@/router';
+} from "@/components/ui/select";
+import { router } from "@/router";
 
 function CreateKurs() {
   const queryClient: QueryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: postKurs,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['kurse'] });
-      router.navigate('/kurse');
+      queryClient.invalidateQueries({ queryKey: ["kurse"] });
+      router.navigate("/kurse");
     },
   });
   let { data: dozentData } = useQuery({
-    queryKey: ['dozenten'],
+    queryKey: ["dozenten"],
     queryFn: getDozenten,
     initialData: [],
   });
@@ -50,21 +50,21 @@ function CreateKurs() {
     resolver: zodResolver(formSchema),
   });
 
-  if (!dozentData || !JSON.stringify(dozentData).startsWith('['))
+  if (!dozentData || !JSON.stringify(dozentData).startsWith("["))
     dozentData = [
       {
-        id: '0',
-        vorname: '',
-        nachname: '',
-        strasse: '',
-        plz: '',
-        ort: '',
-        nr_land: '',
-        geschlecht: 'm',
-        telefon: '',
-        handy: '',
-        email: '',
-        birthdate: '',
+        id: "0",
+        vorname: "",
+        nachname: "",
+        strasse: "",
+        plz: "",
+        ort: "",
+        nr_land: "",
+        geschlecht: "m",
+        telefon: "",
+        handy: "",
+        email: "",
+        birthdate: "",
       },
     ];
   return (
@@ -144,7 +144,7 @@ function CreateKurs() {
                   <SelectContent>
                     {dozentData?.map((dozent) => (
                       <SelectItem key={dozent.id} value={dozent.id}>
-                        {dozent.vorname + ' ' + dozent.nachname}
+                        {dozent.vorname + " " + dozent.nachname}
                       </SelectItem>
                     ))}
                   </SelectContent>

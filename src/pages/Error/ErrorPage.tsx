@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import LoadingIcons from 'react-loading-icons';
+import { useEffect, useState } from "react";
+import LoadingIcons from "react-loading-icons";
 
 function ErrorPage() {
   const [countdown, setCountdown] = useState(5);

@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -6,27 +6,27 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { getLaender, postLernende } from '@/lib/querys';
-import { lernendeFormSchema as formSchema } from '@/lib/schemas';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { getLaender, postLernende } from "@/lib/querys";
+import { lernendeFormSchema as formSchema } from "@/lib/schemas";
 import {
   QueryClient,
   useMutation,
   useQuery,
   useQueryClient,
-} from '@tanstack/react-query';
-import { useForm } from 'react-hook-form';
-import * as z from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
+} from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { router } from '@/router';
+} from "@/components/ui/select";
+import { router } from "@/router";
 
 function CreateLernende() {
   const queryClient: QueryClient = useQueryClient();
@@ -34,13 +34,13 @@ function CreateLernende() {
     mutationFn: postLernende,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['lernende'],
+        queryKey: ["lernende"],
       });
-      router.navigate('/lernende');
+      router.navigate("/lernende");
     },
   });
   let { data: landData } = useQuery({
-    queryKey: ['laender'],
+    queryKey: ["laender"],
     queryFn: getLaender,
     initialData: [],
   });
@@ -48,7 +48,7 @@ function CreateLernende() {
     resolver: zodResolver(formSchema),
   });
 
-  if (!landData) landData = [{ id: '0', country: '' }];
+  if (!landData) landData = [{ id: "0", country: "" }];
   return (
     <div className="create-record">
       <Form {...form} control={form.control}>
