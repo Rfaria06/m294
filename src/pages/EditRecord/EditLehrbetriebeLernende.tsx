@@ -91,22 +91,22 @@ function EditLehrbetriebeLernende() {
       router.navigate(`/${tableName}`);
     },
   });
-  if (!lehrbetriebData)
+  if (!lehrbetriebData || !JSON.stringify(lehrbetriebData).startsWith('['))
     lehrbetriebData = [
       {
         id: '0',
-        firma: '',
+        firma: 'Lädt...',
         strasse: '',
         plz: '',
         ort: '',
       },
     ];
-  if (!lernendeData)
+  if (!lernendeData || !JSON.stringify(lernendeData).startsWith('['))
     lernendeData = [
       {
         id: '0',
-        vorname: '',
-        nachname: '',
+        vorname: 'Lädt...',
+        nachname: 'Lädt...',
         strasse: '',
         plz: '',
         ort: '',
@@ -138,7 +138,7 @@ function EditLehrbetriebeLernende() {
               name="nr_lehrbetrieb"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Lehrbetrieb</FormLabel>
+                  <FormLabel>Lehrbetrieb*</FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger>
@@ -161,7 +161,7 @@ function EditLehrbetriebeLernende() {
               name="nr_lernende"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Lernende/r</FormLabel>
+                  <FormLabel>Lernende/r*</FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger>

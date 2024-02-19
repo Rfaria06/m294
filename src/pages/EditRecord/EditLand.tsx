@@ -19,6 +19,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import LoadingIcons from 'react-loading-icons';
 import { router } from '@/router';
 import * as z from 'zod';
+import './EditRecord.css';
 
 function EditLand() {
   const tableName: string = 'laender';
@@ -60,7 +61,7 @@ function EditLand() {
   });
 
   return (
-    <div className="create-record">
+    <div className="edit-record">
       {isPending ? (
         <LoadingIcons.TailSpin fill="black" />
       ) : (

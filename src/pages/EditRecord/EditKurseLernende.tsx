@@ -136,7 +136,7 @@ function EditKurseLernende() {
               name="nr_teilnehmer"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Teilnehmer</FormLabel>
+                  <FormLabel>Teilnehmer*</FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger>
@@ -159,7 +159,7 @@ function EditKurseLernende() {
               name="nr_kurs"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Kurs</FormLabel>
+                  <FormLabel>Kurs*</FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger>

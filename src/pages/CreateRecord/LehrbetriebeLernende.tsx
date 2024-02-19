@@ -1,7 +1,12 @@
-import { postLehrbetriebeLernende } from '@/lib/querys';
+import {
+  getLehrbetriebe,
+  getLernende,
+  postLehrbetriebeLernende,
+} from '@/lib/querys';
 import {
   QueryClient,
   useMutation,
+  useQuery,
   useQueryClient,
 } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
@@ -16,10 +21,16 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import * as z from 'zod';
-import LehrbetriebePopover from '@/lib/popovers/LehrbetriebePopover';
-import LernendePopover from '@/lib/popovers/LernendePopover';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { router } from '@/router';
 
 function CreateLehrbetriebeLernende() {
   const queryClient: QueryClient = useQueryClient();
@@ -29,18 +40,56 @@ function CreateLehrbetriebeLernende() {
       queryClient.invalidateQueries({
         queryKey: ['lehrbetriebeLernende'],
       });
+      router.navigate('/lehrbetriebe_lernende');
     },
+  });
+  let { data: lehrbetriebData } = useQuery({
+    queryKey: ['lehrbetriebe'],
+    queryFn: getLehrbetriebe,
+  });
+  let { data: lernendeData } = useQuery({
+    queryKey: ['lernende'],
+    queryFn: getLernende,
   });
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
 
+  if (!lehrbetriebData)
+    lehrbetriebData = [
+      {
+        id: '0',
+        firma: '',
+        strasse: '',
+        plz: '',
+        ort: '',
+      },
+    ];
+  if (!lernendeData)
+    lernendeData = [
+      {
+        id: '0',
+        vorname: '',
+        nachname: '',
+        strasse: '',
+        plz: '',
+        ort: '',
+        nr_land: '',
+        geschlecht: 'm',
+        telefon: '',
+        handy: '',
+        email: '',
+        email_privat: '',
+        birthdate: '',
+      },
+    ];
   return (
     <div className="create-record">
       <Form {...form} control={form.control}>
         <FormLabel className="mb-5">
           Neue Verbindung von Lehrbetrieb zu Lernender
         </FormLabel>
+        <div className="w-full border-t border-black mt-4"></div>
         <form
           onSubmit={form.handleSubmit(() => {
             mutation.mutate({ data: form.getValues() });
@@ -49,71 +98,93 @@ function CreateLehrbetriebeLernende() {
           <FormField
             name="nr_lehrbetrieb"
             render={({ field }) => (
-              <FormItem className="mb-4 flex justify-center">
-                <FormControl>
-                  <LehrbetriebePopover field={field} />
-                </FormControl>
+              <FormItem>
+                <FormLabel>Lehrbetrieb*</FormLabel>
+                <Select onValueChange={field.onChange} value={field.value}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Lehrbetrieb..." />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {lehrbetriebData?.map((lehrbetrieb) => (
+                      <SelectItem key={lehrbetrieb.id} value={lehrbetrieb.id}>
+                        {lehrbetrieb.firma}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
                 <FormMessage />
               </FormItem>
             )}
           />
+          <div className="w-full border-t border-grey mt-4"></div>
           <FormField
             name="nr_lernende"
             render={({ field }) => (
-              <FormItem className="mb-4">
-                <FormControl>
-                  <LernendePopover field={field} />
-                </FormControl>
+              <FormItem>
+                <FormLabel>Lernende/r*</FormLabel>
+                <Select onValueChange={field.onChange} value={field.value}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Lernende/r..." />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {lernendeData?.map((lernender) => (
+                      <SelectItem key={lernender.id} value={lernender.id}>
+                        {lernender.vorname} {lernender.nachname}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
                 <FormMessage />
               </FormItem>
             )}
           />
+          <div className="w-full border-t border-grey mt-4"></div>
           <FormField
             name="start"
             render={({ field }) => (
-              <FormItem className="mb-4">
+              <FormItem>
+                <FormLabel>Start</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="Start"
-                    className="bg-white w-[250px]"
-                    {...field}
-                  />
+                  <Input placeholder="Start" className="bg-white " {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
+          <div className="w-full border-t border-grey mt-4"></div>
           <FormField
             name="ende"
             render={({ field }) => (
-              <FormItem className="mb-4">
+              <FormItem>
+                <FormLabel>Ende</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="Ende"
-                    className="bg-white w-[250px]"
-                    {...field}
-                  />
+                  <Input placeholder="Ende" className="bg-white" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
+          <div className="w-full border-t border-grey mt-4"></div>
           <FormField
             name="beruf"
             render={({ field }) => (
-              <FormItem className="mb-4 flex justify-center">
+              <FormItem>
+                <FormLabel>Beruf</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="Beruf"
-                    className="bg-white w-[250px]"
-                    {...field}
-                  />
+                  <Input placeholder="Beruf" className="bg-white" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button type="submit">Erstellen</Button>
+          <div className="w-full border-t border-grey mt-4"></div>
+          <Button type="submit" className="mt-4">
+            Erstellen
+          </Button>
         </form>
       </Form>
     </div>

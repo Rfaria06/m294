@@ -27,6 +27,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import './EditRecord.css';
 
 function EditKurs() {
   const tableName: string = 'kurse';
@@ -117,11 +118,11 @@ function EditKurs() {
               name="kursnummer"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Kursnummer</FormLabel>
+                  <FormLabel>Kursnummer*</FormLabel>
                   <FormControl>
                     <Input
                       className="bg-white"
-                      placeholder={rowData?.kursnummer || 'Kursnummer'}
+                      placeholder={rowData?.kursnummer || 'Kursnummer*'}
                       {...field}
                     />
                   </FormControl>
