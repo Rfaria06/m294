@@ -37,7 +37,7 @@ function DataTableKurse() {
 
   const getDozentFullName = (id: string): string => {
     if (!id) return "";
-    const dozent = dozentData.find((id) => id === id);
+    const dozent = dozentData.find((dozent) => dozent.id === id);
     if (!dozent) return "";
     return ` - ${dozent.vorname} ${dozent.nachname}`;
   };

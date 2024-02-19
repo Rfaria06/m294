@@ -40,14 +40,14 @@ function DataTableKurseLernende() {
 
   const getLernendeFullName = (id: string): string => {
     if (!id) return "";
-    const lernende = lernendeData.find((id) => id === id);
+    const lernende = lernendeData.find((lernender) => lernender.id === id);
     if (!lernende) return "";
     return ` - ${lernende.vorname} ${lernende.nachname}`;
   };
 
   const getKursNummer = (id: string): string => {
     if (!id) return "";
-    const kurs = kurseData.find((id) => id === id);
+    const kurs = kurseData.find((kurs) => kurs.id === id);
     if (!kurs) return "";
     return ` - ${kurs.kursnummer}`;
   };

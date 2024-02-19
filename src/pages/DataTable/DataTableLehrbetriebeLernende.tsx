@@ -44,14 +44,16 @@ function DataTableLehrbetriebeLernende() {
 
   const getLernendeFullName = (id: string): string => {
     if (!id) return "";
-    const lernende = lernendeData.find((id) => id === id);
+    const lernende = lernendeData.find((lernender) => lernender.id === id);
     if (!lernende) return "";
     return ` - ${lernende.vorname} ${lernende.nachname}`;
   };
 
   const getFirma = (id: string): string => {
     if (!id) return "";
-    const lehrbetrieb = lehrbetriebData.find((id) => id === id);
+    const lehrbetrieb = lehrbetriebData.find(
+      (lehrbetrieb) => lehrbetrieb.id === id,
+    );
     if (!lehrbetrieb) return "";
     return ` - ${lehrbetrieb.firma}`;
   };
