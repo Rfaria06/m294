@@ -6,7 +6,11 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { getLehrbetriebLernende } from '@/lib/querys';
+import {
+  getLehrbetriebLernende,
+  getLehrbetriebe,
+  getLernende,
+} from '@/lib/querys';
 import { NavLink } from 'react-router-dom';
 import './DataTable.css';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
@@ -27,6 +31,31 @@ function DataTableLehrbetriebeLernende() {
     queryKey: ['lehrbetriebeLernende'],
     queryFn: getLehrbetriebLernende,
   });
+  let { data: lehrbetriebData } = useQuery({
+    queryKey: ['lehrbetriebe'],
+    queryFn: getLehrbetriebe,
+    initialData: [],
+  });
+  let { data: lernendeData } = useQuery({
+    queryKey: ['lernende'],
+    queryFn: getLernende,
+    initialData: [],
+  });
+
+  const getLernendeFullName = (id: string): string => {
+    if (!id) return '';
+    const lernende = lernendeData.find((id) => id === id);
+    if (!lernende) return '';
+    return ` - ${lernende.vorname} ${lernende.nachname}`;
+  };
+
+  const getFirma = (id: string): string => {
+    if (!id) return '';
+    const lehrbetrieb = lehrbetriebData.find((id) => id === id);
+    if (!lehrbetrieb) return '';
+    return ` - ${lehrbetrieb.firma}`;
+  };
+
   if (!JSON.stringify(data || {}).startsWith('[') || data === undefined) {
     refetch();
     data = [
@@ -40,6 +69,34 @@ function DataTableLehrbetriebeLernende() {
       },
     ];
   }
+  if (!lehrbetriebData || !JSON.stringify(lehrbetriebData).startsWith('['))
+    lehrbetriebData = [
+      {
+        id: '0',
+        firma: 'Lädt...',
+        strasse: '',
+        plz: '',
+        ort: '',
+      },
+    ];
+  if (!lernendeData || !JSON.stringify(lernendeData).startsWith('['))
+    lernendeData = [
+      {
+        id: '0',
+        vorname: 'Lädt...',
+        nachname: 'Lädt...',
+        strasse: '',
+        plz: '',
+        ort: '',
+        nr_land: '',
+        geschlecht: 'm',
+        telefon: '',
+        handy: '',
+        email: '',
+        email_privat: '',
+        birthdate: '',
+      },
+    ];
   return (
     <div>
       <div className="mb-3">
@@ -91,9 +148,11 @@ function DataTableLehrbetriebeLernende() {
                     </TableCell>
                     <TableCell className="text-left">
                       {row.nr_lehrbetrieb}
+                      {getFirma(row.nr_lehrbetrieb)}
                     </TableCell>
                     <TableCell className="text-left">
                       {row.nr_lernende}
+                      {getLernendeFullName(row.nr_lernende)}
                     </TableCell>
                     <TableCell className="text-left">{row.start}</TableCell>
                     <TableCell className="text-left">{row.ende}</TableCell>

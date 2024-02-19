@@ -27,7 +27,7 @@ const components: { title: string; href: string; description: string }[] = [
     description: "Zeige die Tabelle 'Lernende' an.",
   },
   {
-    title: 'Lehrbetriebe ➞ lernende',
+    title: 'Lehrbetriebe ➞ Lernende',
     href: '/lehrbetriebe_lernende',
     description:
       'Diese Tabelle zeigt die Zuordnung von Lehrbetrieben zu Lernenden an.',
@@ -48,7 +48,7 @@ const components: { title: string; href: string; description: string }[] = [
     description: "Zeige die Tabelle 'Kurse' an.",
   },
   {
-    title: 'Kurse ➞ lernende',
+    title: 'Kurse ➞ Lernende',
     href: '/kurse_lernende',
     description:
       'Diese Tabelle zeigt die Zuordnung von Kursen zu Lernenden an.',

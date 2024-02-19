@@ -13,7 +13,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { getKurseLernende } from '@/lib/querys';
+import { getKurse, getKurseLernende, getLernende } from '@/lib/querys';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { NavLink } from 'react-router-dom';
 import './DataTable.css';
@@ -27,6 +27,31 @@ function DataTableKurseLernende() {
     queryKey: ['kurseLernende'],
     queryFn: getKurseLernende,
   });
+  let { data: lernendeData } = useQuery({
+    queryKey: ['lernende'],
+    queryFn: getLernende,
+    initialData: [],
+  });
+  let { data: kurseData } = useQuery({
+    queryKey: ['kurse'],
+    queryFn: getKurse,
+    initialData: [],
+  });
+
+  const getLernendeFullName = (id: string): string => {
+    if (!id) return '';
+    const lernende = lernendeData.find((id) => id === id);
+    if (!lernende) return '';
+    return ` - ${lernende.vorname} ${lernende.nachname}`;
+  };
+
+  const getKursNummer = (id: string): string => {
+    if (!id) return '';
+    const kurs = kurseData.find((id) => id === id);
+    if (!kurs) return '';
+    return ` - ${kurs.kursnummer}`;
+  };
+
   if (!JSON.stringify(data || {}).startsWith('[') || data === undefined) {
     refetch();
     data = [
@@ -38,6 +63,37 @@ function DataTableKurseLernende() {
       },
     ];
   }
+  if (!lernendeData)
+    lernendeData = [
+      {
+        id: '0',
+        vorname: '',
+        nachname: '',
+        email: '',
+        email_privat: '',
+        telefon: '',
+        handy: '',
+        strasse: '',
+        plz: '',
+        ort: '',
+        birthdate: '',
+        nr_land: '',
+        geschlecht: 'm',
+      },
+    ];
+  if (!kurseData)
+    kurseData = [
+      {
+        id: '0',
+        kursnummer: '',
+        kursthema: '',
+        inhalt: '',
+        nr_dozent: '',
+        startdatum: '',
+        enddatum: '',
+        dauer: '',
+      },
+    ];
   return (
     <div>
       <div className="mb-3">
@@ -85,8 +141,12 @@ function DataTableKurseLernende() {
                     <TableCell className="text-left">{row.id}</TableCell>
                     <TableCell className="text-left">
                       {row.nr_teilnehmer}
+                      {getLernendeFullName(row.nr_teilnehmer)}
                     </TableCell>
-                    <TableCell className="text-left">{row.nr_kurs}</TableCell>
+                    <TableCell className="text-left">
+                      {row.nr_kurs}
+                      {getKursNummer(row.nr_kurs)}
+                    </TableCell>
                     <TableCell className="text-left">{row.note}</TableCell>
                   </TableRow>
                 ))}

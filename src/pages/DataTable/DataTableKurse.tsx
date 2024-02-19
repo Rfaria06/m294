@@ -13,7 +13,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { getKurse } from '@/lib/querys';
+import { getDozenten, getKurse } from '@/lib/querys';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { NavLink } from 'react-router-dom';
 import './DataTable.css';
@@ -28,6 +28,20 @@ function DataTableKurse() {
     queryFn: getKurse,
     initialData: [],
   });
+
+  let { data: dozentData } = useQuery({
+    queryKey: ['dozenten'],
+    queryFn: getDozenten,
+    initialData: [],
+  });
+
+  const getDozentFullName = (id: string): string => {
+    if (!id) return '';
+    const dozent = dozentData.find((id) => id === id);
+    if (!dozent) return '';
+    return ` - ${dozent.vorname} ${dozent.nachname}`;
+  };
+
   if (!JSON.stringify(data || {}).startsWith('[') || data === undefined) {
     refetch();
     data = [
@@ -40,6 +54,27 @@ function DataTableKurse() {
         startdatum: '',
         enddatum: '',
         dauer: '',
+      },
+    ];
+  }
+  if (
+    !JSON.stringify(dozentData || {}).startsWith('[') ||
+    dozentData === undefined
+  ) {
+    dozentData = [
+      {
+        id: '1',
+        vorname: 'Max',
+        nachname: 'Mustermann',
+        email: 'max@mustermann.com',
+        strasse: 'Musterstrasse 1',
+        plz: '12345',
+        ort: 'Musterstadt',
+        nr_land: '',
+        geschlecht: 'm',
+        telefon: '123456789',
+        handy: '987654321',
+        birthdate: '01.01.1970',
       },
     ];
   }
@@ -97,7 +132,10 @@ function DataTableKurse() {
                     </TableCell>
                     <TableCell className="text-left">{row.kursthema}</TableCell>
                     <TableCell className="text-left">{row.inhalt}</TableCell>
-                    <TableCell className="text-left">{row.nr_dozent}</TableCell>
+                    <TableCell className="text-left">
+                      {row.nr_dozent}
+                      {getDozentFullName(row.nr_dozent)}
+                    </TableCell>
                     <TableCell className="text-left">
                       {row.startdatum}
                     </TableCell>
