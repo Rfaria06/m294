@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter } from "react-router-dom";
 import {
   CreateDozent,
   CreateKurs,
@@ -7,7 +7,7 @@ import {
   CreateLehrbetrieb,
   CreateLehrbetriebeLernende,
   CreateLernende,
-} from './pages/CreateRecord';
+} from "./pages/CreateRecord";
 import {
   DataTableDozenten,
   DataTableKurse,
@@ -16,11 +16,11 @@ import {
   DataTableLehrbetriebe,
   DataTableLehrbetriebeLernende,
   DataTableLernende,
-} from './pages/DataTable';
-import ErrorPage from './pages/Error/ErrorPage';
-import Startpage from './pages/Startpage/Startpage';
-import InfoPage from './pages/Info/InfoPage';
-import DetailView from './pages/DetailView/DetailView';
+} from "./pages/DataTable";
+import ErrorPage from "./pages/Error/ErrorPage";
+import Startpage from "./pages/Startpage/Startpage";
+import InfoPage from "./pages/Info/InfoPage";
+import DetailView from "./pages/DetailView/DetailView";
 import {
   EditDozent,
   EditKurs,
@@ -29,131 +29,131 @@ import {
   EditLehrbetrieb,
   EditLehrbetriebeLernende,
   EditLernende,
-} from './pages/EditRecord';
+} from "./pages/EditRecord";
 
 export const router = createBrowserRouter([
   {
-    path: '*',
+    path: "*",
     element: <h1 className="font-bold text-white">404 - Not found</h1>,
     errorElement: <ErrorPage />,
   },
   {
-    path: '/',
+    path: "/",
     element: <Startpage />,
     errorElement: <ErrorPage />,
   },
   {
-    path: '/info',
+    path: "/info",
     element: <InfoPage />,
     errorElement: <ErrorPage />,
   },
   {
-    path: '/lernende',
+    path: "/lernende",
     element: <DataTableLernende />,
     errorElement: <ErrorPage />,
   },
   {
-    path: '/lehrbetriebe',
+    path: "/lehrbetriebe",
     element: <DataTableLehrbetriebe />,
     errorElement: <ErrorPage />,
   },
   {
-    path: '/lehrbetriebe_lernende',
+    path: "/lehrbetriebe_lernende",
     element: <DataTableLehrbetriebeLernende />,
     errorElement: <ErrorPage />,
   },
   {
-    path: '/laender',
+    path: "/laender",
     element: <DataTableLaender />,
     errorElement: <ErrorPage />,
   },
   {
-    path: '/dozenten',
+    path: "/dozenten",
     element: <DataTableDozenten />,
     errorElement: <ErrorPage />,
   },
   {
-    path: '/kurse',
+    path: "/kurse",
     element: <DataTableKurse />,
     errorElement: <ErrorPage />,
   },
   {
-    path: '/kurse_lernende',
+    path: "/kurse_lernende",
     element: <DataTableKurseLernende />,
     errorElement: <ErrorPage />,
   },
   {
-    path: '/lernende/create',
+    path: "/lernende/create",
     element: <CreateLernende />,
     errorElement: <ErrorPage />,
   },
   {
-    path: '/lehrbetriebe/create',
+    path: "/lehrbetriebe/create",
     element: <CreateLehrbetrieb />,
     errorElement: <ErrorPage />,
   },
   {
-    path: '/lehrbetriebe_lernende/create',
+    path: "/lehrbetriebe_lernende/create",
     element: <CreateLehrbetriebeLernende />,
     errorElement: <ErrorPage />,
   },
   {
-    path: '/laender/create',
+    path: "/laender/create",
     element: <CreateLand />,
     errorElement: <ErrorPage />,
   },
   {
-    path: '/dozenten/create',
+    path: "/dozenten/create",
     element: <CreateDozent />,
     errorElement: <ErrorPage />,
   },
   {
-    path: '/kurse/create',
+    path: "/kurse/create",
     element: <CreateKurs />,
     errorElement: <ErrorPage />,
   },
   {
-    path: '/kurse_lernende/create',
+    path: "/kurse_lernende/create",
     element: <CreateKurseLernende />,
     errorElement: <ErrorPage />,
   },
   {
-    path: '/:tableName/:id',
+    path: "/:tableName/:id",
     element: <DetailView />,
     errorElement: <ErrorPage />,
   },
   {
-    path: '/lernende/:id/edit',
+    path: "/lernende/:id/edit",
     element: <EditLernende />,
     errorElement: <ErrorPage />,
   },
   {
-    path: '/lehrbetriebe/:id/edit',
+    path: "/lehrbetriebe/:id/edit",
     element: <EditLehrbetrieb />,
     errorElement: <ErrorPage />,
   },
   {
-    path: '/lehrbetriebe_lernende/:id/edit',
+    path: "/lehrbetriebe_lernende/:id/edit",
     element: <EditLehrbetriebeLernende />,
     errorElement: <ErrorPage />,
   },
   {
-    path: '/laender/:id/edit',
+    path: "/laender/:id/edit",
     element: <EditLand />,
     errorElement: <ErrorPage />,
   },
   {
-    path: '/dozenten/:id/edit',
+    path: "/dozenten/:id/edit",
     element: <EditDozent />,
     errorElement: <ErrorPage />,
   },
   {
-    path: '/kurse/:id/edit',
+    path: "/kurse/:id/edit",
     element: <EditKurs />,
     errorElement: <ErrorPage />,
   },
   {
-    path: '/kurse_lernende/:id/edit',
+    path: "/kurse_lernende/:id/edit",
     element: <EditKurseLernende />,
     errorElement: <ErrorPage />,
   },

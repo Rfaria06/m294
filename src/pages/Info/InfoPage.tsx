@@ -1,15 +1,15 @@
-import { Button } from '@/components/ui/button';
-import './InfoPage.css';
-import { toast } from 'sonner';
-import { CodeBlock, CopyBlock, dracula } from 'react-code-blocks';
+import { Button } from "@/components/ui/button";
+import "./InfoPage.css";
+import { toast } from "sonner";
+import { CodeBlock, CopyBlock, dracula } from "react-code-blocks";
 
-const runScript: string = 'npm i\nnpm run build\nnpm run preview';
+const runScript: string = "npm i\nnpm run build\nnpm run preview";
 
 function InfoPage() {
   return (
-    <div className='container'>
+    <div className="container">
       <h1>Info</h1>
-      <div className='sub'>
+      <div className="sub">
         <h3>Vor der Benotung beachten</h3>
       </div>
       <br />
@@ -19,22 +19,22 @@ function InfoPage() {
       </h5>
       <Button
         onClick={() => {
-          toast('Dies ist ein Toast!');
+          toast("Dies ist ein Toast!");
         }}
-        className='mb-5'
+        className="mb-5"
       >
         Beispiel
       </Button>
-      <br className='mb-5' />
+      <br className="mb-5" />
       <h5>
         Wenn die Applikation mit
-        <div className='h-5 mb-5'>
-          <CodeBlock text='npm run dev' theme={dracula} language='shell' />
+        <div className="h-5 mb-5">
+          <CodeBlock text="npm run dev" theme={dracula} language="shell" />
         </div>
         gestartet wurde, werden diese mehrmals angezeigt.
       </h5>
       <br />
-      <h5 className='text-bold underline'>
+      <h5 className="text-bold underline">
         Dies ist Erwartetes und korrektes Verhalten.
       </h5>
       <br />
@@ -42,9 +42,9 @@ function InfoPage() {
         Um die Applikation im richten modus zu sehen, muss die Applikation über
         diese weise gestartet werden:
       </h5>
-      <div className='text-left'>
+      <div className="text-left">
         <CopyBlock
-          language='shell'
+          language="shell"
           theme={dracula}
           text={runScript}
           showLineNumbers={true}
@@ -52,8 +52,8 @@ function InfoPage() {
       </div>
       <br />
       <h5>
-        Danach kann die Applikation über{' '}
-        <a href='http://localhost:4173/'>http://localhost:4173/</a> abgerufen
+        Danach kann die Applikation über{" "}
+        <a href="http://localhost:4173/">http://localhost:4173/</a> abgerufen
         werden.
       </h5>
     </div>

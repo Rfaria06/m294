@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -6,47 +6,47 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { deleteSingle, getDozenten, getSingle, updateKurs } from '@/lib/querys';
-import { Row_kurse } from '@/lib/types';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useForm } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
-import { toast } from 'sonner';
-import { kursFormSchema as formSchema } from '@/lib/schemas';
-import * as z from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { router } from '@/router';
-import LoadingIcons from 'react-loading-icons';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
+} from "@/components/ui/form";
+import { deleteSingle, getDozenten, getSingle, updateKurs } from "@/lib/querys";
+import { Row_kurse } from "@/lib/types";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import { useParams } from "react-router-dom";
+import { toast } from "sonner";
+import { kursFormSchema as formSchema } from "@/lib/schemas";
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { router } from "@/router";
+import LoadingIcons from "react-loading-icons";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import './EditRecord.css';
+} from "@/components/ui/select";
+import "./EditRecord.css";
 
 function EditKurs() {
-  const tableName: string = 'kurse';
+  const tableName: string = "kurse";
 
   const queryClient = useQueryClient();
 
   const { id } = useParams();
-  if (!id) toast('Ungültige ID');
+  if (!id) toast("Ungültige ID");
 
   const { data, isPending } = useQuery({
-    queryKey: ['kurse'],
+    queryKey: ["kurse"],
     queryFn: () =>
       getSingle({
-        tableName: 'kurse',
-        id: id || '',
+        tableName: "kurse",
+        id: id || "",
       }),
   });
   let { data: dozentData } = useQuery({
-    queryKey: ['dozenten'],
+    queryKey: ["dozenten"],
     queryFn: getDozenten,
     initialData: [],
   });
@@ -55,13 +55,13 @@ function EditKurs() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      kursnummer: rowData?.kursnummer || '',
-      kursthema: rowData?.kursthema || '',
-      inhalt: rowData?.inhalt || '',
-      nr_dozent: rowData?.nr_dozent || '',
-      startdatum: rowData?.startdatum || '',
-      enddatum: rowData?.enddatum || '',
-      dauer: rowData?.dauer || '',
+      kursnummer: rowData?.kursnummer || "",
+      kursthema: rowData?.kursthema || "",
+      inhalt: rowData?.inhalt || "",
+      nr_dozent: rowData?.nr_dozent || "",
+      startdatum: rowData?.startdatum || "",
+      enddatum: rowData?.enddatum || "",
+      dauer: rowData?.dauer || "",
     },
   });
 
@@ -69,16 +69,16 @@ function EditKurs() {
     mutationFn: updateKurs,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['kurse'],
+        queryKey: ["kurse"],
       });
       router.navigate(`/${tableName}/${id}`);
     },
   });
   const deleteEntry = useMutation({
-    mutationFn: () => deleteSingle({ tableName: tableName, id: id ?? '0' }),
+    mutationFn: () => deleteSingle({ tableName: tableName, id: id ?? "0" }),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['kurse'],
+        queryKey: ["kurse"],
       });
       router.navigate(`/${tableName}`);
     },
@@ -87,18 +87,18 @@ function EditKurs() {
   if (!dozentData)
     dozentData = [
       {
-        id: '0',
-        vorname: '',
-        nachname: '',
-        strasse: '',
-        plz: '',
-        ort: '',
-        nr_land: '',
-        geschlecht: 'm',
-        telefon: '',
-        handy: '',
-        email: '',
-        birthdate: '',
+        id: "0",
+        vorname: "",
+        nachname: "",
+        strasse: "",
+        plz: "",
+        ort: "",
+        nr_land: "",
+        geschlecht: "m",
+        telefon: "",
+        handy: "",
+        email: "",
+        birthdate: "",
       },
     ];
   return (
@@ -111,7 +111,7 @@ function EditKurs() {
           <div className="w-full border-t border-black mt-4"></div>
           <form
             onSubmit={form.handleSubmit(() => {
-              mutation.mutate({ data: form.getValues(), id: id ?? '0' });
+              mutation.mutate({ data: form.getValues(), id: id ?? "0" });
             })}
           >
             <FormField
@@ -122,7 +122,7 @@ function EditKurs() {
                   <FormControl>
                     <Input
                       className="bg-white"
-                      placeholder={rowData?.kursnummer || 'Kursnummer*'}
+                      placeholder={rowData?.kursnummer || "Kursnummer*"}
                       {...field}
                     />
                   </FormControl>
@@ -138,7 +138,7 @@ function EditKurs() {
                   <FormControl>
                     <Textarea
                       className="bg-white"
-                      placeholder={rowData?.kursthema || 'Kursthema'}
+                      placeholder={rowData?.kursthema || "Kursthema"}
                       maxLength={100}
                       {...field}
                     />
@@ -155,7 +155,7 @@ function EditKurs() {
                   <FormControl>
                     <Textarea
                       className="bg-white"
-                      placeholder={rowData?.inhalt || 'Inhalt'}
+                      placeholder={rowData?.inhalt || "Inhalt"}
                       maxLength={100}
                       {...field}
                     />
@@ -178,7 +178,7 @@ function EditKurs() {
                     <SelectContent>
                       {dozentData?.map((dozent) => (
                         <SelectItem key={dozent.id} value={dozent.id}>
-                          {dozent.vorname + ' ' + dozent.nachname}
+                          {dozent.vorname + " " + dozent.nachname}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -194,8 +194,8 @@ function EditKurs() {
                   <FormLabel>Startdatum</FormLabel>
                   <FormControl>
                     <Input
-                      className="bg-white w-[250px]"
-                      placeholder={rowData?.startdatum || 'Startdatum'}
+                      className="bg-white"
+                      placeholder={rowData?.startdatum || "Startdatum"}
                       {...field}
                     />
                   </FormControl>
@@ -210,8 +210,8 @@ function EditKurs() {
                   <FormLabel>Enddatum</FormLabel>
                   <FormControl>
                     <Input
-                      className="bg-white w-[250px]"
-                      placeholder={rowData?.enddatum || 'Enddatum'}
+                      className="bg-white"
+                      placeholder={rowData?.enddatum || "Enddatum"}
                       {...field}
                     />
                   </FormControl>
@@ -227,7 +227,7 @@ function EditKurs() {
                   <FormControl>
                     <Input
                       className="bg-white"
-                      placeholder={rowData?.dauer || 'Dauer'}
+                      placeholder={rowData?.dauer || "Dauer"}
                       {...field}
                     />
                   </FormControl>

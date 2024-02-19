@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import { useParams } from 'react-router-dom';
-import './EditRecord.css';
-import { toast } from 'sonner';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useParams } from "react-router-dom";
+import "./EditRecord.css";
+import { toast } from "sonner";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   deleteSingle,
   getLehrbetriebe,
   getLernende,
   getSingle,
   updateLehrbetriebeLernende,
-} from '@/lib/querys';
+} from "@/lib/querys";
 import {
   Form,
   FormControl,
@@ -18,46 +18,46 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { useForm } from 'react-hook-form';
-import { lehrbetriebeLernendeFormSchema as formSchema } from '@/lib/schemas';
-import * as z from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Input } from '@/components/ui/input';
-import { Row_lehrbetrieb_lernende } from '@/lib/types';
-import { Button } from '@/components/ui/button';
-import { router } from '@/router';
-import LoadingIcons from 'react-loading-icons';
+} from "@/components/ui/form";
+import { useForm } from "react-hook-form";
+import { lehrbetriebeLernendeFormSchema as formSchema } from "@/lib/schemas";
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Input } from "@/components/ui/input";
+import { Row_lehrbetrieb_lernende } from "@/lib/types";
+import { Button } from "@/components/ui/button";
+import { router } from "@/router";
+import LoadingIcons from "react-loading-icons";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
+} from "@/components/ui/select";
 
 function EditLehrbetriebeLernende() {
-  const tableName: string = 'lehrbetriebe_lernende';
+  const tableName: string = "lehrbetriebe_lernende";
 
   const queryClient = useQueryClient();
 
   const { id } = useParams();
-  if (!id) toast('Ungültige ID');
+  if (!id) toast("Ungültige ID");
 
   const { data, isPending } = useQuery({
-    queryKey: ['lehrbetriebe_lernende'],
+    queryKey: ["lehrbetriebe_lernende"],
     queryFn: () =>
       getSingle({
-        tableName: 'lehrbetriebe_lernende',
-        id: id ?? '',
+        tableName: "lehrbetriebe_lernende",
+        id: id ?? "",
       }),
   });
   let { data: lehrbetriebData } = useQuery({
-    queryKey: ['lehrbetriebe'],
+    queryKey: ["lehrbetriebe"],
     queryFn: getLehrbetriebe,
   });
   let { data: lernendeData } = useQuery({
-    queryKey: ['lernende'],
+    queryKey: ["lernende"],
     queryFn: getLernende,
   });
   const rowData = data as Row_lehrbetrieb_lernende | undefined;
@@ -65,11 +65,11 @@ function EditLehrbetriebeLernende() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      nr_lehrbetrieb: rowData?.nr_lehrbetrieb ?? '',
-      nr_lernende: rowData?.nr_lernende ?? '',
-      start: rowData?.start ?? '',
-      ende: rowData?.ende ?? '',
-      beruf: rowData?.beruf ?? '',
+      nr_lehrbetrieb: rowData?.nr_lehrbetrieb ?? "",
+      nr_lernende: rowData?.nr_lernende ?? "",
+      start: rowData?.start ?? "",
+      ende: rowData?.ende ?? "",
+      beruf: rowData?.beruf ?? "",
     },
   });
 
@@ -77,46 +77,46 @@ function EditLehrbetriebeLernende() {
     mutationFn: updateLehrbetriebeLernende,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['lehrbetriebe'],
+        queryKey: ["lehrbetriebe"],
       });
       router.navigate(`/${tableName}/${id}`);
     },
   });
   const deleteEntry = useMutation({
-    mutationFn: () => deleteSingle({ tableName: tableName, id: id ?? '0' }),
+    mutationFn: () => deleteSingle({ tableName: tableName, id: id ?? "0" }),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['lehrbetriebe', 'lernende'],
+        queryKey: ["lehrbetriebe", "lernende"],
       });
       router.navigate(`/${tableName}`);
     },
   });
-  if (!lehrbetriebData || !JSON.stringify(lehrbetriebData).startsWith('['))
+  if (!lehrbetriebData || !JSON.stringify(lehrbetriebData).startsWith("["))
     lehrbetriebData = [
       {
-        id: '0',
-        firma: 'Lädt...',
-        strasse: '',
-        plz: '',
-        ort: '',
+        id: "0",
+        firma: "Lädt...",
+        strasse: "",
+        plz: "",
+        ort: "",
       },
     ];
-  if (!lernendeData || !JSON.stringify(lernendeData).startsWith('['))
+  if (!lernendeData || !JSON.stringify(lernendeData).startsWith("["))
     lernendeData = [
       {
-        id: '0',
-        vorname: 'Lädt...',
-        nachname: 'Lädt...',
-        strasse: '',
-        plz: '',
-        ort: '',
-        nr_land: '',
-        geschlecht: 'm',
-        telefon: '',
-        handy: '',
-        email: '',
-        email_privat: '',
-        birthdate: '',
+        id: "0",
+        vorname: "Lädt...",
+        nachname: "Lädt...",
+        strasse: "",
+        plz: "",
+        ort: "",
+        nr_land: "",
+        geschlecht: "m",
+        telefon: "",
+        handy: "",
+        email: "",
+        email_privat: "",
+        birthdate: "",
       },
     ];
   return (
@@ -131,7 +131,7 @@ function EditLehrbetriebeLernende() {
           <div className="mt-4 border-t border-black"></div>
           <form
             onSubmit={form.handleSubmit(() => {
-              mutation.mutate({ data: form.getValues(), id: id ?? '0' });
+              mutation.mutate({ data: form.getValues(), id: id ?? "0" });
             })}
           >
             <FormField
@@ -187,7 +187,7 @@ function EditLehrbetriebeLernende() {
                   <FormLabel>Start</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder={rowData?.start || 'Start'}
+                      placeholder={rowData?.start || "Start"}
                       className="bg-white"
                       {...field}
                     />
@@ -203,7 +203,7 @@ function EditLehrbetriebeLernende() {
                   <FormLabel>Ende</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder={rowData?.ende || 'Ende'}
+                      placeholder={rowData?.ende || "Ende"}
                       className="bg-white"
                       {...field}
                     />

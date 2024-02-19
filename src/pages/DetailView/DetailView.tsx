@@ -1,8 +1,8 @@
-import { getSingle } from '@/lib/querys';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { NavLink, useParams } from 'react-router-dom';
-import { toast } from 'sonner';
-import './DetailView.css';
+import { getSingle } from "@/lib/querys";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { NavLink, useParams } from "react-router-dom";
+import { toast } from "sonner";
+import "./DetailView.css";
 import {
   Table,
   TableBody,
@@ -10,37 +10,37 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
+} from "@/components/ui/table";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '@/components/ui/tooltip';
-import { Skeleton } from '@/components/ui/skeleton';
+} from "@/components/ui/tooltip";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type Params = { tableName: string; id: string };
 
 function DetailView() {
   useQueryClient();
   const { tableName, id } = useParams();
-  let params: Params = { tableName: '', id: '' };
+  let params: Params = { tableName: "", id: "" };
   let isForeignKey: boolean = false;
-  let constraintTable: string = '';
+  let constraintTable: string = "";
 
   const title = (): string => {
-    if (!tableName) return 'Details';
+    if (!tableName) return "Details";
     let newName: string;
     newName = tableName;
-    if (tableName === 'countries' || tableName === 'laender')
-      newName = 'länder';
+    if (tableName === "countries" || tableName === "laender")
+      newName = "länder";
     return (
-      newName.charAt(0)?.toUpperCase() + newName.slice(1).replace(/_/g, ' ➞ ')
+      newName.charAt(0)?.toUpperCase() + newName.slice(1).replace(/_/g, " ➞ ")
     );
   };
 
   if (!tableName || !id) {
-    toast('Ungültige URL');
+    toast("Ungültige URL");
   } else {
     params = { tableName, id };
   }
@@ -52,27 +52,27 @@ function DetailView() {
     }) || {};
 
   const formatKey = (key: string): string => {
-    if (key === 'id') return 'ID';
-    if (key === 'plz') return 'PLZ';
-    if (key.startsWith('nr_')) {
+    if (key === "id") return "ID";
+    if (key === "plz") return "PLZ";
+    if (key.startsWith("nr_")) {
       isForeignKey = true;
       constraintTable = key.slice(3);
       switch (constraintTable) {
-        case 'land':
-          constraintTable = 'laender';
+        case "land":
+          constraintTable = "laender";
           break;
-        case 'lehrbetrieb':
-          constraintTable = 'lehrbetriebe';
+        case "lehrbetrieb":
+          constraintTable = "lehrbetriebe";
           break;
-        case 'dozent':
-          constraintTable = 'dozenten';
+        case "dozent":
+          constraintTable = "dozenten";
           break;
-        case 'lernende':
-        case 'teilnehmer':
-          constraintTable = 'lernende';
+        case "lernende":
+        case "teilnehmer":
+          constraintTable = "lernende";
           break;
-        case 'kurs':
-          constraintTable = 'kurse';
+        case "kurs":
+          constraintTable = "kurse";
           break;
       }
     } else isForeignKey = false;
@@ -80,7 +80,7 @@ function DetailView() {
       key.charAt(0).toUpperCase() + // Capitalize the first letter
       key
         .slice(1) // Slice from the second character onwards
-        .replace(/_/g, '. ') // Replace '_' with '. '
+        .replace(/_/g, ". ") // Replace '_' with '. '
         .replace(/(\s\w)/g, function (match) {
           // Capitalize the letter after the space
           return match.toUpperCase();
@@ -90,20 +90,20 @@ function DetailView() {
 
   const formatValue = (value: string): string => {
     switch (value) {
-      case 'm':
-        value = 'Männlich';
+      case "m":
+        value = "Männlich";
         break;
-      case 'w':
-        value = 'Weiblich';
+      case "w":
+        value = "Weiblich";
         break;
-      case 'd':
-        value = 'Divers';
+      case "d":
+        value = "Divers";
         break;
-      case 'UNBEKANNT':
-        value = '';
+      case "UNBEKANNT":
+        value = "";
         break;
-      case 'null':
-        value = '';
+      case "null":
+        value = "";
         break;
     }
     return value;
@@ -156,14 +156,14 @@ function DetailView() {
                           }`}
                         >
                           {formatValue(
-                            itemData![key as keyof typeof itemData]
-                          ) ?? ''}
+                            itemData![key as keyof typeof itemData],
+                          ) ?? ""}
                         </NavLink>
                       </TableCell>
                     ) : (
                       <TableCell>
                         {formatValue(itemData![key as keyof typeof itemData]) ??
-                          ''}
+                          ""}
                       </TableCell>
                     )}
                   </TableRow>

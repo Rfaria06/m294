@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -6,46 +6,46 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import {
   deleteSingle,
   getLaender,
   getSingle,
   updateLernende,
-} from '@/lib/querys';
-import { Row_lernende } from '@/lib/types';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useForm } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
-import { toast } from 'sonner';
-import { lernendeFormSchema as formSchema } from '@/lib/schemas';
-import { zodResolver } from '@hookform/resolvers/zod';
-import LoadingIcons from 'react-loading-icons';
-import { router } from '@/router';
-import * as z from 'zod';
+} from "@/lib/querys";
+import { Row_lernende } from "@/lib/types";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import { useParams } from "react-router-dom";
+import { toast } from "sonner";
+import { lernendeFormSchema as formSchema } from "@/lib/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
+import LoadingIcons from "react-loading-icons";
+import { router } from "@/router";
+import * as z from "zod";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import './EditRecord.css';
+} from "@/components/ui/select";
+import "./EditRecord.css";
 
 function EditLernende() {
-  const tableName: string = 'lernende';
+  const tableName: string = "lernende";
   const queryClient = useQueryClient();
   const { id } = useParams();
-  if (!id) toast('Ungültige ID');
+  if (!id) toast("Ungültige ID");
 
   const { data, isPending } = useQuery({
-    queryKey: ['lernende'],
-    queryFn: () => getSingle({ tableName: tableName, id: id ?? '0' }),
+    queryKey: ["lernende"],
+    queryFn: () => getSingle({ tableName: tableName, id: id ?? "0" }),
     initialData: [],
   });
   let { data: landData } = useQuery({
-    queryKey: ['laender'],
+    queryKey: ["laender"],
     queryFn: getLaender,
     initialData: [],
   });
@@ -54,18 +54,18 @@ function EditLernende() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      vorname: rowData?.vorname || '',
-      nachname: rowData?.nachname || '',
-      strasse: rowData?.strasse || '',
-      plz: rowData?.plz || '',
-      ort: rowData?.ort || '',
-      nr_land: rowData?.nr_land || '',
-      geschlecht: (rowData?.geschlecht as 'm' | 'w' | 'd') || 'd',
-      email: rowData?.email || '',
-      email_privat: rowData?.email_privat || '',
-      telefon: rowData?.telefon || '',
-      handy: rowData?.handy || '',
-      birthdate: rowData?.birthdate || '',
+      vorname: rowData?.vorname || "",
+      nachname: rowData?.nachname || "",
+      strasse: rowData?.strasse || "",
+      plz: rowData?.plz || "",
+      ort: rowData?.ort || "",
+      nr_land: rowData?.nr_land || "",
+      geschlecht: (rowData?.geschlecht as "m" | "w" | "d") || "d",
+      email: rowData?.email || "",
+      email_privat: rowData?.email_privat || "",
+      telefon: rowData?.telefon || "",
+      handy: rowData?.handy || "",
+      birthdate: rowData?.birthdate || "",
     },
   });
 
@@ -73,21 +73,21 @@ function EditLernende() {
     mutationFn: updateLernende,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['lernende'],
+        queryKey: ["lernende"],
       });
       router.navigate(`/${tableName}/${id}`);
     },
   });
   const deleteEntry = useMutation({
-    mutationFn: () => deleteSingle({ tableName: tableName, id: id ?? '0' }),
+    mutationFn: () => deleteSingle({ tableName: tableName, id: id ?? "0" }),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['lernende'],
+        queryKey: ["lernende"],
       });
       router.navigate(`/${tableName}`);
     },
   });
-  if (!landData) landData = [{ id: '0', country: '' }];
+  if (!landData) landData = [{ id: "0", country: "" }];
 
   return (
     <div className="edit-record">
@@ -101,7 +101,7 @@ function EditLernende() {
           <div className="w-full border-t border-black mt-4"></div>
           <form
             onSubmit={form.handleSubmit(() => {
-              mutation.mutate({ data: form.getValues(), id: id || '0' });
+              mutation.mutate({ data: form.getValues(), id: id || "0" });
             })}
           >
             <FormField
@@ -112,7 +112,7 @@ function EditLernende() {
                   <FormControl>
                     <Input
                       className="bg-white"
-                      placeholder={rowData?.vorname || 'Vorname'}
+                      placeholder={rowData?.vorname || "Vorname"}
                       {...field}
                     />
                   </FormControl>
@@ -128,7 +128,7 @@ function EditLernende() {
                   <FormControl>
                     <Input
                       className="bg-white"
-                      placeholder={rowData?.nachname || 'Nachname'}
+                      placeholder={rowData?.nachname || "Nachname"}
                       {...field}
                     />
                   </FormControl>
@@ -144,7 +144,7 @@ function EditLernende() {
                   <FormControl>
                     <Input
                       className="bg-white"
-                      placeholder={rowData?.strasse || 'Strasse'}
+                      placeholder={rowData?.strasse || "Strasse"}
                       {...field}
                     />
                   </FormControl>
@@ -160,7 +160,7 @@ function EditLernende() {
                   <FormControl>
                     <Input
                       className="bg-white"
-                      placeholder={rowData?.plz || 'PLZ'}
+                      placeholder={rowData?.plz || "PLZ"}
                       {...field}
                     />
                   </FormControl>
@@ -176,7 +176,7 @@ function EditLernende() {
                   <FormControl>
                     <Input
                       className="bg-white"
-                      placeholder={rowData?.ort || 'Ort'}
+                      placeholder={rowData?.ort || "Ort"}
                       {...field}
                     />
                   </FormControl>
@@ -242,7 +242,7 @@ function EditLernende() {
                   <FormControl>
                     <Input
                       className="bg-white"
-                      placeholder={rowData?.telefon || 'Telefon'}
+                      placeholder={rowData?.telefon || "Telefon"}
                       {...field}
                     />
                   </FormControl>
@@ -258,7 +258,7 @@ function EditLernende() {
                   <FormControl>
                     <Input
                       className="bg-white"
-                      placeholder={rowData?.handy || 'Handy'}
+                      placeholder={rowData?.handy || "Handy"}
                       {...field}
                     />
                   </FormControl>
@@ -274,7 +274,7 @@ function EditLernende() {
                   <FormControl>
                     <Input
                       className="bg-white"
-                      placeholder={rowData?.email || 'Email'}
+                      placeholder={rowData?.email || "Email"}
                       {...field}
                     />
                   </FormControl>
@@ -290,7 +290,7 @@ function EditLernende() {
                   <FormControl>
                     <Input
                       className="bg-white"
-                      placeholder={rowData?.email_privat || 'Email Privat'}
+                      placeholder={rowData?.email_privat || "Email Privat"}
                       {...field}
                     />
                   </FormControl>
@@ -306,7 +306,7 @@ function EditLernende() {
                   <FormControl>
                     <Input
                       className="bg-white"
-                      placeholder={rowData?.birthdate || 'Geburtsdatum'}
+                      placeholder={rowData?.birthdate || "Geburtsdatum"}
                       {...field}
                     />
                   </FormControl>

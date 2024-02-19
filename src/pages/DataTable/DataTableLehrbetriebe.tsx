@@ -5,37 +5,37 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
+} from "@/components/ui/table";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '@/components/ui/tooltip';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { NavLink } from 'react-router-dom';
-import './DataTable.css';
-import { getLehrbetriebe } from '@/lib/querys';
-import { Skeleton } from '@/components/ui/skeleton';
-import { router } from '@/router';
+} from "@/components/ui/tooltip";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { NavLink } from "react-router-dom";
+import "./DataTable.css";
+import { getLehrbetriebe } from "@/lib/querys";
+import { Skeleton } from "@/components/ui/skeleton";
+import { router } from "@/router";
 
 function DataTableLehrbetriebe() {
-  const TABLE_NAME = 'lehrbetriebe';
+  const TABLE_NAME = "lehrbetriebe";
   useQueryClient();
   // eslint-disable-next-line prefer-const
   let { data, isPending, refetch } = useQuery({
-    queryKey: ['lehrbetriebe'],
+    queryKey: ["lehrbetriebe"],
     queryFn: getLehrbetriebe,
   });
-  if (!JSON.stringify(data || {}).startsWith('[') || data === undefined) {
+  if (!JSON.stringify(data || {}).startsWith("[") || data === undefined) {
     refetch();
     data = [
       {
-        id: '1',
-        firma: '',
-        strasse: '',
-        plz: '',
-        ort: '',
+        id: "1",
+        firma: "",
+        strasse: "",
+        plz: "",
+        ort: "",
       },
     ];
   }

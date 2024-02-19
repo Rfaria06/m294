@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import * as React from 'react';
+import * as React from "react";
 
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/utils";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -11,47 +11,47 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-} from '@/components/ui/navigation-menu';
+} from "@/components/ui/navigation-menu";
 
-import './Header.css';
+import "./Header.css";
 
 const components: { title: string; href: string; description: string }[] = [
   {
-    title: 'Lehrbetriebe',
-    href: '/lehrbetriebe',
+    title: "Lehrbetriebe",
+    href: "/lehrbetriebe",
     description: "Zeige die Tabelle 'Lehrbetriebe' an.",
   },
   {
-    title: 'Lernende',
-    href: '/lernende',
+    title: "Lernende",
+    href: "/lernende",
     description: "Zeige die Tabelle 'Lernende' an.",
   },
   {
-    title: 'Lehrbetriebe ➞ lernende',
-    href: '/lehrbetriebe_lernende',
+    title: "Lehrbetriebe ➞ Lernende",
+    href: "/lehrbetriebe_lernende",
     description:
-      'Diese Tabelle zeigt die Zuordnung von Lehrbetrieben zu Lernenden an.',
+      "Diese Tabelle zeigt die Zuordnung von Lehrbetrieben zu Lernenden an.",
   },
   {
-    title: 'Länder',
-    href: '/laender',
+    title: "Länder",
+    href: "/laender",
     description: "Zeige die Tabelle 'Länder' an.",
   },
   {
-    title: 'Dozenten',
-    href: '/dozenten',
+    title: "Dozenten",
+    href: "/dozenten",
     description: "Zeige die Tabelle 'Dozenten' an.",
   },
   {
-    title: 'Kurse',
-    href: '/kurse',
+    title: "Kurse",
+    href: "/kurse",
     description: "Zeige die Tabelle 'Kurse' an.",
   },
   {
-    title: 'Kurse ➞ lernende',
-    href: '/kurse_lernende',
+    title: "Kurse ➞ Lernende",
+    href: "/kurse_lernende",
     description:
-      'Diese Tabelle zeigt die Zuordnung von Kursen zu Lernenden an.',
+      "Diese Tabelle zeigt die Zuordnung von Kursen zu Lernenden an.",
   },
 ];
 
@@ -113,8 +113,8 @@ export function Header() {
 }
 
 const ListItem = React.forwardRef<
-  React.ElementRef<'a'>,
-  React.ComponentPropsWithoutRef<'a'>
+  React.ElementRef<"a">,
+  React.ComponentPropsWithoutRef<"a">
 >(({ className, title, children, ...props }, ref) => {
   return (
     <li>
@@ -122,8 +122,8 @@ const ListItem = React.forwardRef<
         <a
           ref={ref}
           className={cn(
-            'block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
-            className
+            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+            className,
           )}
           {...props}
         >
@@ -136,6 +136,6 @@ const ListItem = React.forwardRef<
     </li>
   );
 });
-ListItem.displayName = 'ListItem';
+ListItem.displayName = "ListItem";
 
 export default Header;

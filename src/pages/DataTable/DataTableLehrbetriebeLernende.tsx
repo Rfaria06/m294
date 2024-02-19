@@ -5,41 +5,98 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
-import { getLehrbetriebLernende } from '@/lib/querys';
-import { NavLink } from 'react-router-dom';
-import './DataTable.css';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { Skeleton } from '@/components/ui/skeleton';
+} from "@/components/ui/table";
+import {
+  getLehrbetriebLernende,
+  getLehrbetriebe,
+  getLernende,
+} from "@/lib/querys";
+import { NavLink } from "react-router-dom";
+import "./DataTable.css";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '@/components/ui/tooltip';
-import { router } from '@/router';
+} from "@/components/ui/tooltip";
+import { router } from "@/router";
 
 function DataTableLehrbetriebeLernende() {
-  const TABLE_NAME = 'lehrbetriebe_lernende';
+  const TABLE_NAME = "lehrbetriebe_lernende";
   useQueryClient();
   // eslint-disable-next-line prefer-const
   let { data, isPending, refetch } = useQuery({
-    queryKey: ['lehrbetriebeLernende'],
+    queryKey: ["lehrbetriebeLernende"],
     queryFn: getLehrbetriebLernende,
   });
-  if (!JSON.stringify(data || {}).startsWith('[') || data === undefined) {
+  let { data: lehrbetriebData } = useQuery({
+    queryKey: ["lehrbetriebe"],
+    queryFn: getLehrbetriebe,
+    initialData: [],
+  });
+  let { data: lernendeData } = useQuery({
+    queryKey: ["lernende"],
+    queryFn: getLernende,
+    initialData: [],
+  });
+
+  const getLernendeFullName = (id: string): string => {
+    if (!id) return "";
+    const lernende = lernendeData.find((id) => id === id);
+    if (!lernende) return "";
+    return ` - ${lernende.vorname} ${lernende.nachname}`;
+  };
+
+  const getFirma = (id: string): string => {
+    if (!id) return "";
+    const lehrbetrieb = lehrbetriebData.find((id) => id === id);
+    if (!lehrbetrieb) return "";
+    return ` - ${lehrbetrieb.firma}`;
+  };
+
+  if (!JSON.stringify(data || {}).startsWith("[") || data === undefined) {
     refetch();
     data = [
       {
-        id: '1',
-        nr_lehrbetrieb: '',
-        nr_lernende: '',
-        start: '',
-        ende: '',
-        beruf: '',
+        id: "1",
+        nr_lehrbetrieb: "",
+        nr_lernende: "",
+        start: "",
+        ende: "",
+        beruf: "",
       },
     ];
   }
+  if (!lehrbetriebData || !JSON.stringify(lehrbetriebData).startsWith("["))
+    lehrbetriebData = [
+      {
+        id: "0",
+        firma: "Lädt...",
+        strasse: "",
+        plz: "",
+        ort: "",
+      },
+    ];
+  if (!lernendeData || !JSON.stringify(lernendeData).startsWith("["))
+    lernendeData = [
+      {
+        id: "0",
+        vorname: "Lädt...",
+        nachname: "Lädt...",
+        strasse: "",
+        plz: "",
+        ort: "",
+        nr_land: "",
+        geschlecht: "m",
+        telefon: "",
+        handy: "",
+        email: "",
+        email_privat: "",
+        birthdate: "",
+      },
+    ];
   return (
     <div>
       <div className="mb-3">
@@ -87,13 +144,15 @@ function DataTableLehrbetriebeLernende() {
                     className="cursor-pointer"
                   >
                     <TableCell className="text-left">
-                      {row.id ?? 'id'}
+                      {row.id ?? "id"}
                     </TableCell>
                     <TableCell className="text-left">
                       {row.nr_lehrbetrieb}
+                      {getFirma(row.nr_lehrbetrieb)}
                     </TableCell>
                     <TableCell className="text-left">
                       {row.nr_lernende}
+                      {getLernendeFullName(row.nr_lernende)}
                     </TableCell>
                     <TableCell className="text-left">{row.start}</TableCell>
                     <TableCell className="text-left">{row.ende}</TableCell>

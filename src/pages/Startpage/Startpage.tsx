@@ -1,17 +1,17 @@
-import { NavLink } from 'react-router-dom';
-import './Startpage.css';
+import { NavLink } from "react-router-dom";
+import "./Startpage.css";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '@/components/ui/tooltip';
+} from "@/components/ui/tooltip";
 
 function Startpage() {
   return (
     <div className="w-half">
       <div className="mb-3">
-        <NavLink to={'/info'}>
+        <NavLink to={"/info"}>
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>Wichtige Info</TooltipTrigger>

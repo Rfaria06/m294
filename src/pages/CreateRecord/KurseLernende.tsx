@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -8,43 +8,43 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { getKurse, getLernende, postKurseLernende } from '@/lib/querys';
-import { kurseLernendeFormSchema as formSchema } from '@/lib/schemas';
-import { router } from '@/router';
-import { zodResolver } from '@hookform/resolvers/zod';
+} from "@/components/ui/select";
+import { getKurse, getLernende, postKurseLernende } from "@/lib/querys";
+import { kurseLernendeFormSchema as formSchema } from "@/lib/schemas";
+import { router } from "@/router";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   QueryClient,
   useMutation,
   useQuery,
   useQueryClient,
-} from '@tanstack/react-query';
-import { useForm } from 'react-hook-form';
-import * as z from 'zod';
+} from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
 
 function CreateKurseLernende() {
   const queryClient: QueryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: postKurseLernende,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['kurseLernende'] });
-      router.navigate('/kurse_lernende');
+      queryClient.invalidateQueries({ queryKey: ["kurseLernende"] });
+      router.navigate("/kurse_lernende");
     },
   });
   let { data: kurseData } = useQuery({
-    queryKey: ['kurse'],
+    queryKey: ["kurse"],
     queryFn: getKurse,
   });
   let { data: lernendeData } = useQuery({
-    queryKey: ['lernende'],
+    queryKey: ["lernende"],
     queryFn: getLernende,
   });
 
@@ -55,32 +55,32 @@ function CreateKurseLernende() {
   if (!kurseData)
     kurseData = [
       {
-        id: '0',
-        kursnummer: '',
-        kursthema: '',
-        inhalt: '',
-        nr_dozent: '',
-        startdatum: '',
-        enddatum: '',
-        dauer: '',
+        id: "0",
+        kursnummer: "",
+        kursthema: "",
+        inhalt: "",
+        nr_dozent: "",
+        startdatum: "",
+        enddatum: "",
+        dauer: "",
       },
     ];
   if (!lernendeData)
     lernendeData = [
       {
-        id: '0',
-        vorname: '',
-        nachname: '',
-        email: '',
-        email_privat: '',
-        telefon: '',
-        handy: '',
-        strasse: '',
-        plz: '',
-        ort: '',
-        birthdate: '',
-        nr_land: '',
-        geschlecht: 'm',
+        id: "0",
+        vorname: "",
+        nachname: "",
+        email: "",
+        email_privat: "",
+        telefon: "",
+        handy: "",
+        strasse: "",
+        plz: "",
+        ort: "",
+        birthdate: "",
+        nr_land: "",
+        geschlecht: "m",
       },
     ];
   return (

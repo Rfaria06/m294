@@ -1,6 +1,6 @@
-import axios, { AxiosError } from 'axios';
-import { toast } from 'sonner';
-import * as z from 'zod';
+import axios, { AxiosError } from "axios";
+import { toast } from "sonner";
+import * as z from "zod";
 import {
   dozentFormSchema,
   dozentUploadFormSchema,
@@ -10,7 +10,7 @@ import {
   lehrbetriebeFormSchema,
   lehrbetriebeLernendeFormSchema,
   lernendeFormSchema,
-} from './schemas';
+} from "./schemas";
 import {
   Row_dozenten,
   Row_kurse,
@@ -19,9 +19,9 @@ import {
   Row_lehrbetrieb_lernende,
   Row_lehrbetriebe,
   Row_lernende,
-} from './types';
+} from "./types";
 
-const BASE_URL = 'https://raul.undefiniert.ch/';
+const BASE_URL = "https://raul.undefiniert.ch/";
 
 export async function getSingle(params: {
   tableName: string;
@@ -30,12 +30,12 @@ export async function getSingle(params: {
   const url: string = `${BASE_URL}${params.tableName}/id/${params.id}`;
   try {
     const response = await axios.get(url);
-    toast('Eintrag erfolgreich geladen');
+    toast("Eintrag erfolgreich geladen");
     return response.data.data[0];
   } catch (error) {
     handleError(error);
     return {
-      daten: 'Keine Daten gefunden.',
+      daten: "Keine Daten gefunden.",
     };
   }
 }
@@ -47,17 +47,17 @@ export async function deleteSingle(params: {
   const url: string = `${BASE_URL}${params.tableName}/id/${params.id}`;
   try {
     await axios.delete(url);
-    toast('Eintrag erfolgreich gelöscht');
+    toast("Eintrag erfolgreich gelöscht");
   } catch (error) {
     handleError(error);
   }
 }
 
 export async function getLernende(): Promise<Row_lernende[]> {
-  const url = BASE_URL + 'lernende';
+  const url = BASE_URL + "lernende";
   try {
     const response = (await axios.get(url)) ?? [];
-    toast('Lernende erfolgreich geladen');
+    toast("Lernende erfolgreich geladen");
     return response.data.data;
   } catch (error) {
     handleError(error);
@@ -68,14 +68,14 @@ export async function getLernende(): Promise<Row_lernende[]> {
 export async function postLernende(params: {
   data: z.infer<typeof lernendeFormSchema>;
 }) {
-  const url = BASE_URL + 'lernende';
+  const url = BASE_URL + "lernende";
   try {
     const paramData = params.data;
     await axios.post(url, {
       ...paramData,
       birthdate: paramData.birthdate,
     });
-    toast('Lernender erstellt');
+    toast("Lernender erstellt");
   } catch (error) {
     handleError(error);
   }
@@ -85,11 +85,11 @@ export async function updateLernende(params: {
   data: z.infer<typeof lernendeFormSchema>;
   id: string;
 }) {
-  const url = BASE_URL + 'lernende/id/' + params.id;
+  const url = BASE_URL + "lernende/id/" + params.id;
   try {
     const paramData = params.data;
     await axios.put(url, JSON.stringify({ ...paramData }), {
-      headers: { 'Content-Type': 'Application/json' },
+      headers: { "Content-Type": "Application/json" },
     });
     toast(`Lernender ${params.id} erfolgreich geändert.`);
   } catch (error) {
@@ -98,10 +98,10 @@ export async function updateLernende(params: {
 }
 
 export async function getLehrbetriebe(): Promise<Row_lehrbetriebe[]> {
-  const url = BASE_URL + 'lehrbetriebe';
+  const url = BASE_URL + "lehrbetriebe";
   try {
     const response = (await axios.get(url)) ?? [];
-    toast('Lehrbetriebe erfolgreich geladen');
+    toast("Lehrbetriebe erfolgreich geladen");
     return response.data.data;
   } catch (error) {
     handleError(error);
@@ -112,13 +112,13 @@ export async function getLehrbetriebe(): Promise<Row_lehrbetriebe[]> {
 export async function postLehrbetriebe(params: {
   data: z.infer<typeof lehrbetriebeFormSchema>;
 }) {
-  const url = BASE_URL + 'lehrbetriebe';
+  const url = BASE_URL + "lehrbetriebe";
   try {
     const paramData = params.data;
     await axios.post(url, JSON.stringify(paramData), {
-      headers: { 'Content-Type': 'Application/json' },
+      headers: { "Content-Type": "Application/json" },
     });
-    toast('Lehrbetrieb erstellt');
+    toast("Lehrbetrieb erstellt");
   } catch (error) {
     handleError(error);
   }
@@ -128,11 +128,11 @@ export async function updateLehrbetriebe(params: {
   data: z.infer<typeof lehrbetriebeFormSchema>;
   id: string;
 }) {
-  const url = BASE_URL + 'lehrbetriebe/id/' + params.id;
+  const url = BASE_URL + "lehrbetriebe/id/" + params.id;
   try {
     const paramData = params.data;
     await axios.put(url, JSON.stringify({ ...paramData }), {
-      headers: { 'Content-Type': 'Application/json' },
+      headers: { "Content-Type": "Application/json" },
     });
     toast(`Lehrbetrieb ${params.id} erfolgreich geändert.`);
   } catch (error) {
@@ -143,10 +143,10 @@ export async function updateLehrbetriebe(params: {
 export async function getLehrbetriebLernende(): Promise<
   Row_lehrbetrieb_lernende[]
 > {
-  const url = BASE_URL + 'lehrbetriebe_lernende';
+  const url = BASE_URL + "lehrbetriebe_lernende";
   try {
     const response = (await axios.get(url)) ?? [];
-    toast('Lehrbetriebe ➞ Lernende erfolgreich geladen');
+    toast("Lehrbetriebe ➞ Lernende erfolgreich geladen");
     return response.data.data;
   } catch (error) {
     handleError(error);
@@ -157,7 +157,7 @@ export async function getLehrbetriebLernende(): Promise<
 export async function postLehrbetriebeLernende(params: {
   data: z.infer<typeof lehrbetriebeLernendeFormSchema>;
 }) {
-  const url = BASE_URL + 'lehrbetriebe_lernende';
+  const url = BASE_URL + "lehrbetriebe_lernende";
   try {
     const paramData = params.data;
     await axios.post(url, {
@@ -165,7 +165,7 @@ export async function postLehrbetriebeLernende(params: {
       start: paramData.start,
       ende: paramData.ende,
     });
-    toast('Lehrbetriebe ➞ Lernende erfolgreich erstellt');
+    toast("Lehrbetriebe ➞ Lernende erfolgreich erstellt");
   } catch (error) {
     handleError(error);
   }
@@ -175,11 +175,11 @@ export async function updateLehrbetriebeLernende(params: {
   data: z.infer<typeof lehrbetriebeLernendeFormSchema>;
   id: string;
 }) {
-  const url = BASE_URL + 'lehrbetriebe_lernende/id/' + params.id;
+  const url = BASE_URL + "lehrbetriebe_lernende/id/" + params.id;
   try {
     const paramData = params.data;
     await axios.put(url, JSON.stringify({ ...paramData }), {
-      headers: { 'Content-Type': 'Application/json' },
+      headers: { "Content-Type": "Application/json" },
     });
     toast(`Lehrbetriebe ➞ Lernende ${params.id} erfolgreich geändert.`);
   } catch (error) {
@@ -188,10 +188,10 @@ export async function updateLehrbetriebeLernende(params: {
 }
 
 export async function getLaender(): Promise<Row_laender[]> {
-  const url = BASE_URL + 'laender';
+  const url = BASE_URL + "laender";
   try {
     const response = (await axios.get(url)) ?? [];
-    toast('Länder erfolgreich geladen');
+    toast("Länder erfolgreich geladen");
     return response.data.data;
   } catch (error) {
     handleError(error);
@@ -202,11 +202,11 @@ export async function getLaender(): Promise<Row_laender[]> {
 export async function postLaender(params: {
   data: z.infer<typeof laenderFormSchema>;
 }) {
-  const url: string = BASE_URL + 'laender';
+  const url: string = BASE_URL + "laender";
   try {
     const paramData = params.data;
     await axios.post(url, { ...paramData });
-    toast('Land erstellt');
+    toast("Land erstellt");
   } catch (error) {
     handleError(error);
   }
@@ -216,11 +216,11 @@ export async function updateLaender(params: {
   data: z.infer<typeof laenderFormSchema>;
   id: string;
 }) {
-  const url = BASE_URL + 'laender/id/' + params.id;
+  const url = BASE_URL + "laender/id/" + params.id;
   try {
     const paramData = params.data;
     await axios.put(url, JSON.stringify({ ...paramData }), {
-      headers: { 'Content-Type': 'Application/json' },
+      headers: { "Content-Type": "Application/json" },
     });
     toast(`Land ${params.id} erfolgreich geändert.`);
   } catch (error) {
@@ -229,10 +229,10 @@ export async function updateLaender(params: {
 }
 
 export async function getDozenten(): Promise<Row_dozenten[]> {
-  const url = BASE_URL + 'dozenten';
+  const url = BASE_URL + "dozenten";
   try {
     const response = (await axios.get(url)) ?? [];
-    toast('Dozenten erfolgreich geladen');
+    toast("Dozenten erfolgreich geladen");
     return response.data.data;
   } catch (error) {
     handleError(error);
@@ -243,15 +243,15 @@ export async function getDozenten(): Promise<Row_dozenten[]> {
 export async function postDozenten(params: {
   data: z.infer<typeof dozentFormSchema>;
 }): Promise<void> {
-  const url: string = BASE_URL + 'dozenten';
+  const url: string = BASE_URL + "dozenten";
   try {
     const paramData = params.data;
     const uploadData: z.infer<typeof dozentUploadFormSchema> = {
       ...paramData,
-      birthdate: paramData.birthdate ?? '',
+      birthdate: paramData.birthdate ?? "",
     };
     await axios.post(url, uploadData);
-    toast('Dozent erstellt');
+    toast("Dozent erstellt");
   } catch (error) {
     handleError(error);
   }
@@ -261,15 +261,15 @@ export async function updateDozenten(params: {
   data: z.infer<typeof dozentFormSchema>;
   id: string;
 }) {
-  const url = BASE_URL + 'dozenten/id/' + params.id;
+  const url = BASE_URL + "dozenten/id/" + params.id;
   try {
     const paramData = params.data;
     const uploadData: z.infer<typeof dozentUploadFormSchema> = {
       ...paramData,
-      birthdate: paramData.birthdate ?? '',
+      birthdate: paramData.birthdate ?? "",
     };
     await axios.put(url, JSON.stringify({ ...uploadData }), {
-      headers: { 'Content-Type': 'Application/json' },
+      headers: { "Content-Type": "Application/json" },
     });
     toast(`Dozent ${params.id} erfolgreich geändert.`);
   } catch (error) {
@@ -278,10 +278,10 @@ export async function updateDozenten(params: {
 }
 
 export async function getKurse(): Promise<Row_kurse[]> {
-  const url: string = BASE_URL + 'kurse';
+  const url: string = BASE_URL + "kurse";
   try {
     const response = (await axios.get(url)) ?? [];
-    toast('Kurse erfolgreich geladen');
+    toast("Kurse erfolgreich geladen");
     return response.data.data;
   } catch (error) {
     handleError(error);
@@ -292,7 +292,7 @@ export async function getKurse(): Promise<Row_kurse[]> {
 export async function postKurs(params: {
   data: z.infer<typeof kursFormSchema>;
 }) {
-  const url: string = BASE_URL + 'kurse';
+  const url: string = BASE_URL + "kurse";
   try {
     const paramData = params.data;
     await axios.post(url, {
@@ -300,7 +300,7 @@ export async function postKurs(params: {
       startdatum: paramData.startdatum,
       enddatum: paramData.enddatum,
     });
-    toast('Kurs erstellt');
+    toast("Kurs erstellt");
   } catch (error) {
     handleError(error);
   }
@@ -310,16 +310,16 @@ export async function updateKurs(params: {
   data: z.infer<typeof kursFormSchema>;
   id: string;
 }) {
-  const url = BASE_URL + 'kurse/id/' + params.id;
+  const url = BASE_URL + "kurse/id/" + params.id;
   try {
     const paramData = params.data;
     const uploadData: z.infer<typeof kursFormSchema> = {
       ...paramData,
-      startdatum: paramData.startdatum ?? '',
-      enddatum: paramData.enddatum ?? '',
+      startdatum: paramData.startdatum ?? "",
+      enddatum: paramData.enddatum ?? "",
     };
     await axios.put(url, JSON.stringify({ ...uploadData }), {
-      headers: { 'Content-Type': 'Application/json' },
+      headers: { "Content-Type": "Application/json" },
     });
     toast(`Kurs ${params.id} erfolgreich geändert.`);
   } catch (error) {
@@ -328,10 +328,10 @@ export async function updateKurs(params: {
 }
 
 export async function getKurseLernende(): Promise<Row_kurse_lernende[]> {
-  const url: string = BASE_URL + 'kurse_lernende';
+  const url: string = BASE_URL + "kurse_lernende";
   try {
     const response = (await axios.get(url)) ?? [];
-    toast('Kurse ➞ Lernende erfolgreich geladen');
+    toast("Kurse ➞ Lernende erfolgreich geladen");
     return response.data.data;
   } catch (error) {
     handleError(error);
@@ -342,11 +342,11 @@ export async function getKurseLernende(): Promise<Row_kurse_lernende[]> {
 export async function postKurseLernende(params: {
   data: z.infer<typeof kurseLernendeFormSchema>;
 }) {
-  const url: string = BASE_URL + 'kurse_lernende';
+  const url: string = BASE_URL + "kurse_lernende";
   try {
     const paramData = params.data;
     await axios.post(url, { ...paramData });
-    toast('Kurs ➞ Lernende erstellt');
+    toast("Kurs ➞ Lernende erstellt");
   } catch (error) {
     handleError(error);
   }
@@ -356,11 +356,11 @@ export async function updateKurseLernende(params: {
   data: z.infer<typeof kurseLernendeFormSchema>;
   id: string;
 }) {
-  const url = BASE_URL + 'kurse_lernende/id/' + params.id;
+  const url = BASE_URL + "kurse_lernende/id/" + params.id;
   try {
     const paramData = params.data;
     await axios.put(url, JSON.stringify({ ...paramData }), {
-      headers: { 'Content-Type': 'Application/json' },
+      headers: { "Content-Type": "Application/json" },
     });
     toast(`Kurs ➞ Lernender  ${params.id} erfolgreich geändert.`);
   } catch (error) {
@@ -377,8 +377,8 @@ export async function updateKurseLernende(params: {
 
 function handleError(error: unknown): void {
   if (!(error instanceof AxiosError) || !(error instanceof Error)) return;
-  toast('Fehler bei der Anfrage ➞ ' + error.name, {
+  toast("Fehler bei der Anfrage ➞ " + error.name, {
     description: error.message,
-    className: 'bg-red-75',
+    className: "bg-red-75",
   });
 }

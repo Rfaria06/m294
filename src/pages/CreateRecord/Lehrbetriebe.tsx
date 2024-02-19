@@ -1,9 +1,9 @@
-import { postLehrbetriebe } from '@/lib/querys';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useForm } from 'react-hook-form';
-import * as z from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { lehrbetriebeFormSchema as formSchema } from '@/lib/schemas';
+import { postLehrbetriebe } from "@/lib/querys";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { lehrbetriebeFormSchema as formSchema } from "@/lib/schemas";
 import {
   Form,
   FormControl,
@@ -11,18 +11,18 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { router } from '@/router';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { router } from "@/router";
 
 function CreateLehrbetrieb() {
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: postLehrbetriebe,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['lehrbetriebe'] });
-      router.navigate('/lehrbetriebe');
+      queryClient.invalidateQueries({ queryKey: ["lehrbetriebe"] });
+      router.navigate("/lehrbetriebe");
     },
   });
   const form = useForm<z.infer<typeof formSchema>>({

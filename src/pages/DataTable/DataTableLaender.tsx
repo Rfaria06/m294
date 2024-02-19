@@ -5,34 +5,34 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
+} from "@/components/ui/table";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '@/components/ui/tooltip';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { NavLink } from 'react-router-dom';
-import './DataTable.css';
-import { getLaender } from '@/lib/querys';
-import { Skeleton } from '@/components/ui/skeleton';
-import { router } from '@/router';
+} from "@/components/ui/tooltip";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { NavLink } from "react-router-dom";
+import "./DataTable.css";
+import { getLaender } from "@/lib/querys";
+import { Skeleton } from "@/components/ui/skeleton";
+import { router } from "@/router";
 
 function DataTableLaender() {
-  const TABLE_NAME = 'laender';
+  const TABLE_NAME = "laender";
   useQueryClient();
   // eslint-disable-next-line prefer-const
   let { data, isPending, refetch } = useQuery({
-    queryKey: ['laender'],
+    queryKey: ["laender"],
     queryFn: getLaender,
   });
-  if (!JSON.stringify(data || {}).startsWith('[') || data === undefined) {
+  if (!JSON.stringify(data || {}).startsWith("[") || data === undefined) {
     refetch();
     data = [
       {
-        id: '1',
-        country: '',
+        id: "1",
+        country: "",
       },
     ];
   }
