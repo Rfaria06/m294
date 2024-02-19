@@ -19,6 +19,7 @@ import {
 } from '@/components/ui/select';
 import { getKurse, getLernende, postKurseLernende } from '@/lib/querys';
 import { kurseLernendeFormSchema as formSchema } from '@/lib/schemas';
+import { router } from '@/router';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   QueryClient,
@@ -35,6 +36,7 @@ function CreateKurseLernende() {
     mutationFn: postKurseLernende,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['kurseLernende'] });
+      router.navigate('/kurse_lernende');
     },
   });
   let { data: kurseData } = useQuery({

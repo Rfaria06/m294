@@ -26,6 +26,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { router } from '@/router';
 
 function CreateLernende() {
   const queryClient: QueryClient = useQueryClient();
@@ -35,6 +36,7 @@ function CreateLernende() {
       queryClient.invalidateQueries({
         queryKey: ['lernende'],
       });
+      router.navigate('/lernende');
     },
   });
   let { data: landData } = useQuery({

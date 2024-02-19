@@ -30,6 +30,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { router } from '@/router';
 
 function CreateLehrbetriebeLernende() {
   const queryClient: QueryClient = useQueryClient();
@@ -39,6 +40,7 @@ function CreateLehrbetriebeLernende() {
       queryClient.invalidateQueries({
         queryKey: ['lehrbetriebeLernende'],
       });
+      router.navigate('/lehrbetriebe_lernende');
     },
   });
   let { data: lehrbetriebData } = useQuery({

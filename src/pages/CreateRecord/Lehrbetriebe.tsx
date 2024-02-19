@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { router } from '@/router';
 
 function CreateLehrbetrieb() {
   const queryClient = useQueryClient();
@@ -21,6 +22,7 @@ function CreateLehrbetrieb() {
     mutationFn: postLehrbetriebe,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['lehrbetriebe'] });
+      router.navigate('/lehrbetriebe');
     },
   });
   const form = useForm<z.infer<typeof formSchema>>({

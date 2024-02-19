@@ -30,6 +30,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { router } from '@/router';
 
 function CreateKurs() {
   const queryClient: QueryClient = useQueryClient();
@@ -37,6 +38,7 @@ function CreateKurs() {
     mutationFn: postKurs,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['kurse'] });
+      router.navigate('/kurse');
     },
   });
   let { data: dozentData } = useQuery({
