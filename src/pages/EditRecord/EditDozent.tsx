@@ -31,6 +31,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import './EditRecord.css';
 
 function EditDozent() {
   const tableName: string = 'dozenten';
@@ -92,7 +93,7 @@ function EditDozent() {
   if (!landData) landData = [{ id: '0', country: '' }];
 
   return (
-    <div className="create-record">
+    <div className="edit-record">
       {isPending ? (
         <LoadingIcons.TailSpin fill="black" />
       ) : (

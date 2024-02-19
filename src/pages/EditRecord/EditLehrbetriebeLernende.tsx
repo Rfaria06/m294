@@ -91,22 +91,22 @@ function EditLehrbetriebeLernende() {
       router.navigate(`/${tableName}`);
     },
   });
-  if (!lehrbetriebData)
+  if (!lehrbetriebData || !JSON.stringify(lehrbetriebData).startsWith('['))
     lehrbetriebData = [
       {
         id: '0',
-        firma: '',
+        firma: 'Lädt...',
         strasse: '',
         plz: '',
         ort: '',
       },
     ];
-  if (!lernendeData)
+  if (!lernendeData || !JSON.stringify(lernendeData).startsWith('['))
     lernendeData = [
       {
         id: '0',
-        vorname: '',
-        nachname: '',
+        vorname: 'Lädt...',
+        nachname: 'Lädt...',
         strasse: '',
         plz: '',
         ort: '',

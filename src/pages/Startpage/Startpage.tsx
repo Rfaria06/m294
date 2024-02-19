@@ -9,7 +9,7 @@ import {
 
 function Startpage() {
   return (
-    <div className="container p-5">
+    <div className="w-half">
       <div className="mb-3">
         <NavLink to={'/info'}>
           <TooltipProvider>
@@ -22,17 +22,19 @@ function Startpage() {
           </TooltipProvider>
         </NavLink>
       </div>
-      <h1>M294</h1>
-      <div className="sub">
-        <h3>React - Frontend</h3>
+      <div className="container p-5">
+        <h1>M294</h1>
+        <div className="sub">
+          <h3>React - Frontend</h3>
+        </div>
+        <br />
+        <h5>
+          Um den Source code, commit history und weiteres zu sehen, klicken sie
+          auf "Dokumentation" in der Navigationsleiste
+        </h5>
+        <br />
+        <p>Über das Menü "Tabellen" können die Daten zugegriffen werden</p>
       </div>
-      <br />
-      <h5>
-        Um den Source code, commit history und weiteres zu sehen, klicken sie
-        auf "Dokumentation" in der Navigationsleiste
-      </h5>
-      <br />
-      <p>Über das Menü "Tabellen" können die Daten zugegriffen werden</p>
     </div>
   );
 }

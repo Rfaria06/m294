@@ -27,6 +27,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import './EditRecord.css';
 
 function EditKurs() {
   const tableName: string = 'kurse';
