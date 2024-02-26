@@ -4,8 +4,8 @@ import * as z from "zod";
 import {
   dozentFormSchema,
   dozentUploadFormSchema,
-  kursFormSchema,
   kurseLernendeFormSchema,
+  kursFormSchema,
   laenderFormSchema,
   lehrbetriebeFormSchema,
   lehrbetriebeLernendeFormSchema,
@@ -376,7 +376,7 @@ export async function updateKurseLernende(params: {
 }*/
 
 function handleError(error: unknown): void {
-  if (!(error instanceof AxiosError) || !(error instanceof Error)) return;
+  if (!(error instanceof AxiosError)) return;
   toast("Fehler bei der Anfrage ➞ " + error.name, {
     description: error.message,
     className: "bg-red-75",

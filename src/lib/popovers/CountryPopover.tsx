@@ -5,7 +5,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import CountryPickerData from "./CountryPopoverData";
 import { Check, ChevronsUpDown } from "lucide-react";
 import {
   Command,
@@ -15,6 +14,8 @@ import {
   CommandItem,
 } from "@/components/ui/command";
 import { cn } from "@/lib/utils";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { getLaender } from "@/lib/querys.ts";
 
 interface DozentenPopoverProps {
   field: {
@@ -25,9 +26,19 @@ interface DozentenPopoverProps {
 }
 
 export default function CountryPopover({ field }: DozentenPopoverProps) {
-  const countries = CountryPickerData();
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
+
+  useQueryClient();
+  const { data } = useQuery({
+    queryKey: ["laender"],
+    queryFn: getLaender,
+  });
+
+  const countries = data?.map((row) => ({
+    value: row.id,
+    label: row.country,
+  })) || [{ value: "0", label: "Schweiz" }];
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
